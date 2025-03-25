@@ -1,0 +1,166 @@
+:: Farm Tank Widgets [widget]
+
+<<widget "farm_assault_attack_tank_options">>
+    /* _args[0] assault_team */
+    <<if $isInTank is true and _args[0]>>
+        <<set _assault_team to _args[0]>>
+        <<if _assault_team.type is "bailey">>
+            <<link [[向他们开火 (0:05)|Farm Assault Fire Bailey]]>><<pass 5>><</link>>
+            <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
+        <<elseif _assault_team.type is "wraith">>
+            <<set $_them to $wraith.seenFarm ? "祂" : "对方">>
+            <<link [["向" + $_them + "开火" (0:05)|Farm Assault Fire Wraith]]>><<pass 5>><</link>>
+            <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
+        <<else>>
+            <<link [[向他们开火 (0:05)|Farm Assault Fire Remy]]>><<pass 5>><</link>>
+            <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
+        <</if>>
+        <br>
+    <</if>>
+<</widget>>
+
+<<widget "farm_assault_tank_options">>
+    <<set _assault_team to null>>
+    <<set _assault_keys to Object.keys($farm_assault.teams)>>
+    <<for _s to 0; _s lt _assault_keys.length; _s++>>
+        <<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+            <<set _assault_team to $farm_assault.teams[_assault_keys[_s]]>>
+        <</if>>
+    <</for>>
+    
+    <<if $isInTank is true>>
+        <<if _assault_team>>
+            <<if _assault_team.type is "bailey">>
+                <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
+                <<skill_difficulty $fame.scrap "战斗知名度" 1 500>>
+            <<elseif _assault_team.type is "wraith">>
+                <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
+                <<skill_difficulty $fame.scrap "战斗知名度" 3000 3000>>
+            <<else>>
+                <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
+                <<skill_difficulty $fame.scrap "战斗知名度" 1 1>>
+            <</if>>
+            <br>
+            <<farm_assault_attack_tank_options _assault_team>>
+        <</if>>
+        <<link [[离开坦克 (0:05)|Farm Assault]]>><<set $isInTank to false>><</link>>
+        <br>
+    <<elseif $farm.tank gte 1>>
+        <<link [[进入坦克 (0:05)|Farm Assault]]>><<set $isInTank to true>><</link>>
+        <br>
+    <</if>>
+<</widget>>
+
+:: Farm Assault Tank Threaten
+<<effects>>
+
+<<set _assault_keys to Object.keys($farm_assault.teams)>>
+<<for _s to 0; _s lt _assault_keys.length; _s++>>
+	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+        <<if $farm_assault.teams[_assault_keys[_s]].type is "bailey">>
+            <<if $fame.scrap gte random(1, 500)>>
+                你驾驶着坦克向贝利的手下们逼近。"看看是谁来了，"一个入侵者说道。"就是那个开着破铜烂铁的疯子。"
+                <br><br>
+                他们交换了一下眼神。"贝利付的钱可不够我们对付这种疯子，"另一个说。<span class="green">他们迅速撤退了。</span>
+                <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
+            <<else>>
+                你驾驶着坦克向贝利的手下们逼近。"哈，就这破铜烂铁也想吓唬我们？"一个入侵者嘲笑道。
+                <br><br>
+                他们无视了你的威胁，继续他们的破坏活动。
+            <</if>>
+        <<elseif $farm_assault.teams[_assault_keys[_s]].type is "wraith">>
+            你驾驶着坦克向那个苍白的身影逼近。祂转过身来，红色的眼睛直视着你。
+            <br><br>
+            "<span class="wraith">凡人的玩具，无法阻挡复仇之火。</span>"祂的声音在你的脑海中回响。
+        <<else>>
+            你把炮筒对准雷米的打手，但没有开火，他们立刻停下了手中的工作。
+            <br><br>
+            "该死，没人说过这里有坦克！"一个入侵者惊恐地喊道。<span class="green">他们转身就跑，连汽油罐都扔在了地上。</span>
+            <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
+        <</if>>
+        <br><br>
+        <<link [[继续|Farm Assault]]>><</link>>
+	<</if>>
+<</for>>
+
+:: Farm Assault Fire Remy
+<<effects>>
+
+<<set _assault_keys to Object.keys($farm_assault.teams)>>
+<<for _s to 0; _s lt _assault_keys.length; _s++>>
+	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+        <<if currentSkillValue('science') gte random(1, 1000)>>
+            坦克的主炮轰鸣一声。<span class="green">炮弹精确地落在入侵者们的脚边爆炸</span>，激起一片尘土。
+            <br><br>
+            "疯子！这些疯子真的在用炮弹！"入侵者们惊恐地大叫着，四散奔逃。
+        <<else>>
+            你扣动扳机，坦克发出一声巨响。炮弹飞过入侵者们的头顶，<span class="purple">在远处爆炸</span>。
+            <br><br>
+            虽然没有击中，但这足以让他们意识到危险。"快跑！这疯子是认真的！"他们丢下工具转身就逃。
+        <</if>>
+        <br><br>
+        你准备着下一步行动。
+        <br><br>
+        <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
+        <<link [[继续|Farm Assault]]>><</link>>
+	<</if>>
+<</for>>
+
+:: Farm Assault Fire Bailey
+<<effects>>
+
+<<set _assault_keys to Object.keys($farm_assault.teams)>>
+<<for _s to 0; _s lt _assault_keys.length; _s++>>
+	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+        <<if currentSkillValue('science') gte random(1, 1000)>>
+            坦克炮口喷出火焰，<span class="green">炮弹准确地落在贝利的手下们中间</span>。爆炸声震耳欲聋。
+            <br><br>
+            "该死！贝利没说过要对付这种疯子！"他们狼狈地逃窜着，有人还被自己的同伴绊倒在地。
+            <br><br>
+            你准备着下一步行动。
+            <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
+        <<elseif 50 gte random(1, 100)>>
+            你瞄准入侵者们开火，但炮弹<span class="purple">偏离了目标</span>，在他们身后爆炸。
+            <br><br>
+            即便如此，巨大的爆炸声还是让他们惊慌失措。"撤退！这不值得冒险！"他们一边喊着一边逃跑。
+            <br><br>
+            你准备着下一步行动。
+            <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
+        <<else>>
+            炮弹在远处爆炸，完全<span class="red">没有命中目标</span>。贝利的手下们看起来更加嚣张了。
+            <br><br>
+            "哈！连瞄准都不会吗？"他们继续着破坏活动，时不时嘲笑地看向你的方向。
+        <</if>>
+        <br><br>
+        <<link [[继续|Farm Assault]]>><</link>>
+	<</if>>
+<</for>>
+
+:: Farm Assault Fire Wraith
+<<effects>>
+
+<<set _assault_keys to Object.keys($farm_assault.teams)>>
+<<for _s to 0; _s lt _assault_keys.length; _s++>>
+	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+        <<if currentSkillValue('science') gte random(1, 1000)>>
+            <<if 80 gte random(1, 100)>>
+                坦克的主炮轰鸣，<span class="green">炮弹直接命中了那个苍白的身影</span>。爆炸的火光中，你看到祂的形体开始扭曲消散。
+                <br><br>
+                "<span class="wraith">沉没在烟雾中，沉没于火焰中。</span>"祂的声音渐渐消失在夜色中。
+                <br><br>
+                你准备着下一步行动。
+                <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
+            <<else>>
+                炮弹穿过那个苍白的身影，<span class="purple">在祂身后爆炸</span>。烟雾散去后，你发现祂依然站在原地，完好无损。
+                <br><br>
+                "<span class="wraith">凡人的武器...无法伤及灵魂...</span>"
+            <</if>>
+        <<else>>
+            你扣动扳机，但炮弹<span class="red">完全偏离了目标</span>。那个苍白的身影转向你，发出一声不带感情的笑声。
+            <br><br>
+            "<span class="wraith">准头不错...可惜对象错了...</span>"
+        <</if>>
+        <br><br>
+        <<link [[继续|Farm Assault]]>><</link>>
+	<</if>>
+<</for>>

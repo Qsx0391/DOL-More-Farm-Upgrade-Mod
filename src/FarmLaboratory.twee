@@ -1,0 +1,25 @@
+:: Put Strange Flowers Widget [widget]
+
+<<widget "put_strange_flowers">>
+    <<if $plants.strange_flower.amount >= 1000>>
+        <<icon "tending/strange_flower.png">>
+        <<link [[把 1000 朵诡异的花放到实验室|Farm Still Put Flowers]]>>
+            <<set $flowers_stored += 1000>>
+            <<set $plants.strange_flower.amount -= 1000>>
+        <</link>>
+	    <br>
+    <</if>>
+<</widget>>
+
+:: Farm Still Put Flowers
+<<effects>>
+
+你把诡异的花放到了实验室。艾利克斯会生产出一瓶催情剂。<<nnpc_He "Alex">>准备好后会把它放在实验室里。
+<br><br>
+
+<<if $farm.still_timer lte 0 or $farm.still_timer is undefined>>
+	<<set $farm.still_timer to 1>>
+<</if>>
+
+<<link [[继续|Farm Still]]>><</link>>
+<br>

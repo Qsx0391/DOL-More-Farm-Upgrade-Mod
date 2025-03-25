@@ -1,0 +1,24 @@
+:: New Farm Upgrades Current Widgets [widget]
+
+<<widget "new_farm_upgrades_current">>
+    <<switch $farm.build>>
+        <<case "cultivator">>
+            田地里正在安装一台耕地机。
+        <<case "seeder">>
+            田地里正在安装一台播种机。
+        <<case "harvester">>
+            田地里正在安装一台收割机。
+        <<case "construction machinery">>
+            一些施工机械正在运往农场。
+        <<case "field greenhouse">>
+            田地里正在安装温室。
+        <<case "laboratory">>
+            实验室的科学设备正在升级。
+        <<case "cold store">>
+            小屋里正在加装冷库。
+        <<case "compost">>
+            堆肥设施正在建造中。
+        <<case "tank">>
+            坦克正在运往农场。
+    <</switch>>
+<</widget>>

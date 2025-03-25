@@ -1,0 +1,117 @@
+:: New Farm Upgrades Finished Widgets [widget]
+
+<<widget "cultivator_upgrades_finished">>
+    <<run $farm.build_finished.delete("cultivator")>>
+    <<npc Alex>><<person1>>
+    "嘿，来看看这个新家伙，"艾利克斯兴奋地说，轻轻拍了拍耕地机的金属外壳。"有了它，你就不用再弯腰了。"
+    <br><br>
+    <span class="gold">耕地机已经安装完成。</span>
+    这台机器可以帮助你更快地耕地，让你有更多时间做其他事情。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "seeder_upgrades_finished">>
+    <<run $farm.build_finished.delete("seeder")>>
+    你走近新安装的播种机，机器上的刻度盘闪烁着微光。工人们正在调试设备，确保每个设置都恰到好处。
+    <br><br>
+    <span class="gold">播种机已经安装完成。</span>
+    这台机器可以帮助你更快地播种，让你有更多时间做其他事情。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "harvester_upgrades_finished">>
+    <<run $farm.build_finished.delete("harvester")>>
+    收割机静静地停在田野边，金属外壳在阳光下闪闪发亮。你启动机器，引擎的轰鸣声回荡在农场中。
+    <br><br>
+    <span class="gold">收割机已经安装完成。</span>
+    这台强大的农业机械将让收获变得轻而易举，大大提高工作效率。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "construction_machinery_upgrades_finished">>
+    <<run $farm.build_finished.delete("construction machinery")>>
+    <<npc Alex>><<person1>>
+    "施工机械已经到位，"艾利克斯说，看着工人们熟练地操作着机器。"有了这些，我们的农场会发展得更快。"
+    <br><br>
+    <span class="gold">施工机械已经安装完成。</span>
+    这些机器可以帮助工人更快地完成农场升级工作。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "field_greenhouse_upgrades_finished">>
+    <<run $farm.build_finished.delete("field greenhouse")>>
+    <span class="gold">你走近温室大棚。</span>
+    <<switch $farm.field_greenhouse>>
+        <<case 1>>
+            第一块田地的温室大棚已经建造完成，你推开温室大棚的玻璃门，温暖的空气扑面而来。阳光透过玻璃顶洒落下来，为植物提供着充足的光照。
+        <<case 2 3 4>>
+            又一块田地的温室大棚已经建造完成，还有几块田地需要建造。
+        <<case 5 6 7>>
+            又一块田地的温室大棚已经建造完成，只剩下几块田地了。
+        <<case 8>>
+            又一块田地的温室大棚已经建造完成，只剩下最后一块田地了。
+        <<case 9>>
+            最后一块田地的温室大棚已经建造完成，现在所有田地都有了温室保护。
+        <<default>>
+            温室大棚系统出现了问题，请报告。
+    <</switch>>
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "laboratory_upgrades_finished">>
+    <<run $farm.build_finished.delete("laboratory")>>
+    实验室里新安装的仪器闪烁着冷光。试管架上整齐地排列着各种容器，工作台上摆放着精密的测量设备。
+    <br><br>
+    <span class="gold">实验室已经升级完成。</span>
+    现在你可以更快地生产催情剂，并且可以使用诡异的花来制作。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "cold_store_upgrades_finished">>
+    <<run $farm.build_finished.delete("cold store")>>
+    你走进新完工的冷库，凉爽的空气让你精神一振。货架上整齐地摆放着各种农产品，温度计显示着适宜的储存温度。
+    <br><br>
+    <span class="gold">冷库已经建造完成。</span>
+    现在你的农产品可以在冷库中保存更长时间而不会过期。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "compost_upgrades_finished">>
+    <<run $farm.build_finished.delete("compost")>>
+    <<npc Alex>><<person1>>
+    "堆肥设施已经完工，"艾利克斯说，指着新设备。"这些机器会自动处理有机废物，每周都能生产出优质的肥料。"
+    <br><br>
+    <span class="gold">堆肥设施已经建造完成。</span>
+    现在每周都会自动生产一袋肥料，可以帮助你的作物生长得更好。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>
+
+<<widget "tank_upgrades_finished">>
+    <<run $farm.build_finished.delete("tank")>>
+    <<npc Alex>><<person1>>
+    你和艾利克斯站在农场的高地上，看着那辆庞然大物缓缓驶入农场。这辆翻新过的坦克虽然已经退役，但它的威慑力丝毫未减。厚重的装甲在阳光下泛着冷光，主炮虽然已经改装，但仍然给人不容小觑的感觉。
+    <br><br>
+    "这下我看谁还敢来骚扰我们的农场，"艾利克斯说着，眼中闪烁着兴奋的光芒。"就算是雷米，看到这个大家伙也得掂量掂量。"
+    <br><br>
+    <span class="gold">坦克已经部署到农场。</span>
+    这位钢铁守护者将为农场提供强大的火力支援，任何心怀不轨的入侵者都会三思而后行。
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>

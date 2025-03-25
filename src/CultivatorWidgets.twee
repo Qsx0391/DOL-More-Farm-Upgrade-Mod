@@ -1,0 +1,49 @@
+:: Cultivator Widgets [widget]
+
+<<widget "till_by_cultivator">>
+    /* _args[0] plantbed */
+    <<if $location is "alex_farm" and _plantbed.greenhouse is undefined and $farm.cultivator gte 1>>
+        <<set _plantbed to _args[0]>>
+        <<gardenicon "till">>
+        <<link "使用耕地机耕种 (0:15)" $passage>>
+            <<set $tendingvars.plot_tilled to true>>
+            <<tiredness 2>><<physique 2>>
+            <<pass 15>>
+            <<farm_count 15>>
+            <<set _plantbed.till to 1>>
+            <<set $farm.useCultivator to true>>
+        <</link>><<gtiredness>>
+        <br>
+    <</if>>
+<</widget>>
+
+<<widget "till_by_cultivator_and_fertiliser">>
+    /* _args[0] plantbed */
+    <<if $location is "alex_farm" and _plantbed.greenhouse is undefined and $farm.cultivator gte 1>>
+        <<set _plantbed to _args[0]>>
+        <<gardenicon "fertiliser">>
+        <<link "使用耕地机耕种并施肥 (0:30)" $passage>>
+            /* Till */
+            <<set $tendingvars.plot_tilled_fertiliser to true>>
+            <<tiredness 4>><<physique 4>>
+            <<pass 30>>
+            <<farm_count 30>>
+            <<set _plantbed.till to 1>>
+            <<set $farm.useCultivator to true>>
+
+            /* Fertilise */
+            <<set $fertiliser.current-->><<set $fertiliser.used++>>
+            <<set _plantbed.quality++>>
+            <<if !$backgroundTraits.includes("greenthumb")>>
+                <<if _plantbed.baseQuality is undefined>>
+                    <<set _plantbed.baseQuality to clone(_plantbed.quality - 1)>>
+                <</if>>
+                <<set _plantbed.fertiliserDecay to 2>>
+                <<if _plantbed.size isnot "large">>
+                    <<set _plantbed.fertiliserDecay++>>
+                <</if>>
+            <</if>>
+        <</link>><<gtiredness>>
+        <br>
+    <</if>>
+<</widget>>

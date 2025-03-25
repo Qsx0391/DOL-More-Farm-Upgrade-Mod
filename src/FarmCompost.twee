@@ -1,0 +1,32 @@
+:: Farm Compost
+<<effects>>
+
+你来到堆肥设施。这里可以将农场的有机废料转化为肥料。
+<br><br>
+
+<<if $farm.compost gte 1>>
+    <<if $fertiliser_stored gte 1>>
+        你可以取出 <<Number $fertiliser_stored>> 袋肥料。
+        <br><br>
+        <<gardenicon "fertiliser">><<link [[取出肥料|Farm Compost Take]]>><</link>>
+        <br>
+    <<else>>
+        堆肥设施正在工作中，废料 <<Number $compost_timer>> 天后就能转化成肥料。
+        <br><br>
+    <</if>>
+<</if>>
+
+<<getouticon>><<link [[离开|Farm Work]]>><</link>>
+<br>
+
+:: Farm Compost Take
+<<effects>>
+
+你获得了 <<Number $fertiliser_stored>> 袋肥料。
+<<set $fertiliser.current += $fertiliser_stored>>
+<<set $fertiliser_stored to 0>>
+<br><br>
+
+<<link [[继续|Farm Compost]]>><</link>>
+<br>
+

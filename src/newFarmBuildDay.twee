@@ -1,0 +1,34 @@
+:: New Farm Build Day Widgets [widget]
+
+<<widget "new_farm_build_day">>    
+    <<if $farm.build_timer lte 0>>
+        <<switch $farm.build>>
+            <<case "cultivator">>
+                <<set $farm.cultivator to 1>>
+            <<case "seeder">>
+                <<set $farm.seeder to 1>>
+            <<case "harvester">>
+                <<set $farm.harvester to 1>>
+            <<case "construction machinery">>
+                <<set $farm.construction_machinery to 1>>
+            <<case "field greenhouse">>
+                <<if $farm.field_greenhouse is undefined>>
+                    <<set $farm.field_greenhouse to 1>>
+                <<elseif $farm.field_greenhouse lt 9>>
+                    <<set $farm.field_greenhouse++>>
+                <</if>>
+                <<set $plots.farm[$farm.field_greenhouse - 1].greenhouse = true>>
+            <<case "laboratory">>
+                <<set $farm.laboratory to 1>>
+                <<set $flowers_stored to 0>>
+            <<case "cold store">>
+                <<set $farm.cold_store to 1>>
+            <<case "compost">>
+                <<set $farm.compost to 1>>
+                <<set $fertiliser_stored to 0>>
+                <<set $compost_timer to 7>>
+            <<case "tank">>
+                <<set $farm.tank to 1>>
+        <</switch>>
+    <</if>>
+<</widget>>
