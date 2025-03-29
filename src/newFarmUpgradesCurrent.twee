@@ -18,6 +18,8 @@
             小屋里正在加装冷库。
         <<case "compost">>
             堆肥设施正在建造中。
+        <<case "farmhouse">>
+            工人们正在建造新的农舍。
         <<case "tank">>
             坦克正在运往农场。
     <</switch>>

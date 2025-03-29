@@ -1,31 +1,35 @@
 {
   "name": "MoreFarmUpgrade",
   "version": "1.0.0",
-  "scriptFileList_inject_early": [],
-  "scriptFileList_earlyload": [],
-  "scriptFileList_preload": [],
   "styleFileList": [],
   "scriptFileList": [
-    "src/js/newBuildTime.js"
+    "src/js/farmerTendingDay.js",
+    "src/js/newBuildTime.js",
+    "src/js/farmerSell.js"
   ],
   "tweeFileList": [
-    "src/newFarmUpgrades.twee",
-    "src/newFarmUpgradesCurrent.twee",
-    "src/newFarmUpgradeStatus.twee",
-    "src/newFarmBuildDay.twee",
-    "src/newFarmUpgradesFinished.twee",
-    "src/CultivatorWidgets.twee",
-    "src/HarvesterWidgets.twee",
-    "src/FarmLaboratory.twee",
     "src/FarmCompost.twee",
-    "src/FarmTank.twee"
+    "src/NewFarmUpgradesFinished.twee",
+    "src/FarmFarmer.twee",
+    "src/FarmTank.twee",
+    "src/PubGuardFarmer.twee",
+    "src/CultivatorWidgets.twee",
+    "src/FarmerCultivator.twee",
+    "src/NewFarmUpgradeStatus.twee",
+    "src/FarmLaboratory.twee",
+    "src/NewFarmUpgradesCurrent.twee",
+    "src/NewFarmUpgrades.twee",
+    "src/FarmStockWidgets.twee",
+    "src/HarvesterWidgets.twee",
+    "src/NewFarmBuildDay.twee",
+    "src/FarmFarmhouse.twee"
   ],
   "imgFileList": [
     "img/misc/icon/compost.png"
   ],
-  "additionFile": [],
-  "additionBinaryFile": [],
-  "additionDir": [],
+  "additionFile": [
+    "src/replace/buildFinishedHandle.txt"
+  ],
   "addonPlugin": [
     {
       "modName": "ModLoader DoL ImageLoaderHook",
@@ -42,31 +46,31 @@
           "passage": "Farm Widgets",
           "findString": "<<if $farm.build>>",
           "debug": true,
-          "replace":"<<if $farm.build>><<new_farm_upgrades_current>>"
+          "replace": "<<if $farm.build>><<new_farm_upgrades_current>>"
         },
         {
           "passage": "Farm Widgets",
           "findString": "<<if $farm_stage gte 8>>",
           "debug": true,
-          "replace":"<<if $farm_stage gte 8>><<new_farm_upgrades_status>>"
+          "replace": "<<if $farm_stage gte 8>><<new_farm_upgrades_status>>"
         },
         {
           "passage": "Farm Widgets",
           "findString": "<<if $farm.build_timer lte 0>>",
           "debug": true,
-          "replace":"<<if $farm.build_timer lte 0>><<new_farm_build_day>>"
+          "replace": "<<if $farm.build_timer lte 0>><<new_farm_build_day>>"
         },
         {
           "passage": "Widgets Journal",
           "findString": "<<switch $farm.build>>",
           "debug": true,
-          "replace":"<<new_farm_upgrades_current>><<switch $farm.build>>"
+          "replace": "<<new_farm_upgrades_current>><<switch $farm.build>>"
         },
         {
           "passage": "Farm Work",
           "findString": "<<switch $farm.build>>",
           "debug": true,
-          "replace":"<<new_farm_upgrades_current>><<switch $farm.build>>"
+          "replace": "<<new_farm_upgrades_current>><<switch $farm.build>>"
         },
         {
           "passage": "Widgets Tending",
@@ -360,7 +364,7 @@
           "passage": "Farm Work",
           "findString": "<<elseif $farm.build_finished.includes(\"wall 1\")>>",
           "debug": true,
-          "replace": "<<elseif $farm.build_finished.includes(\"cultivator\")>><<cultivator_upgrades_finished>><<elseif $farm.build_finished.includes(\"seeder\")>><<seeder_upgrades_finished>><<elseif $farm.build_finished.includes(\"harvester\")>><<harvester_upgrades_finished>><<elseif $farm.build_finished.includes(\"construction machinery\")>><<construction_machinery_upgrades_finished>><<elseif $farm.build_finished.includes(\"field greenhouse\")>><<field_greenhouse_upgrades_finished>><<elseif $farm.build_finished.includes(\"laboratory\")>><<laboratory_upgrades_finished>><<elseif $farm.build_finished.includes(\"cold store\")>><<cold_store_upgrades_finished>><<elseif $farm.build_finished.includes(\"compost\")>><<compost_upgrades_finished>><<elseif $farm.build_finished.includes(\"tank\")>><<tank_upgrades_finished>><<elseif $farm.build_finished.includes(\"wall 1\")>>"
+          "replaceFile": "src/replace/buildFinishedHandle.txt"
         },
         {
           "passage": "Farm Still",
@@ -457,6 +461,42 @@
           "findString": "你在阴影中等待，观察着入侵者的动向。",
           "debug": true,
           "replace": "<<if $isInTank is true>>你在坦克中等待，观察着入侵者的动向。<<else>>你在阴影中等待，观察着入侵者的动向。<</if>>"
+        },
+        {
+          "passage": "Farm Fields",
+          "findString": "<<display_plot farm>>",
+          "debug": true,
+          "replace": "<<field_farmer>><<display_plot farm>>"
+        },
+        {
+          "passage": "Farm Work",
+          "findString": "<<elseif $farm.tower_guard and $farm.tower_guard_unpaid gte 2 and $farm.tower_guard_patience isnot 1>>",
+          "debug": true,
+          "replace": "<<elseif $farm.farmer and $farm.farmer_unpaid gte 2 and $farm.farmer_patience isnot 1>><<farmer_pay_request>><<elseif $farm.tower_guard and $farm.tower_guard_unpaid gte 2 and $farm.tower_guard_patience isnot 1>>"
+        },
+        {
+          "passage": "Farm Work",
+          "findString": "<<farmicon \"cottage\">><<link [[小屋 (0:01)|Farm Cottage]]>><<pass 1>><</link>>",
+          "debug": true,
+          "replace": "<<farmicon \"cottage\">><<link [[小屋 (0:01)|Farm Cottage]]>><<pass 1>><</link>><br><<farmhouse_entry>>"
+        },
+        {
+          "passage": "Pub",
+          "findString": "<<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>",
+          "debug": true,
+          "replace": "<<if $farm.farmhouse gte 1 and !$farm.farmer and $farm.farmer_can_hire>><<investigateicon>><<link [[为农场找农夫 (0:30)|Pub Farmer]]>><<endevent>><<pass 30>><</link>><</if>><<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>"
+        },
+        {
+          "passage": "Farm Stock",
+          "findString": "<<if _farm_stocked is true>>",
+          "debug": true,
+          "replace": "<<farm_stock_plant>><<if _farm_stocked is true or $farm_plant_stocked is true>>"
+        },
+        {
+          "passage": "Farm Stock",
+          "findString": "<<link [[拿取全部|Farm Cottage]]>>",
+          "debug": true,
+          "replace": "<<link [[拿取全部|Farm Cottage]]>><<take_all_plant>>"
         }
       ]
     },
@@ -468,7 +508,7 @@
         "js": [
           {
             "from": "if (V.farm.stock)",
-            "to": "if (V.farm.stock && !(State.variables.farm.cold_store >= 1))",
+            "to": "farmerSell(); if (V.farm.stock && !(V.farm.cold_store >= 1))",
             "fileName": "time.js"
           },
           {
@@ -490,6 +530,16 @@
             "from": "if (V.alex_greenhouse === 1)",
             "to": "if (V.farm.compost >= 1) { V.compost_timer--; if (V.compost_timer < 1) { V.fertiliser_stored++; V.compost_timer = 7; } } if (V.alex_greenhouse === 1)",
             "fileName": "time.js"
+          },
+          {
+            "from": "if (V.farm.tower_guard)",
+            "to": "if (V.farm.farmer) { V.farm.farmer_unpaid++; V.farm.farmer_patience = 0; } if (V.farm.tower_guard) ",
+            "fileName": "time.js"
+          },
+          {
+            "from": "}\nwindow.tendingDay = tendingDay;",
+            "to": "farmerTendingDay(); } window.tendingDay = tendingDay;",
+            "fileName": "ingame.js"
           }
         ]
       }

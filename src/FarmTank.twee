@@ -9,7 +9,7 @@
             <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
         <<elseif _assault_team.type is "wraith">>
             <<set $_them to $wraith.seenFarm ? "祂" : "对方">>
-            <<link [["向" + $_them + "开火" (0:05)|Farm Assault Fire Wraith]]>><<pass 5>><</link>>
+            <<link [[向$_them开火 (0:05)|Farm Assault Fire Wraith]]>><<pass 5>><</link>>
             <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
         <<else>>
             <<link [[向他们开火 (0:05)|Farm Assault Fire Remy]]>><<pass 5>><</link>>

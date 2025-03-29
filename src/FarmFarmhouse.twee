@@ -1,0 +1,44 @@
+:: Farmhouse
+<<effects>>
+
+<<if $farm.farmer is undefined>>
+    你走进农舍，房间里空空荡荡的。墙上挂着一些老旧的农具，角落里堆着几个木箱。
+    <br><br>
+    也许你该考虑雇个农夫来帮忙打理农场。
+    <br><br>
+    <<getouticon>><<link [[离开|Farm Work]]>><</link>>
+<<elseif between(Time.hour, 9, 17)>>
+    你推开农舍的门。房间收拾得很整洁，但现在没人在这里。<<print $farm.farmer>>应该在田里忙活。
+    <br><br>
+    <<getouticon>><<link [[离开|Farm Work]]>><</link>>
+<<elseif between(Time.hour, 6, 9) or between(Time.hour, 17, 21)>>
+    <<loadNPC 0 "farm_farmer">><<person1>>
+    你走进农舍，房间收拾得很整洁。
+    <br><br>
+
+    <<if $speech_attitude is "meek">>
+        "有什么事吗？"<<print $farm.farmer>>问道。
+    <<elseif $speech_attitude is "bratty">>
+        "老板有什么吩咐？"<<print $farm.farmer>>直接问道。
+    <<else>>
+        "有什么需要我帮忙的吗？"<<print $farm.farmer>>问道。
+    <</if>>
+    <br><br>
+
+    <<farm_farmer_pay>>
+    <<link [[修改工作安排|Farm Farmer Work Change]]>><</link>>
+    <br>
+    <<getouticon>><<link [[离开|Farm Work]]>><<endevent>><</link>>
+<<else>>
+    你来到农舍门前。已经很晚了，看来<<print $farm.farmer>>已经睡了。
+    <br><br>
+    <<getouticon>><<link [[离开|Farm Work]]>><</link>>
+<</if>>
+
+:: Farmhouse Widgets [widget]
+
+<<widget "farmhouse_entry">>
+    <<if $farm.farmhouse gte 1>>
+        <<farmicon "cottage">><<link [[农舍 (0:01)|Farmhouse]]>><<pass 1>><</link>>
+    <</if>>
+<</widget>>

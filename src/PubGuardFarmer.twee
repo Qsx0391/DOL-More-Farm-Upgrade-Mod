@@ -1,0 +1,141 @@
+:: Pub Farmer
+<<effects>>
+
+<<generate1>><<set $NPCList[0].skills.tending to random(1, 600)>><<npcClothesName $NPCList[0] "工装">>
+<<generate2>><<person2>>
+你向酒馆老板打听是否有人在找农活。<<He>>点点头，指向一个<<person1>><<person>>
+
+<<if $NPCList[0].traits.includes("relaxed")>>
+    正在慢悠悠地喝着麦酒。<<He>>注意到你走近，露出友善的微笑。"有什么我能帮你的吗？"<<he>>问道，示意你坐下。
+    <br><br>
+
+    <<if $speech_attitude is "meek">>
+        "我-我在找人帮忙打理农场，"你说。"需要有种地经验的人。"
+    <<elseif $speech_attitude is "bratty">>
+        "我的农场需要帮手，"你说。"你懂农活吗？"
+    <<else>>
+        "我在找一个农场帮手，"你说。"需要有经验的农夫。"
+    <</if>>
+    <br><br>
+
+    <<person>>抿了一口麦酒，若有所思。"我在乡下长大，"<<he>>说。"种地的活计我熟得很。不过得谈谈工钱。"
+    <br><br>
+
+<<elseif $NPCList[0].traits.includes("sociable")>>
+    正和几个人聊得热火朝天，话题似乎是关于今年的收成。
+    <br><br>
+
+    <<He>>欣然同意和你单独谈谈。"什么事？"<<he>>问道。
+    <br><br>
+
+    <<if $speech_attitude is "meek">>
+        "我-我在找人帮忙打理农场，"你说。"需要有种地经验的人。"
+    <<elseif $speech_attitude is "bratty">>
+        "我的农场需要帮手，"你说。"你懂农活吗？"
+    <<else>>
+        "我在找一个农场帮手，"你说。"需要有经验的农夫。"
+    <</if>>
+    <br><br>
+
+    "农活啊？"<<he>>的眼睛一亮，"这我在行。我家就是种地的，从小就帮着干活。"
+    <br><br>
+
+<<elseif $NPCList[0].traits.includes("brooding")>>
+    独自坐在角落，手里摆弄着一株麦穗。
+    <br><br>
+
+    你在<<he>>对面坐下。
+    <<if $speech_attitude is "meek">>
+        "我-我在找-"
+    <<elseif $speech_attitude is "bratty">>
+        "我需要-"
+    <<else>>
+        "我在找-"
+    <</if>>
+    <br>
+    "农场帮手是吧，"<<person>>打断道，把麦穗放在桌上。"我看你这身打扮就是种地的。正好我也在找活干。"
+    <br><br>
+
+<<else>>
+    正在研究酒馆墙上的农作物价格公告。看到你走近，<<he>>转过身来。
+    <br><br>
+
+    "价格不错，"<<person>>说，指着公告板。"今年是个丰收年。"
+    <br><br>
+
+    <<if $speech_attitude is "meek">>
+        "我-我在找人帮忙打理农场，"你说。"需要有种地经验的人。"
+    <<elseif $speech_attitude is "bratty">>
+        "我的农场需要帮手，"你说。"你懂农活吗？"
+    <<else>>
+        "我在找一个农场帮手，"你说。"需要有经验的农夫。"
+    <</if>>
+    <br><br>
+
+    "农场？"<<he>>笑了，"我正愁找不到活干呢。我可是从小在地里摸爬滚打长大的。"
+    <br><br>
+
+<</if>>
+
+<<farmer_text>>
+<br><br>
+
+<<link [[雇佣|Pub Farmer Accept]]>><<famebusiness 2>><</link>>
+<br>
+<<link [[拒绝|Pub]]>><<endevent>><</link>>
+<br>
+
+:: Pub Farmer Accept
+<<effects>>
+
+
+<<if $NPCList[0].traits.includes("relaxed")>>
+    "那就这么说定了，"<<person>>说着，喝干了杯中的麦酒。"我叫<span class="gold"><<print $NPCList[0].name>></span>。带我去看看你的农场吧。"
+    <br><br>
+
+    你给<<he>>指了路。"好的，我明天一早就去。正好看看你的地怎么样。"
+    <br><br>
+
+    <<He>>慢悠悠地走出了酒馆。
+    <br><br>
+
+<<elseif $NPCList[0].traits.includes("sociable")>>
+    "听起来不错，"<<person>>说。"我叫<span class="gold"><<print $NPCList[0].name>></span>。你的农场在哪儿？"
+    <br><br>
+
+    你给<<he>>指了路。"明白了。我明天一早就去。希望你的地打理得不错。"
+    <br><br>
+
+    <<He>>起身，向朋友们挥手告别。
+    <br><br>
+
+<<elseif $NPCList[0].traits.includes("brooding")>>
+    "行，"<<person>>说。"我是<span class="gold"><<print $NPCList[0].name>></span>。"<<He>>站起身。"我知道路。"<<He>>离开了酒馆。
+    <br><br>
+
+<<else>>
+    <<person>>想了想，点点头。"可以试试，"<<he>>说。"你可以叫我<span class="gold"><<print $NPCList[0].name>></span>。我们有的是时间互相了解。农场在哪儿？"
+    <br><br>
+
+    你给<<he>>指了路。"那边没有公交车，"<<he>>抱怨道。"不过我会想办法过去的。"
+    <br><br>
+
+    <<He>>大步走出了酒馆。
+    <br><br>
+
+<</if>>
+
+<<saveNPC 0 "farm_farmer">>
+<<set $farm.farmer to clone($NPCList[0].name)>>
+<<set $farm.farmer_unpaid to 1>>
+<<set $farm.farmer_skill to clone($NPCList[0].skills.tending)>>
+<<set $farmerCanWater to true>>
+<<set $farmerCanTill to true>>
+<<set $farmerCanPlant to true>>
+<<set $farmerCanHarvest to false>>
+<<set $farmerCanSell to false>>
+<<set $farmerSellTimer to 7>>
+<<set $farmerPlantable to []>>
+
+<<link [[继续|Pub]]>><<endevent>><</link>>
+<br>

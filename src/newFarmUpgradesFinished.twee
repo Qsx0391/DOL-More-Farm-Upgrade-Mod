@@ -102,6 +102,16 @@
     <br>
 <</widget>>
 
+<<widget "farmhouse_upgrades_finished">>
+    <<run $farm.build_finished.delete("farmhouse")>>
+    农舍终于建造完成了。崭新的建筑矗立在农场的一角。
+    <br><br>
+    <span class="gold">现在你可以开始雇佣新的农夫来帮助管理农场了。</span>
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><<set $farm.farmer_can_hire to true>><</link>>
+    <br>
+<</widget>>
+
 <<widget "tank_upgrades_finished">>
     <<run $farm.build_finished.delete("tank")>>
     <<npc Alex>><<person1>>

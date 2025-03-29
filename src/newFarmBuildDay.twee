@@ -27,6 +27,8 @@
                 <<set $farm.compost to 1>>
                 <<set $fertiliser_stored to 0>>
                 <<set $compost_timer to 7>>
+            <<case "farmhouse">>
+                <<set $farm.farmhouse to 1>>
             <<case "tank">>
                 <<set $farm.tank to 1>>
         <</switch>>

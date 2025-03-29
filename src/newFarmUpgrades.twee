@@ -232,6 +232,34 @@
 <<link [[返回|Farm Upgrades]]>><</link>>
 <br>
 
+:: Farm Upgrades Farmhouse
+
+建造一座现代化的农舍，为农场工人提供舒适的居住环境。
+<br><br>
+
+<span class="green">允许你雇佣一名农夫为你工作</span>
+<br>
+<span class="gold">需要花费£50000。</span>
+<br>
+<span class="blue">需要<<print get_build_time_str(14)>>来建造。</span>
+<br>
+<span class="blue">直到项目完成工人都会留在农场里。</span>
+<br>
+<br>
+
+<<if $farm.build>>
+	<span class="blue">一次只能进行一个设施的升级。</span>
+	<br>
+<<elseif $money gte 5000000>>
+	<<link [[建造 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -5000000 "farmUpgrades">><<set $farm.build to "farmhouse">>
+		<<set $farm.build_timer to calc_build_time(14)>>
+	<</link>>
+	<br>
+<</if>>
+<br>
+<<link [[返回|Farm Upgrades]]>><</link>>
+<br>
+
 :: Farm Upgrades Tank
 
 购买一辆翻新的坦克，用于加强农场防御。

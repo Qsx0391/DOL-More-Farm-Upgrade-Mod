@@ -1,0 +1,21 @@
+<<elseif $farm.build_finished.includes("cultivator")>>
+    <<cultivator_upgrades_finished>>
+<<elseif $farm.build_finished.includes("seeder")>>
+    <<seeder_upgrades_finished>>
+<<elseif $farm.build_finished.includes("harvester")>>
+    <<harvester_upgrades_finished>>
+<<elseif $farm.build_finished.includes("construction machinery")>>
+    <<construction_machinery_upgrades_finished>>
+<<elseif $farm.build_finished.includes("field greenhouse")>>
+    <<field_greenhouse_upgrades_finished>>
+<<elseif $farm.build_finished.includes("laboratory")>>
+    <<laboratory_upgrades_finished>>
+<<elseif $farm.build_finished.includes("cold store")>>
+    <<cold_store_upgrades_finished>>
+<<elseif $farm.build_finished.includes("compost")>>
+    <<compost_upgrades_finished>>
+<<elseif $farm.build_finished.includes("farmhouse")>>
+    <<farmhouse_upgrades_finished>>
+<<elseif $farm.build_finished.includes("tank")>>
+    <<tank_upgrades_finished>>
+<<elseif $farm.build_finished.includes("wall 1")>>

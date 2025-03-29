@@ -1,0 +1,445 @@
+:: Farm Fields Farmer
+<<effects>>
+
+<<loadNPC 0 "farm_farmer">><<person1>>
+
+<<print $NPCList[0].name>>停下手中的工作。
+
+<<if $speech_attitude is "meek">>
+    "有什么需要我帮忙的吗？"<<he>>问道。
+<<elseif $speech_attitude is "bratty">>
+    <<he>>直起腰来说："有什么指示？"
+<<else>>
+    "早啊，"<<he>>擦了擦手说，"工作进展得不错。"
+<</if>>
+<br><br>
+
+<<farm_farmer_pay>>
+<<link [[修改工作安排|Farm Farmer Work Change]]>><</link>>
+<br>
+
+<<link [[离开|Farm Fields]]>><<endevent>><</link>>
+
+
+:: Farm Farmer Work Change
+<<effects>>
+
+<<if $speech_attitude is "meek">>
+    "那个，我想和你谈谈工作安排的事，"你小声说道。
+<<elseif $speech_attitude is "bratty">>
+    "过来一下，我们需要重新安排一下你的工作，"你朝<<he>>招手。
+<<else>>
+    "能谈谈工作安排吗？"你问道。
+<</if>>
+<br><br>
+
+<<he>>停下手中的活计，"当然可以，老板。你觉得我现在的工作有什么问题吗？"
+<br><br>
+
+<<link [[继续|Work Change Detail]]>><</link>>
+
+
+:: Work Change Detail
+
+你开始说明你的想法：
+<br><br>
+
+浇水：
+<<if $farmerCanWater>>
+    <span class="green">目前由农夫负责</span>
+    <<link [[自己来做|Water Change]]>>
+        <<set $farmerCanWater to false>>
+    <</link>>
+<<else>>
+    <span class="red">目前由你负责</span>
+    <<link [[交给农夫做|Water Change]]>>
+        <<set $farmerCanWater to true>>
+    <</link>>
+<</if>>
+<br>
+
+耕地：
+<<if $farmerCanTill>>
+    <span class="green">目前由农夫负责</span>
+    <<link [[自己来做|Till Change]]>>
+        <<set $farmerCanTill to false>>
+    <</link>>
+<<else>>
+    <span class="red">目前由你负责</span>
+    <<link [[交给农夫做|Till Change]]>>
+        <<set $farmerCanTill to true>>
+    <</link>>
+<</if>>
+<br>
+
+播种：
+<<if $farmerCanPlant>>
+    <span class="green">目前由农夫负责</span>
+    <<link [[自己来做|Plant Change]]>>
+        <<set $farmerCanPlant to false>>
+    <</link>>
+    <<link [[修改可种植作物|Plantable Change]]>><</link>>
+<<else>>
+    <span class="red">目前由你负责</span>
+    <<link [[交给农夫做|Plant Change]]>>
+        <<set $farmerCanPlant to true>>
+    <</link>>
+<</if>>
+<br>
+
+收获：
+<<if $farm.cold_store gte 1>>
+    <<if $farmerCanHarvest>>
+        <span class="green">目前由农夫负责</span>
+        <<link [[自己来做|Harvest Change]]>>
+            <<set $farmerCanHarvest to false>>
+        <</link>>
+    <<else>>
+        <span class="red">目前由你负责</span>
+        <<link [[交给农夫做|Harvest Change]]>>
+            <<set $farmerCanHarvest to true>>
+        <</link>>
+    <</if>>
+<<else>>
+    <span class="red">你需要先修建冷库来存储收获的农产品</span>
+<</if>>
+<br>
+
+出售：
+<<if $farm.cold_store gte 1>>
+    <<if $farmerCanSell>>
+        <span class="green">目前由农夫负责</span>
+        <<link [[自己来做|Sell Change]]>>
+            <<set $farmerCanSell to false>>
+        <</link>>
+    <<else>>
+        <span class="red">目前由你负责</span>
+        <<link [[交给农夫做|Sell Change]]>>
+            <<set $farmerCanSell to true>>
+        <</link>>
+    <</if>>
+<<else>>
+    <span class="red">你需要先修建冷库来存储收获的农产品</span>
+<</if>>
+<br><br>
+
+<<if (!$farmerCanWater and !$farmerCanTill and !$farmerCanPlant and !$farmerCanHarvest) or 
+      ($farmerCanWater and $farmerCanTill and $farmerCanPlant and $farmerCanHarvest)>>
+    <<getouticon>><<link [[离开|Work Change End]]>><</link>>
+<<elseif $farm.farmer and between(Time.hour, 9, 17)>>
+    <<getouticon>><<link [[离开|Farm Fields]]>><<endevent>><</link>>
+<<else>>
+    <<getouticon>><<link [[离开|Farm Work]]>><<endevent>><</link>>
+<</if>>
+
+
+:: Water Change
+
+<<if $farmerCanWater>>
+    "浇水的活我来做吧，"<<he>>点点头，"我会确保每块地都得到充足的水分。"
+<<else>>
+    "好的，浇水的事就交给你了，"<<he>>说，"我会专注于其他工作。"
+<</if>>
+<br><br>
+<<link [[继续|Work Change Detail]]>><</link>>
+
+
+:: Till Change
+
+<<if $farmerCanTill>>
+    "耕地需要技巧和经验，"<<he>>说，"这活儿交给我准没错。"
+<<else>>
+    "你想自己耕地？"<<he>>有些惊讶，"好吧，我会把精力放在其他事情上。"
+<</if>>
+<br><br>
+<<link [[继续|Work Change Detail]]>><</link>>
+
+    
+:: Plant Change
+    
+<<if $farmerCanPlant>>
+    "播种的事就包在我身上，"<<he>>拍着胸脯保证，"我知道什么时候种什么作物。"
+<<else>>
+    "明白了，"<<he>>说，"你想亲自决定种什么，这很合理。"
+<</if>>
+<br><br>
+<<link [[继续|Work Change Detail]]>><</link>>
+
+    
+:: Harvest Change
+
+<<if $farmerCanHarvest>>
+    "收获的活我最在行了，"<<he>>笑着说，"保证不会错过最佳收获时机。"
+<<else>>
+    "收获的工作交给你也好，"<<he>>说，"毕竟你更清楚想要什么样的成果。"
+<</if>>
+<br><br>
+<<link [[继续|Work Change Detail]]>><</link>>
+
+
+:: Sell Change
+<<effects>>
+
+<<if $farmerCanSell>>
+    <<farm_farmer_wage>>
+    "我可以帮你把农产品送到农贸工厂，"<<he>>说，"每周一次，不过运费要 <span class="gold">£200</span>"
+    <br><br>
+    <<link [[接受|Work Change Detail]]>><</link>>
+    <br>
+    <<link [[拒绝|Sell Change]]>><<set $farmerCanSell to false>><</link>>
+<<else>>
+    "明白了，"<<he>>说，"你想自己处理销售的事情。"
+    <br><br>
+    <<link [[继续|Work Change Detail]]>><</link>>
+<</if>>
+
+
+:: Plantable Change
+<<effects>>
+
+<<if $speech_attitude is "meek">>
+    "我想和你商量一下种植计划，"你小声说道。
+<<elseif $speech_attitude is "bratty">>
+    "过来，我们需要讨论一下种什么，"你直接说道。
+<<else>>
+    "我们来规划一下种植的事吧，"你提议道。
+<</if>>
+<br><br>
+
+<<he>>拿出一本记事本。"好啊，"<<he>>翻开本子说，"我们来看看现在可以种些什么。你想让我种哪些作物？"
+<br><br>
+
+<<link [[继续|Plantable Change Detail]]>><</link>>
+
+
+:: Plantable Change Detail
+
+可种植作物：
+<br>
+<<for _plantType range $plants_known>>
+    <<set $_plant to setup.plants[_plantType]>>
+    <<if !$_plant>>
+        <span class="red">未知作物类型：'<<print _plantType>>'</span>
+        <br><br>
+    <<elseif $_plant.bed is "earth">>
+        <<capture _plantType>>
+            <<set $_name to $_plant.seed_name ? $_plant.seed_name : $_plant.plural>>
+            <<if $options.images is 1 and $_plant.icon>>
+                <img class="tending_icon" @src="`img/misc/icon/tending/` + $_plant.icon">
+            <</if>>
+            <<if $farmerPlantable.includes(_plantType)>>
+                <span class="green">✓</span> <<print $_name>> 
+                <<link [[禁用|Plantable Change Detail]]>>
+                    <<run $farmerPlantable.delete(_plantType)>>
+                    <<set _plantChange to "remove">>
+                    <<set _changedPlant to _plantType>>
+                <</link>>
+            <<else>>
+                <span class="red">✗</span> <<print $_name>> 
+                <<link [[启用|Plantable Change Detail]]>>
+                    <<run $farmerPlantable.push(_plantType)>>
+                    <<set _plantChange to "add">>
+                    <<set _changedPlant to _plantType>>
+                <</link>>
+            <</if>>
+            <br>
+        <</capture>>
+    <</if>>
+<</for>>
+<br>
+
+<<link [[返回|Work Change Detail]]>><</link>>
+
+
+:: Work Change End
+
+<<if !$farmerCanWater and !$farmerCanTill and !$farmerCanPlant and !$farmerCanHarvest>>
+    <<he>>看起来有些困惑。"这样的话，我是不是就没什么事可做了？"<<he>>挠挠头，"你确定这样安排合适吗？"
+<<else>>
+    <<he>>显得很高兴。"这样我就能全权负责农场的日常工作了，"<<he>>说，"你就放心吧，我会把一切都打理得井井有条。"
+<</if>>
+<br><br>
+
+<<endevent>>
+<<if $farm.farmer and between(Time.hour, 9, 17)>>
+    <<link [[继续|Farm Fields]]>><</link>>
+<<else>>
+    <<link [[继续|Farm Work]]>><</link>>
+<</if>>
+
+
+:: Farm Farmer Pay
+
+<<if $NPCList[0].traits.includes("relaxed")>>
+    "谢谢老板，"<<print $NPCList[0].name>>说，"我会继续把农场打理好的。"
+<<elseif $NPCList[0].traits.includes("sociable")>>
+    "太感谢了！"<<print $NPCList[0].name>>的笑容更灿烂了，"在这里工作真的很开心。"
+<<elseif $NPCList[0].traits.includes("brooding")>>
+    <<print $NPCList[0].name>>点点头，目光投向田地，"我不会辜负你的信任。"
+<<else>>
+    "好的，"<<print $NPCList[0].name>>说。
+<</if>>
+<br><br>
+
+<<link [[继续|Farm Work]]>><<saveNPC 0 "farm_farmer">><<endevent>><</link>>
+<br>
+
+
+:: Farmer Pay Refuse
+<<effects>>
+
+<<if $speech_attitude is "meek">>
+    "对不起"，你低声说，"我现在手头有点紧。"
+<<elseif $speech_attitude is "bratty">>
+    "最近资金周转有点问题"，你说，"下次一定。"
+<<else>>
+    "抱歉，现在确实付不出来"，你说，"能不能再等等？"
+<</if>>
+<br><br>
+
+<<if $NPCList[0].trust gte 1>>
+    <<if $NPCList[0].traits.includes("relaxed")>>
+        <<print $NPCList[0].name>>叹了口气。<span class="green">"好吧，"</span><<he>>说，"我再等等。"
+    <<elseif $NPCList[0].traits.includes("sociable")>>
+        <<print $NPCList[0].name>>耸耸肩。<span class="green">"我可以等，"</span><<he>>说，"但希望不要等太久。"
+    <<elseif $NPCList[0].traits.includes("brooding")>>
+        <span class="green">"我明白，"</span><<print $NPCList[0].name>>说，"但请记得这件事。"
+    <<else>>
+        <<print $NPCList[0].name>>看着远处。<span class="green">"好吧，"</span><<he>>说，"看在你是老板的份上。"
+    <</if>>
+    
+    <<He>>转身继续工作。
+    <br><br>
+    
+    <<set $NPCList[0].trust -= 3>>
+    
+    <<link [[继续|Farm Work]]>><<saveNPC 0 "farm_farmer">><<set $farm.farmer_patience to 1>><<endevent>><</link>>
+    <br>
+<<else>>
+    <<if $NPCList[0].traits.includes("relaxed")>>
+        <<print $NPCList[0].name>><span class="red">摇摇头。</span>"很抱歉，"<<he>>说，"我也需要养家糊口。再见了。"
+    <<elseif $NPCList[0].traits.includes("sociable")>>
+        <span class="red">"老板，"</span><<print $NPCList[0].name>>说，"我不能一直无偿工作下去。就这样吧。"
+    <<elseif $NPCList[0].traits.includes("brooding")>>
+        <span class="red">"那就到此为止吧，"</span><<print $NPCList[0].name>>说，"祝你好运。"
+    <<else>>
+        <span class="red">"抱歉，"</span><<print $NPCList[0].name>>说，"我得为自己的生活考虑。再见。"
+    <</if>>
+    <br><br>
+    <<He>>收拾好自己的东西离开了农场。
+    <br><br>
+    <span class="purple">农场将无人打理，直到你雇佣新的农夫。</span>
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><<clearNPC "farm_farmer">><<set $farm.farmer to 0>><</link>>
+    <br>
+<</if>>
+
+
+:: Farmer Work Widgets [widget]
+
+<<widget "field_farmer">>
+    <<if $farm.farmer and between(Time.hour, 9, 17)>>
+        <<loadNPC 0 "farm_farmer">><<person1>>
+        <<if $rng gte 88>>
+            <<print $NPCList[0].name>>正在检查农作物的生长情况。
+        <<elseif $rng gte 76>>
+            <<print $NPCList[0].name>>正在整理农具。
+        <<elseif $rng gte 64>>
+            <<print $NPCList[0].name>>在给作物浇水。
+        <<elseif $rng gte 52>>
+            <<print $NPCList[0].name>>正扛着一袋肥料穿过农田。
+        <<elseif $rng gte 40>>
+            <<print $NPCList[0].name>>站在田埂上规划今天的工作。
+        <<elseif $rng gte 28>>
+            <<print $NPCList[0].name>>正在修理灌溉设备，看起来很专注。
+        <<elseif $rng gte 16>>
+            <<print $NPCList[0].name>>正在检查作物的长势。
+        <<else>>
+            <<print $NPCList[0].name>>正在田地里工作。
+        <</if>>
+
+        <br>
+        <<link [[靠近|Farm Fields Farmer]]>><</link>>
+        <br><br>
+        <<endevent>>
+    <</if>>
+<</widget>>
+
+<<widget "farm_farmer_pay">>
+    <<if $farm.farmer_unpaid gte 1>>
+        <<set _owed to ($farm.farmer_wage * $farm.farmer_unpaid)>>
+		你欠<<him>><<printmoney _owed>>工资。
+        <br>
+        <<if $money gte _owed>>
+            <<link [[支付|Farm Farmer Pay]]>><<money `-_owed` "farm">> 
+                <<set $NPCList[0].trust += 1>><<farm_farmer_paid>><</link>>
+                <<gtrust>>
+                <<note "+ 护理技能" "green">>
+                <<note "+ 工资" "red">>
+			<br>
+		<</if>>
+    <</if>>
+<</widget>>
+
+<<widget "farm_farmer_paid">>
+	<<set $NPCList[0].skills.tending += (20 * $farm.farmer_unpaid)>>
+	<<set $NPCList[0].skills.tending to Math.clamp($NPCList[0].skills.tending, 0, 1000)>>
+	<<set $farm.farmer_skill to clone($NPCList[0].skills.tending)>>
+	<<farm_farmer_wage>>
+	<<set $farm.farmer_unpaid to 0>>
+<</widget>>
+
+<<widget "farmer_text">>
+	<<farm_farmer_wage>>
+	护理技能：<<farmer_skill_text>>
+	<br>
+	周薪：<<printmoney $farm.farmer_wage>>
+	<br>
+	<i>技能会随着时间的推移而提高，但<<he>>会要求更高的报酬。</i>
+<</widget>>
+
+<<widget "farm_farmer_wage">>
+    <<set $farm.farmer_wage to 30000 + ($NPCList[0].skills.tending * 100)>>
+    <<if $farmerCanSell>>
+        <<set $farm.farmer_wage += 20000>>
+    <</if>>
+<</widget>>
+
+<<widget "farmer_skill_text">>
+    <<if $farm.farmer_skill isnot undefined>>
+		<<set _farmer_skill to $farm.farmer_skill>>
+	<<else>>
+		<<set _farmer_skill to $NPCList[0].skills.tending>>
+	<</if>>
+	<<if _farmer_skill gte 1000>>
+		<span class="green">S</span>
+	<<elseif _farmer_skill gte 800>>
+		<span class="teal">A</span>
+	<<elseif _farmer_skill gte 600>>
+		<span class="lblue">B</span>
+	<<elseif _farmer_skill gte 400>>
+		<span class="blue">C</span>
+	<<elseif _farmer_skill gte 200>>
+		<span class="purple">D</span>
+	<<else>>
+		<span class="pink">F</span>
+	<</if>>
+<</widget>>
+
+<<widget "farmer_pay_request">>
+    <<loadNPC 0 "farm_farmer">><<person1>>
+
+    <<if $NPCList[0].traits.includes("relaxed")>>
+        "那个"，<<print $NPCList[0].name>>说道，"该发工资了。"
+    <<elseif $NPCList[0].traits.includes("sociable")>>
+        "今天是发薪日呢，"<<print $NPCList[0].name>>微笑着说，"我们谈谈工资的事吧。"
+    <<elseif $NPCList[0].traits.includes("brooding")>>
+        <<print $NPCList[0].name>>看着你说："工资的事，我们得谈谈。"
+    <<else>>
+        "老板，"<<print $NPCList[0].name>>说，"我知道你很忙，但工资的事情。"
+    <</if>>
+    <br><br>
+
+    <<farm_farmer_pay>>
+    <<link [[说你现在没钱|Farmer Pay Refuse]]>><</link>><<lltrust>>
+<</widget>>
