@@ -3,25 +3,26 @@
   "version": "1.0.0",
   "styleFileList": [],
   "scriptFileList": [
-    "src/js/farmerTendingDay.js",
+    "src/js/farmerSell.js",
     "src/js/newBuildTime.js",
-    "src/js/farmerSell.js"
+    "src/js/farmerTendingDay.js"
   ],
   "tweeFileList": [
-    "src/FarmCompost.twee",
-    "src/NewFarmUpgradesFinished.twee",
+    "src/HarvesterWidgets.twee",
     "src/FarmFarmer.twee",
-    "src/FarmTank.twee",
+    "src/FarmCultivator.twee",
+    "src/NewFarmUpgrades.twee",
     "src/PubGuardFarmer.twee",
-    "src/CultivatorWidgets.twee",
+    "src/FarmTank.twee",
+    "src/FarmStock.twee",
+    "src/FarmCompost.twee",
     "src/FarmerCultivator.twee",
+    "src/NewFarmUpgradesCurrent.twee",
+    "src/NewFarmBuildDay.twee",
+    "src/NewFarmUpgradesFinished.twee",
+    "src/FarmHarvester.twee",
     "src/NewFarmUpgradeStatus.twee",
     "src/FarmLaboratory.twee",
-    "src/NewFarmUpgradesCurrent.twee",
-    "src/NewFarmUpgrades.twee",
-    "src/FarmStockWidgets.twee",
-    "src/HarvesterWidgets.twee",
-    "src/NewFarmBuildDay.twee",
     "src/FarmFarmhouse.twee"
   ],
   "imgFileList": [

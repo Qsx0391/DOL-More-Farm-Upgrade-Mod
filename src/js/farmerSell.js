@@ -16,15 +16,15 @@ function farmerSell() {
         };
     }
 
-    for (let plantType in V.farm.stock) {
-        if (V.farm.stock[plantType] >= 250) {
-            const amount = Math.floor(V.farm.stock[plantType] / 250) * 250;
-            V.farm.stock[plantType] -= amount;
-            console.log("sell: " + plantType + " " + amount);
-            if (V.farmersProduce.selling[plantType] === undefined) {
-                V.farmersProduce.selling[plantType] = amount;
+    for (let item in V.farm.stock) {
+        if ((["truffles", "eggs", "milk"].includes(item) || ["produce", "vegetable", "fruit", "shroom"].includes(setup.plants[item].type)) && V.farm.stock[item] >= 250) {
+            const amount = Math.floor(V.farm.stock[item] / 250) * 250;
+            V.farm.stock[item] -= amount;
+            console.log("sell: " + item + " " + amount);
+            if (V.farmersProduce.selling[item] === undefined) {
+                V.farmersProduce.selling[item] = amount;
             } else {
-                V.farmersProduce.selling[plantType] += amount;
+                V.farmersProduce.selling[item] += amount;
             }
         }
     }

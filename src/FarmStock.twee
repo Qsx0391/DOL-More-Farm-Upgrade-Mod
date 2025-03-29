@@ -3,10 +3,7 @@
 <<widget "farm_stock_plant">>
     <<set $farm_plant_stocked to false>>
     <<for _plantType range Object.keys($farm.stock)>>
-        <<if _plantType isnot "truffles" and 
-             _plantType isnot "eggs" and
-             _plantType isnot "milk" and
-             $farm.stock[_plantType] gt 0>>
+        <<if ["truffles", "eggs", "milk"].includes(_plantType) is false and $farm.stock[_plantType] gt 0>>
             <<set $farm_plant_stocked to true>>
             <<set _plant to setup.plants[_plantType]>>
             <<set _name to _plant.seed_name ? _plant.seed_name : _plant.plural>>
@@ -27,10 +24,7 @@
 <<widget "take_all_plant">>
     <<if $farm_plant_stocked is true>>
         <<for _plantType range Object.keys($farm.stock)>>
-            <<if _plantType isnot "truffles" and 
-                 _plantType isnot "eggs" and
-                 _plantType isnot "milk" and
-                 $farm.stock[_plantType] gt 0>>
+            <<if ["truffles", "eggs", "milk"].includes(_plantType) is false and $farm.stock[_plantType] gt 0>>
                 <<tending_give _plantType $farm.stock[_plantType]>>
                 <<set $farm.stock[_plantType] to 0>>
             <</if>>
