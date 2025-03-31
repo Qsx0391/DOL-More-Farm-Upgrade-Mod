@@ -10,7 +10,7 @@
   "tweeFileList": [
     "src/FarmCompost.twee",
     "src/NewFarmUpgradesFinished.twee",
-    "src/PubGuardFarmer.twee",
+    "src/PubFarmer.twee",
     "src/NewFarmBuildDay.twee",
     "src/NewFarmUpgradesCurrent.twee",
     "src/FarmLaboratory.twee",
