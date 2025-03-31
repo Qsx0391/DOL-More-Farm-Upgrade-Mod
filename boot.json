@@ -3,27 +3,25 @@
   "version": "1.0.0",
   "styleFileList": [],
   "scriptFileList": [
-    "src/js/farmerSell.js",
-    "src/js/newBuildTime.js",
-    "src/js/farmerTendingDay.js"
+    "src/js/FarmerEvents.js",
+    "src/js/BuildTimeUtils.js",
+    "src/js/NewFarmEvents.js"
   ],
   "tweeFileList": [
-    "src/HarvesterWidgets.twee",
-    "src/FarmFarmer.twee",
-    "src/FarmCultivator.twee",
-    "src/NewFarmUpgrades.twee",
-    "src/PubGuardFarmer.twee",
-    "src/FarmTank.twee",
-    "src/FarmStock.twee",
     "src/FarmCompost.twee",
-    "src/FarmerCultivator.twee",
-    "src/NewFarmUpgradesCurrent.twee",
-    "src/NewFarmBuildDay.twee",
     "src/NewFarmUpgradesFinished.twee",
-    "src/FarmHarvester.twee",
-    "src/NewFarmUpgradeStatus.twee",
+    "src/PubGuardFarmer.twee",
+    "src/NewFarmBuildDay.twee",
+    "src/NewFarmUpgradesCurrent.twee",
     "src/FarmLaboratory.twee",
-    "src/FarmFarmhouse.twee"
+    "src/FarmStock.twee",
+    "src/FarmHarvester.twee",
+    "src/FarmFarmhouse.twee",
+    "src/NewFarmUpgrades.twee",
+    "src/NewFarmUpgradeStatus.twee",
+    "src/FarmTank.twee",
+    "src/FarmCultivator.twee",
+    "src/FarmFarmer.twee"
   ],
   "imgFileList": [
     "img/misc/icon/compost.png"
@@ -508,39 +506,14 @@
       "params": {
         "js": [
           {
-            "from": "if (V.farm.stock)",
-            "to": "farmerSell(); if (V.farm.stock && !(V.farm.cold_store >= 1))",
+            "from": "fragment.append(dailyFarmEvents());",
+            "to": "newDailyFarmEvents();fragment.append(dailyFarmEvents());",
             "fileName": "time.js"
           },
           {
-            "from": "if (V.lurkers_stored >= 1)",
-            "to": "if (V.lurkers_stored >= 1 || (V.farm.laboratory >= 1 && V.flowers_stored >= 1000))",
+            "from": "tendingDay();",
+            "to": "tendingDay();farmerTendingDay();",
             "fileName": "time.js"
-          },
-          {
-            "from": "V.lurkers_stored--;",
-            "to": "if (V.lurkers_stored >= 1) { V.lurkers_stored--; } else { V.flowers_stored -= 1000; }",
-            "fileName": "time.js"
-          },
-          {
-            "from": "V.farm.still_timer = 7;",
-            "to": "V.farm.still_timer = V.farm.laboratory >= 1 ? 1 : 7;",
-            "fileName": "time.js"
-          },
-          {
-            "from": "if (V.alex_greenhouse === 1)",
-            "to": "if (V.farm.compost >= 1) { V.compost_timer--; if (V.compost_timer < 1) { V.fertiliser_stored++; V.compost_timer = 7; } } if (V.alex_greenhouse === 1)",
-            "fileName": "time.js"
-          },
-          {
-            "from": "if (V.farm.tower_guard)",
-            "to": "if (V.farm.farmer) { V.farm.farmer_unpaid++; V.farm.farmer_patience = 0; } if (V.farm.tower_guard) ",
-            "fileName": "time.js"
-          },
-          {
-            "from": "}\nwindow.tendingDay = tendingDay;",
-            "to": "farmerTendingDay(); } window.tendingDay = tendingDay;",
-            "fileName": "ingame.js"
           }
         ]
       }

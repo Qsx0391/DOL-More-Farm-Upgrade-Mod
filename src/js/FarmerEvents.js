@@ -1,5 +1,5 @@
 function farmerTendingDay() {
-    if (!V.farm.farmer) {
+    if (!V.farm || !V.farm.farmer) {
         return;
     }
     let workTime = 8 * 60;
@@ -67,8 +67,10 @@ function farmerTendingDay() {
                             V.farm.stock[plantType] = 0;
                         }
                         let tending_amount = random(10, Math.trunc(V.farm.farmer_skill / 2)) + 50;
+                        tending_amount *= setup.plants[plantType].multiplier;
                         tending_amount *= 1 + (Math.clamp(plot.quality, 1, 4) - 1) * 0.2;
-                        V.farm.stock[plantType] += Math.trunc(tending_amount * V.tending_yield_factor);
+                        tending_amount = Math.trunc(tending_amount * V.tending_yield_factor);
+                        V.farm.stock[plantType] += tending_amount;
                         if (plot.baseQuality && !V.backgroundTraits.includes("greenthumb")) {
                             if (plot.fertiliserDecay > 0) {
                                 plot.fertiliserDecay--;
@@ -87,7 +89,7 @@ function farmerTendingDay() {
                         plot.stage = 0;
                         workTime -= 60;
                         updated = true; 
-                        console.log("harvest: " + i + " " + plantType + " " + V.farm.stock[plantType]);
+                        console.log("harvest: " + i + " " + plantType + " " + tending_amount);
                     }
                 }
             }
@@ -95,6 +97,39 @@ function farmerTendingDay() {
     }
 }
 window.farmerTendingDay = farmerTendingDay;
+
+// 农夫运送农产品到农贸工厂
+function farmerSell() {
+    if (!V.farmerCanSell || --V.farmerSellTimer > 0) {
+        return;
+    } 
+    V.farmerSellTimer = 7;
+
+    // 初始化农贸工厂数据（如果需要）
+    if (V.farmersProduce === undefined) {
+        V.farmersProduce = {
+            selling: {},
+            toSell: {},
+            money: 0,
+            sold: 0,
+            totalSold: 0
+        };
+    }
+
+    for (let item in V.farm.stock) {
+        if ((["truffles", "eggs", "milk"].includes(item) || ["produce", "vegetable", "fruit", "shroom"].includes(setup.plants[item].type)) && V.farm.stock[item] >= 250) {
+            const amount = Math.floor(V.farm.stock[item] / 250) * 250;
+            V.farm.stock[item] -= amount;
+            console.log("sell: " + item + " " + amount);
+            if (V.farmersProduce.selling[item] === undefined) {
+                V.farmersProduce.selling[item] = amount;
+            } else {
+                V.farmersProduce.selling[item] += amount;
+            }
+        }
+    }
+};
+window.farmerSell = farmerSell;
 
 function calcTillingTime() {
     let baseTime = 6 * 60;
