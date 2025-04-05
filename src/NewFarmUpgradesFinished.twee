@@ -125,3 +125,13 @@
     <<link [[继续|Farm Work]]>><<endevent>><</link>>
     <br>
 <</widget>>
+
+<<widget "basement_upgrades_finished">>
+    <<run $farm.build_finished.delete("basement")>>
+    你走进扩建后的地下室，一台最新的性爱机器安装在里面。
+    <br><br>
+    <span class="gold">地下室扩建完成。</span>
+    <br><br>
+    <<link [[继续|Farm Work]]>><<endevent>><</link>>
+    <br>
+<</widget>>

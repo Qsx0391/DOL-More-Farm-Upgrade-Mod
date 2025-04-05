@@ -496,6 +496,18 @@
           "findString": "<<link [[拿取全部|Farm Cottage]]>>",
           "debug": true,
           "replace": "<<link [[拿取全部|Farm Cottage]]>><<take_all_plant>>"
+        },
+        {
+          "passage": "Farm Widgets",
+          "findString": "<<if $farm.stock>>",
+          "debug": true,
+          "replace": "<<farm_basement_enter>><<if $farm.stock>>"
+        },
+        {
+          "passage": "Widgets Machine Actions Generation",
+          "findString": "<<switch $leftarm>>",
+          "debug": true,
+          "replace": "<<run console.log(\"more farm upgrade test: \", $leftarm)>><<switch $leftarm>>"
         }
       ]
     },

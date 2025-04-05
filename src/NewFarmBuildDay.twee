@@ -31,6 +31,8 @@
                 <<set $farm.farmhouse to 1>>
             <<case "tank">>
                 <<set $farm.tank to 1>>
+            <<case "basement">>
+                <<set $farm.basement to 1>>
         <</switch>>
     <</if>>
 <</widget>>

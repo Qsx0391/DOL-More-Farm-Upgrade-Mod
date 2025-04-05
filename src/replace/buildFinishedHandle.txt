@@ -18,4 +18,6 @@
     <<farmhouse_upgrades_finished>>
 <<elseif $farm.build_finished.includes("tank")>>
     <<tank_upgrades_finished>>
+<<elseif $farm.build_finished.includes("basement")>>
+    <<basement_upgrades_finished>>
 <<elseif $farm.build_finished.includes("wall 1")>>

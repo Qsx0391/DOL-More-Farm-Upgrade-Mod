@@ -3,9 +3,9 @@
 购买一台现代化的耕地机。这台机器能大大提高田地耕作的效率，让农场的工作事半功倍。
 <br><br>
 
-<span class="green">显著减少耕地所需的时间和体力。</span>
+<span class="green">减少耕地所需的时间和体力消耗。</span>
 <br>
-<span class="red">由于空间限制，温室中无法使用此设备。</span>
+<span class="red">温室内无法使用此设备。</span>
 <br>
 <span class="gold">需要花费£20000。</span>
 <br>
@@ -33,9 +33,9 @@
 购买一台自动播种机。这台精密的农业设备能让播种工作变得轻松快捷。
 <br><br>
 
-<span class="green">减少种植所需的时间。</span>
+<span class="green">减少种植所需时间。</span>
 <br>
-<span class="red">受空间所限，温室内无法使用此设备。</span>
+<span class="red">温室内无法使用此设备。</span>
 <br>
 <span class="gold">需要花费£20000。</span>
 <br>
@@ -63,9 +63,9 @@
 购买一台现代化收割机。这台强大的农业机械能让收获季节的工作变得轻而易举。
 <br><br>
 
-<span class="green">显著提升收获效率，减少体力消耗。</span>
+<span class="green">减少收获时的时间和体力消耗。</span>
 <br>
-<span class="red">受空间所限，温室内无法使用此设备。</span>
+<span class="red">温室内无法使用此设备。</span>
 <br>
 <span class="gold">需要花费£20000。</span>
 <br>
@@ -90,10 +90,10 @@
 
 :: Farm Upgrades Construction Machinery
 
-你可以购置一批现代化的施工机械。这些设备将大大提高农场建设和维护的效率。
+添置一批施工机械，用于农场建设。
 <br><br>
 
-<span class="green">显著缩短所有农场设施的建造和升级时间。</span>
+<span class="green">缩短所有农场设施的建造和升级时间。</span>
 <br>
 <span class="gold">需要花费£50000。</span>
 <br>
@@ -121,7 +121,7 @@
 在田地上建造一座现代化的温室大棚。温室能为作物创造理想的生长环境，不受季节限制。
 <br><br>
 
-<span class="green">突破季节限制，全年都能种植各类农作物。</span>
+<span class="green">可以突破季节限制种植作物。</span>
 <br>
 <span class="red">温室空间有限，无法使用大型农业机械。</span>
 <br>
@@ -151,9 +151,9 @@
 升级实验室的科研设备，引入更先进的生物技术设施。
 <br><br>
 
-<span class="green">大幅提升催情剂的生产效率。</span>
+<span class="green">提升催情剂的生产效率。</span>
 <br>
-<span class="green">可以使用诡异的花制作催情剂。</span>
+<span class="green">可以利用诡异的花制作催情剂。</span>
 <br>
 <span class="gold">需要花费£20000。</span>
 <br>
@@ -181,7 +181,7 @@
 在农舍内安装现代化的冷藏设施，用于储存农产品。
 <br><br>
 
-<span class="green">冷库中的农产品不会过期。</span>
+<span class="green">储存的农产品不会变质。</span>
 <br>
 <span class="gold">需要花费£20000。</span>
 <br>
@@ -280,6 +280,32 @@
 	<br>
 <<elseif $money gte 100000000>>
 	<<link [[购买 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -100000000 "farmUpgrades">><<set $farm.build to "tank">>
+		<<set $farm.build_timer to calc_build_time(7)>>
+	<</link>>
+	<br>
+<</if>>
+<br>
+<<link [[返回|Farm Upgrades]]>><</link>>
+<br>
+
+:: Farm Upgrades Basement
+
+扩建小屋的地下室，在地下室安装一台性爱机器。
+<br><br>
+
+<span class="gold">需要花费£20000。</span>
+<br>
+<span class="blue">需要<<print get_build_time_str(7)>>来扩建。</span>
+<br>
+<span class="blue">直到项目完成工人都会留在农场里。</span>
+<br>
+<br>
+
+<<if $farm.build>>
+	<span class="blue">一次只能进行一个设施的升级。</span>
+	<br>
+<<elseif $money gte 2000000>>
+	<<link [[扩建 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -2000000 "farmUpgrades">><<set $farm.build to "basement">>
 		<<set $farm.build_timer to calc_build_time(7)>>
 	<</link>>
 	<br>

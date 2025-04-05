@@ -1,0 +1,17 @@
+:: Farm Basement
+
+你在小屋的地下室，一台性爱机器摆在角落里。
+<br><br>
+
+<<link [[使用性爱机器|Farm Sex Machine Intro]]>><<set $sexstart to 1>><</link>>
+<br><br>
+<<getouticon>><<link [[离开 (0:01)|Farm Cottage]]>><<pass 1>><</link>>
+
+:: Farm Basement Widgets [widget]
+
+<<widget "farm_basement_enter">>
+    <<if $farm.basement gte 1>>
+        <<stairsicon "down">><<link [[地下室 (0:01)|Farm Basement]]>><<pass 1>><<endevent>><</link>>
+        <br>
+    <</if>>
+<</widget>>

@@ -26,7 +26,7 @@
     <br><br>
 
     <<farm_farmer_pay>>
-    <<link [[修改工作安排|Farm Farmer Work Change]]>><</link>>
+    <<link [[安排工作|Farm Farmer Work Change]]>><</link>>
     <br>
     <<getouticon>><<link [[离开|Farm Work]]>><<endevent>><</link>>
 <<else>>

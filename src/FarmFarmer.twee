@@ -15,7 +15,7 @@
 <br><br>
 
 <<farm_farmer_pay>>
-<<link [[修改工作安排|Farm Farmer Work Change]]>><</link>>
+<<link [[安排工作|Farm Farmer Work Change]]>><</link>>
 <br>
 
 <<link [[离开|Farm Fields]]>><<endevent>><</link>>
@@ -27,7 +27,7 @@
 <<if $speech_attitude is "meek">>
     "那个，我想和你谈谈工作安排的事，"你小声说道。
 <<elseif $speech_attitude is "bratty">>
-    "过来一下，我们需要重新安排一下你的工作，"你朝<<he>>招手。
+    "过来一下，我要重新安排一下你的工作，"你朝<<he>>招手。
 <<else>>
     "能谈谈工作安排吗？"你问道。
 <</if>>
