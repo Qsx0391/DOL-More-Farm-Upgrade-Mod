@@ -22,5 +22,7 @@
             工人们正在建造新的农舍。
         <<case "tank">>
             坦克正在运往农场。
+        <<case "basement">>
+            工人们正在扩建地下室。
     <</switch>>
 <</widget>>

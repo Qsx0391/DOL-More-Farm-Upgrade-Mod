@@ -85,4 +85,12 @@
         <<link [[购买|Farm Upgrades Tank]]>><</link>>
     <</if>>
     <br>
+
+    地下室：
+    <<if $farm.basement gte 1 or $farm.build is "basement">>
+        <span class="green">已扩建</span>
+    <<else>>
+        <<link [[扩建|Farm Upgrades Basement]]>><</link>>
+    <</if>>
+    <br>
 <</widget>>

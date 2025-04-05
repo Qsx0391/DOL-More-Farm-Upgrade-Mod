@@ -56,7 +56,7 @@
 
 <<set _assault_keys to Object.keys($farm_assault.teams)>>
 <<for _s to 0; _s lt _assault_keys.length; _s++>>
-	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+    <<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
         <<if $farm_assault.teams[_assault_keys[_s]].type is "bailey">>
             <<if $fame.scrap gte random(1, 500)>>
                 你驾驶着坦克向贝利的手下们逼近。"看看是谁来了，"一个入侵者说道。"就是那个开着破铜烂铁的疯子。"
@@ -80,7 +80,7 @@
         <</if>>
         <br><br>
         <<link [[继续|Farm Assault]]>><</link>>
-	<</if>>
+    <</if>>
 <</for>>
 
 :: Farm Assault Fire Remy
@@ -88,7 +88,7 @@
 
 <<set _assault_keys to Object.keys($farm_assault.teams)>>
 <<for _s to 0; _s lt _assault_keys.length; _s++>>
-	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+    <<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
         <<if currentSkillValue('science') gte random(1, 1000)>>
             坦克的主炮轰鸣一声。<span class="green">炮弹精确地落在入侵者们的脚边爆炸</span>，激起一片尘土。
             <br><br>
@@ -103,7 +103,7 @@
         <br><br>
         <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
         <<link [[继续|Farm Assault]]>><</link>>
-	<</if>>
+    <</if>>
 <</for>>
 
 :: Farm Assault Fire Bailey
@@ -111,7 +111,7 @@
 
 <<set _assault_keys to Object.keys($farm_assault.teams)>>
 <<for _s to 0; _s lt _assault_keys.length; _s++>>
-	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+    <<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
         <<if currentSkillValue('science') gte random(1, 1000)>>
             坦克炮口喷出火焰，<span class="green">炮弹准确地落在贝利的手下们中间</span>。爆炸声震耳欲聋。
             <br><br>
@@ -133,7 +133,7 @@
         <</if>>
         <br><br>
         <<link [[继续|Farm Assault]]>><</link>>
-	<</if>>
+    <</if>>
 <</for>>
 
 :: Farm Assault Fire Wraith
@@ -141,12 +141,12 @@
 
 <<set _assault_keys to Object.keys($farm_assault.teams)>>
 <<for _s to 0; _s lt _assault_keys.length; _s++>>
-	<<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
+    <<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
         <<if currentSkillValue('science') gte random(1, 1000)>>
             <<if 80 gte random(1, 100)>>
                 坦克的主炮轰鸣，<span class="green">炮弹直接命中了那个苍白的身影</span>。爆炸的火光中，你看到祂的形体开始扭曲消散。
                 <br><br>
-                "<span class="wraith">沉没在烟雾中，沉没于火焰中。</span>"祂的声音渐渐消失在夜色中。
+                烟雾中,祂的形体开始扭曲、消散。"<span class="wraith">沉没在烟雾中，沉没于火焰中。</span>"。祂的声音渐渐消失在夜色中。
                 <br><br>
                 你准备着下一步行动。
                 <<set $farm_assault.teams[_assault_keys[_s]].location to "done">>
@@ -158,9 +158,9 @@
         <<else>>
             你扣动扳机，但炮弹<span class="red">完全偏离了目标</span>。那个苍白的身影转向你，发出一声不带感情的笑声。
             <br><br>
-            "<span class="wraith">准头不错...可惜对象错了...</span>"
+            "<span class="wraith">恐惧...让你连瞄准都做不到...</span>"祂的声音在你脑海中回荡。
         <</if>>
         <br><br>
         <<link [[继续|Farm Assault]]>><</link>>
-	<</if>>
+    <</if>>
 <</for>>
