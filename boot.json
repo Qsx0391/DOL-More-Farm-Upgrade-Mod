@@ -93,7 +93,7 @@
           "passage": "Widgets Tending",
           "findString": "<<default>><<set _passTime to 180>>",
           "debug": true,
-          "replace": "<<default>><<set _passTime to ($farm.seeder gte 1 and _plantbed.greenhouse is undefined) ? 20 : 180>>"
+          "replace": "<<default>><<set _passTime to (_location is \"farm\" and $farm.seeder gte 1 and _plantbed.greenhouse is undefined) ? 20 : 180>>"
         },
         {
           "passage": "Widgets Tending",
@@ -111,13 +111,13 @@
           "passage": "Widgets Tending",
           "findString": "你开始清除杂草，耕耘土地。这确实很辛苦，但当你完成之后你就可以进行种植了。",
           "debug": true,
-          "replace": "<<if $farm.useCultivator is true>>你启动耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，比手动耕作要快得多。<<set $farm.useCultivator to false>><<else>>你开始清除杂草，耕耘土地。这确实很辛苦，但当你完成之后你就可以进行种植了。<</if>>"
+          "replace": "<<if $farm and $farm.useCultivator is true>>你启动耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，比手动耕作要快得多。<<set $farm.useCultivator to false>><<else>>你开始清除杂草，耕耘土地。这确实很辛苦，但当你完成之后你就可以进行种植了。<</if>>"
         },
         {
           "passage": "Widgets Tending",
           "findString": "你开始清除杂草，耕耘土地，同时混入一些肥料。这确实很辛苦，但当你完成之后就可以进行种植了。",
           "debug": true,
-          "replace": "<<if $farm.useCultivator is true>>你启动耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，同时将肥料均匀地混入土中。整个过程比手动操作要快得多。<<set $farm.useCultivator to false>><<else>>你开始清除杂草，耕耘土地，同时混入一些肥料。这确实很辛苦，但当你完成之后就可以进行种植了。<</if>>"
+          "replace": "<<if $farm and $farm.useCultivator is true>>你启动耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，同时将肥料均匀地混入土中。整个过程比手动操作要快得多。<<set $farm.useCultivator to false>><<else>>你开始清除杂草，耕耘土地，同时混入一些肥料。这确实很辛苦，但当你完成之后就可以进行种植了。<</if>>"
         },
         {
           "passage": "Farm Stock",

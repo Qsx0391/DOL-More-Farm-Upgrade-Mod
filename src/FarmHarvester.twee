@@ -3,7 +3,7 @@
 <<widget "harvest_by_harvester">>
     /* _args[0] plantbed */
     <<set _plantbed to _args[0]>>
-    <<if $farm.harvester gte 1 and _plantbed.greenhouse is undefined>>
+    <<if $location is "alex_farm" and $farm.harvester gte 1 and _plantbed.greenhouse is undefined>>
         <br>
         <<set _plantedPlant to setup.plants[_plantbed.plant]>>
         <<if $options.images is 1 and _plantedPlant.icon>>
