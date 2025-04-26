@@ -1,0 +1,52 @@
+:: Farm Field Append [widget]
+
+<<widget "farm_fields_append">>
+
+    <<if $farm.farmer and between(Time.hour, 9, 17)>>
+        <<loadNPC 0 "farm_farmer">><<person1>>
+        <<if $rng gte 88>>
+            <<print $NPCList[0].name>>正在检查农作物的生长情况。
+        <<elseif $rng gte 76>>
+            <<print $NPCList[0].name>>正在整理农具。
+        <<elseif $rng gte 64>>
+            <<print $NPCList[0].name>>在给作物浇水。
+        <<elseif $rng gte 52>>
+            <<print $NPCList[0].name>>正扛着一袋肥料穿过农田。
+        <<elseif $rng gte 40>>
+            <<print $NPCList[0].name>>站在田埂上规划今天的工作。
+        <<elseif $rng gte 28>>
+            <<print $NPCList[0].name>>正在修理灌溉设备，看起来很专注。
+        <<elseif $rng gte 16>>
+            <<print $NPCList[0].name>>正在检查作物的长势。
+        <<else>>
+            <<print $NPCList[0].name>>正在田地里工作。
+        <</if>>
+
+        <br>
+        <<link [[靠近|Farm Fields Farmer]]>><</link>>
+        <br><br>
+        <<endevent>>
+    <</if>>
+
+    <<if $farm.cultivator gte 1>>
+        一台红色的耕地机停在田边，它的金属外壳在阳光下闪闪发亮。机器看起来保养得很好，随时可以投入使用。
+        <br>
+        <<icon "farm_machine.png">><<link [[驾驶 (0:05)|Drive Cultivator]]>><<pass 5>><</link>>
+        <br><br>
+    <</if>>
+
+    <<if $farm.seeder gte 1>>
+        播种机整齐地停放在农具棚旁，它的种子箱已经装满。
+        <br>
+        <<icon "farm_machine.png">><<link [[驾驶 (0:05)|Drive Seeder]]>><<pass 5>><</link>>
+        <br><br>
+    <</if>>
+
+    <<if $farm.harvester gte 1>>
+        一台大型收割机伫立在田间，它宽大的割台闪着寒光。
+        <br>
+        <<icon "farm_machine.png">><<link [[驾驶 (0:05)|Drive Harvester]]>><<pass 5>><</link>>
+        <br><br>
+    <</if>>
+
+<</widget>>

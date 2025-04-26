@@ -337,34 +337,6 @@
 
 :: Farmer Work Widgets [widget]
 
-<<widget "field_farmer">>
-    <<if $farm.farmer and between(Time.hour, 9, 17)>>
-        <<loadNPC 0 "farm_farmer">><<person1>>
-        <<if $rng gte 88>>
-            <<print $NPCList[0].name>>正在检查农作物的生长情况。
-        <<elseif $rng gte 76>>
-            <<print $NPCList[0].name>>正在整理农具。
-        <<elseif $rng gte 64>>
-            <<print $NPCList[0].name>>在给作物浇水。
-        <<elseif $rng gte 52>>
-            <<print $NPCList[0].name>>正扛着一袋肥料穿过农田。
-        <<elseif $rng gte 40>>
-            <<print $NPCList[0].name>>站在田埂上规划今天的工作。
-        <<elseif $rng gte 28>>
-            <<print $NPCList[0].name>>正在修理灌溉设备，看起来很专注。
-        <<elseif $rng gte 16>>
-            <<print $NPCList[0].name>>正在检查作物的长势。
-        <<else>>
-            <<print $NPCList[0].name>>正在田地里工作。
-        <</if>>
-
-        <br>
-        <<link [[靠近|Farm Fields Farmer]]>><</link>>
-        <br><br>
-        <<endevent>>
-    <</if>>
-<</widget>>
-
 <<widget "farm_farmer_pay">>
     <<if $farm.farmer_unpaid gte 1>>
         <<set _owed to ($farm.farmer_wage * $farm.farmer_unpaid)>>

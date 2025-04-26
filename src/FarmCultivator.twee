@@ -1,49 +1,99 @@
-:: Cultivator Widgets [widget]
+:: Drive Cultivator
 
-<<widget "till_by_cultivator">>
-    /* _args[0] plantbed */
-    <<if $location is "alex_farm" and _plantbed.greenhouse is undefined and $farm.cultivator gte 1>>
-        <<set _plantbed to _args[0]>>
-        <<gardenicon "till">>
-        <<link "使用耕地机耕种 (0:15)" $passage>>
-            <<set $tendingvars.plot_tilled to true>>
-            <<tiredness 2>><<physique 2>>
-            <<pass 15>>
-            <<farm_count 15>>
-            <<set _plantbed.till to 1>>
-            <<set $farm.useCultivator to true>>
-        <</link>><<gtiredness>>
-        <br>
+你爬上驾驶座，转动钥匙。引擎发出一声低沉的咆哮，整个机器随之颤动。你能感觉到座位下传来的强劲动力。
+<br><br>
+<<link [[继续|Farm Cultivator]]>><</link>>
+
+:: Farm Cultivator
+
+<<if $tendingvars.plot_tilled>>
+    你驾驶耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，比手动耕作要快得多。
+<<elseif $tendingvars.plot_tilled_fertiliser>>
+    你驾驶耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，同时将肥料均匀地混入土中。整个过程比手动操作要快得多。
+<<else>>
+    你坐在驾驶座上，双手握紧方向盘。耕地机在田间缓慢前行，泥土在机器后方翻滚着。
+<</if>>
+<<run unsetTendingVars()>>
+<br><br>
+
+<<set $_till_count to 0>>
+
+<<for _plantbed range $plots.farm>>
+    <<if _plantbed.stage lte 0 and _plantbed.till lte 0>>
+        <<set $_till_count++>>
     <</if>>
-<</widget>>
+<</for>>
+<<if $_till_count gt 0>>
+    这里有<<number $_till_count>>块可耕种的田地。
+<<else>>
+    没有田地需要耕种。
+<</if>>
+<<if $fertiliser.current + $fertiliser.used gt 0>>
+    你现在有<<number $fertiliser.current>>袋肥料。
+<</if>>
+<br><br>
 
-<<widget "till_by_cultivator_and_fertiliser">>
-    /* _args[0] plantbed */
-    <<if $location is "alex_farm" and _plantbed.greenhouse is undefined and $farm.cultivator gte 1>>
-        <<set _plantbed to _args[0]>>
-        <<gardenicon "fertiliser">>
-        <<link "使用耕地机耕种并施肥 (0:30)" $passage>>
-            /* Till */
-            <<set $tendingvars.plot_tilled_fertiliser to true>>
-            <<tiredness 4>><<physique 4>>
-            <<pass 30>>
-            <<farm_count 30>>
-            <<set _plantbed.till to 1>>
-            <<set $farm.useCultivator to true>>
+<<set $_i to 0>>
 
-            /* Fertilise */
-            <<set $fertiliser.current-->><<set $fertiliser.used++>>
-            <<set _plantbed.quality++>>
-            <<if !$backgroundTraits.includes("greenthumb")>>
-                <<if _plantbed.baseQuality is undefined>>
-                    <<set _plantbed.baseQuality to clone(_plantbed.quality - 1)>>
+<<for _plantbed range $plots.farm>>
+    <<capture _plantbed $_i>>
+        <<if _plantbed.stage lte 0 and _plantbed.till lte 0>>
+            <span class="gold"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>
+            <<if _plantbed.greenhouse gte 1>>
+                <span class="green">这块农田有温室覆盖</span>，
+            <</if>>
+            土壤已准备好耕种。
+            <br>
+
+            <<if _plantbed.greenhouse gte 1>>
+                <span class="red">你无法在温室里使用耕地机。</span>
+                <br>
+            <<else>>
+                <<if $farm_attack_timer is 0>>
+                    <<set $_timeUntilAttack to ((23 - Time.hour) * 60) + (60 - Time.minute)>>
                 <</if>>
-                <<set _plantbed.fertiliserDecay to 2>>
-                <<if _plantbed.size isnot "large">>
-                    <<set _plantbed.fertiliserDecay++>>
+                <<if 15 gte $_timeUntilAttack>>
+                    <span class="pink">在雷米到来之前，你没有足够的时间耕地。</span>
+                <<else>>
+                    <<gardenicon "till">>
+                    <<link "耕种 (0:15)" $passage>>
+                        <<set $tendingvars.plot_tilled to true>>
+                        <<tiredness 2>><<physique 2>>
+                        <<pass 15>>
+                        <<farm_count 15>>
+                        <<set _plantbed.till to 1>>
+                    <</link>><<gtiredness>>
+                <</if>>
+                <br>
+
+                <<if $fertiliser.current gte 1 and _plantbed.quality lt 4 and currentSkillValue('tending') gte 400>>
+                    <<if 30 gte $_timeUntilAttack>>
+                        <span class="pink">在雷米到来之前，你没有足够的时间耕地并施肥。</span>
+                    <<else>>
+                        <<gardenicon "fertiliser">>
+                        <<link "耕种和施肥 (0:20)" $passage>>
+                            <<set $tendingvars.plot_tilled_fertiliser to true>>
+                            <<tiredness 3>><<physique 3>>
+                            <<pass 20>>
+                            <<farm_count 20>>
+                            <<set _plantbed.till to 1>>
+                            <<set $fertiliser.current-->><<set $fertiliser.used++>>
+                            <<set _plantbed.quality++>>
+                            <<if !$backgroundTraits.includes("greenthumb")>>
+                                <<if _plantbed.baseQuality is undefined>>
+                                    <<set _plantbed.baseQuality to clone(_plantbed.quality - 1)>>
+                                <</if>>
+                                <<set _plantbed.fertiliserDecay to 2>>
+                            <</if>>
+                        <</link>><<gtiredness>>
+                    <</if>>
+                    <br>
                 <</if>>
             <</if>>
-        <</link>><<gtiredness>>
-        <br>
-    <</if>>
-<</widget>>
+            <br>
+        <</if>>
+    <</capture>>
+    <<set $_i++>>
+<</for>>
+
+<<link [[停止|Farm Fields]]>><</link>>

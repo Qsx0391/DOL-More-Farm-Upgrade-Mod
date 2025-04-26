@@ -1,0 +1,75 @@
+:: Farm Cold Stock
+<<effects>>
+
+你检查了农场的库存。艾利克斯将通过出售农产品满足农场的协议，并支付日常开支。多余的农产品会保存在新修建的冷库中，你可以随时取走去镇上出售。
+<br><br>
+
+松露：$farm.stock.truffles
+<br>
+<<if $farm.stock.truffles gte 1>>
+	<<set _farm_stocked to true>>
+	<<tendingicon "truffle">><<link [[拿走|Farm Cold Stock]]>><<wearProp "truffle">><<tending_give truffle $farm.stock.truffles>><<set $farm.stock.truffles to 0>><</link>>
+	<br>
+<</if>>
+<br>
+鸡蛋：$farm.stock.eggs
+<br>
+<<if $farm.stock.eggs gte 1>>
+	<<set _farm_stocked to true>>
+	<<tendingicon "egg">><<link [[拿走|Farm Cold Stock]]>><<wearProp "egg" 0 "chicken">><<tending_give chicken_egg $farm.stock.eggs>><<set $farm.stock.eggs to 0>><</link>>
+	<br>
+<</if>>
+<br>
+瓶装牛奶：$farm.stock.milk
+<br>
+<<if $farm.stock.milk gte 1>>
+	<<set _farm_stocked to true>>
+	<<tendingicon "milk">><<link [[拿走|Farm Cold Stock]]>><<wearProp "milk bottle" 0 "milk">><<tending_give bottle_of_milk $farm.stock.milk>><<set $farm.stock.milk to 0>><</link>>
+	<br>
+<</if>>
+<br>
+
+
+<<for _plantType range Object.keys($setup.plants)>>
+    <<if $farm.stock[_plantType] gt 0>>
+        <<set _farm_stocked to true>>
+        <<set _plant to setup.plants[_plantType]>>
+        <<set _name to _plant.seed_name ? _plant.seed_name : _plant.plural>>
+        <<print _name>>：<<print $farm.stock[_plantType]>>
+        <br>
+        <<if _plant.icon>>
+            <img class="tending_icon" @src="`img/misc/icon/tending/` + _plant.icon">
+        <</if>>
+        <<link [[拿走|Farm Cold Stock]]>>
+            <<tending_give _plantType $farm.stock[_plantType]>>
+            <<set $farm.stock[_plantType] to 0>>
+        <</link>>
+        <br><br>
+    <</if>>
+<</for>>
+
+<<if _farm_stocked is true>>
+	<<tendingicon "basket">>
+	<<link [[拿取全部|Farm Cottage]]>>
+		<<if $farm.stock.truffles gte 1>>
+			<<tending_give truffle $farm.stock.truffles>><<set $farm.stock.truffles to 0>>
+		<</if>>
+		<<if $farm.stock.eggs gte 1>>
+			<<tending_give chicken_egg $farm.stock.eggs>><<set $farm.stock.eggs to 0>>
+		<</if>>
+		<<if $farm.stock.milk gte 1>>
+			<<tending_give bottle_of_milk $farm.stock.milk>><<set $farm.stock.milk to 0>>
+		<</if>>
+        <<for _plantType range Object.keys($farm.stock)>>
+            <<if $farm.stock[_plantType] gt 0>>
+                <<tending_give _plantType $farm.stock[_plantType]>>
+                <<set $farm.stock[_plantType] to 0>>
+            <</if>>
+        <</for>>
+		<<wearProp "basket">>
+	<</link>>
+	<br>
+<</if>>
+
+<<getouticon>><<link [[离开|Farm Cottage]]>><</link>>
+<br>

@@ -38,6 +38,7 @@
 :: Farmhouse Widgets [widget]
 
 <<widget "farmhouse_entry">>
+    <br>
     <<if $farm.farmhouse gte 1>>
         <<farmicon "cottage">><<link [[农舍 (0:01)|Farmhouse]]>><<pass 1>><</link>>
     <</if>>

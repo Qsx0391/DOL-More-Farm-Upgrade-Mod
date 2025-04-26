@@ -1,25 +1,50 @@
+:: Farm Tank Drive
+
+<<set $isInTank to true>>
+你拉开沉重的舱门，爬进坦克狭窄的驾驶舱。启动后，发动机的轰鸣声回荡在装甲内部，整个钢铁巨兽随之颤动。透过观察窗，你能看到外面的一切。
+<br><br>
+
+<<link [[继续|Farm Assault]]>><</link>>
+
+:: Farm Tank Exit
+
+<<set $isInTank to false>>
+你关闭引擎，坦克的轰鸣声渐渐平息。推开舱门时，新鲜的空气涌入闷热的驾驶舱。你从坦克上爬下来，钢铁巨兽依然散发着温热的气息。
+<br><br>
+
+<<link [[继续|Farm Assault]]>><</link>>
+
 :: Farm Tank Widgets [widget]
 
-<<widget "farm_assault_attack_tank_options">>
-    /* _args[0] assault_team */
-    <<if $isInTank is true and _args[0]>>
-        <<set _assault_team to _args[0]>>
-        <<if _assault_team.type is "bailey">>
-            <<link [[向他们开火 (0:05)|Farm Assault Fire Bailey]]>><<pass 5>><</link>>
-            <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
-        <<elseif _assault_team.type is "wraith">>
-            <<set $_them to $wraith.seenFarm ? "祂" : "对方">>
-            <<link [[向$_them开火 (0:05)|Farm Assault Fire Wraith]]>><<pass 5>><</link>>
-            <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
-        <<else>>
-            <<link [[向他们开火 (0:05)|Farm Assault Fire Remy]]>><<pass 5>><</link>>
-            <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
-        <</if>>
+<<widget "farm_assault_tank_drive_options">>
+    <<if $isInTank>>
+        <<link [[离开坦克 (0:05)|Farm Tank Exit]]>><<pass 5>><</link>>
+    <<else>>
+        一辆翻新过的重型坦克停在这里。尽管外表布满划痕，但它的主炮和装甲看起来依然可靠。
+        <br>
+        <<icon "farm_tank.png">><<link [[驾驶 (0:05)|Farm Tank Drive]]>><<pass 5>><</link>>
         <br>
     <</if>>
+    <br>
 <</widget>>
 
-<<widget "farm_assault_tank_options">>
+<<widget "farm_assault_attack_tank_options">>
+    <<set _assault_team to _args[0]>>
+    <<if _assault_team.type is "bailey">>
+        <<link [[向他们开火 (0:05)|Farm Assault Fire Bailey]]>><<pass 5>><</link>>
+        <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
+    <<elseif _assault_team.type is "wraith">>
+        <<set $_them to $wraith.seenFarm ? "祂" : "对方">>
+        <<link [[向$_them开火 (0:05)|Farm Assault Fire Wraith]]>><<pass 5>><</link>>
+        <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
+    <<else>>
+        <<link [[向他们开火 (0:05)|Farm Assault Fire Remy]]>><<pass 5>><</link>>
+        <<skill_difficulty `currentSkillValue("science")` "科学" 1 1000>>
+    <</if>>
+    <br>
+<</widget>>
+
+<<widget "farm_assault_tank_threaten_options">>
     <<set _assault_team to null>>
     <<set _assault_keys to Object.keys($farm_assault.teams)>>
     <<for _s to 0; _s lt _assault_keys.length; _s++>>
@@ -28,27 +53,20 @@
         <</if>>
     <</for>>
     
-    <<if $isInTank is true>>
-        <<if _assault_team>>
-            <<if _assault_team.type is "bailey">>
-                <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
-                <<skill_difficulty $fame.scrap "战斗知名度" 1 500>>
-            <<elseif _assault_team.type is "wraith">>
-                <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
-                <<skill_difficulty $fame.scrap "战斗知名度" 3000 3000>>
-            <<else>>
-                <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
-                <<skill_difficulty $fame.scrap "战斗知名度" 1 1>>
-            <</if>>
-            <br>
-            <<farm_assault_attack_tank_options _assault_team>>
+    <<if _assault_team>>
+        <<if _assault_team.type is "bailey">>
+            <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
+            <<skill_difficulty $fame.scrap "战斗知名度" 1 500>>
+        <<elseif _assault_team.type is "wraith">>
+            <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
+            <<skill_difficulty $fame.scrap "战斗知名度" 3000 3000>>
+        <<else>>
+            <<link [[威胁 (0:05)|Farm Assault Tank Threaten]]>><<pass 5>><</link>>
+            <<skill_difficulty $fame.scrap "战斗知名度" 1 1>>
         <</if>>
-        <<link [[离开坦克 (0:05)|Farm Assault]]>><<set $isInTank to false>><</link>>
-        <br>
-    <<elseif $farm.tank gte 1>>
-        <<link [[进入坦克 (0:05)|Farm Assault]]>><<set $isInTank to true>><</link>>
         <br>
     <</if>>
+    <<farm_assault_attack_tank_options _assault_team>>
 <</widget>>
 
 :: Farm Assault Tank Threaten
@@ -143,7 +161,7 @@
 <<for _s to 0; _s lt _assault_keys.length; _s++>>
     <<if $bus is $farm_assault.teams[_assault_keys[_s]].location>>
         <<if currentSkillValue('science') gte random(1, 1000)>>
-            <<if 80 gte random(1, 100)>>
+            <<if 50 gte random(1, 100)>>
                 坦克的主炮轰鸣，<span class="green">炮弹直接命中了那个苍白的身影</span>。爆炸的火光中，你看到祂的形体开始扭曲消散。
                 <br><br>
                 烟雾中,祂的形体开始扭曲、消散。"<span class="wraith">沉没在烟雾中，沉没于火焰中。</span>"。祂的声音渐渐消失在夜色中。

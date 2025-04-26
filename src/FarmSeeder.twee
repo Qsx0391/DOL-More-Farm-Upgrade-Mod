@@ -1,0 +1,86 @@
+:: Drive Seeder
+
+你爬上播种机的驾驶座，检查了一下种子箱。转动钥匙后，机器平稳地启动了，播种装置发出轻微的嗡嗡声。
+<br><br>
+<<link [[继续|Farm Seeder]]>><</link>>
+
+:: Farm Seeder
+
+<<if $tendingvars.plot_planted is true>>
+    播种机缓缓前进，在泥土上留下整齐的播种沟，你能听到种子均匀落入土壤的细微声响。
+<<else>>
+    你驾驶着播种机在田间行进。机器轻巧地在耕好的土地上移动，播种装置随时准备开始工作。
+<</if>>
+<<run unsetTendingVars()>>
+<br><br>
+
+<<set $_seed_count to 0>>
+<<for _plantbed range $plots.farm>>
+    <<if _plantbed.stage lte 0 and _plantbed.till gte 1>>
+        <<set $_seed_count++>>
+    <</if>>
+<</for>>
+<<if $_seed_count gt 0>>
+    这里有<<number $_seed_count>>块可播种的田地。
+<<else>>
+    没有田地需要播种。
+<</if>>
+<br><br>
+
+<<set $_i to 0>>
+<<set _irrigation to ($farm.irrigation ? $farm.irrigation : 0)>>
+
+<<for _plantbed range $plots.farm>>
+    <<capture _plantbed  $_i>>
+        <<if _plantbed.stage lte 0 and _plantbed.till gte 1>>
+            <span class="gold"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>
+            <<if _plantbed.greenhouse gte 1>>
+                <span class="green">这块农田有温室覆盖</span>，
+            <</if>>
+            土壤已准备好种植。
+
+            <<if $farm_attack_timer is 0>>
+                <<set $_timeUntilAttack to ((23 - Time.hour) * 60) + (60 - Time.minute)>>
+            <</if>>
+            <<if _plantbed.greenhouse gte 1>>
+                <br>
+                <span class="red">你无法在温室里使用播种机。</span>
+            <<elseif 20 gte $_timeUntilAttack>>
+                <br>
+                <span class="pink">在雷米到来之前，你没有足够的时间播种。</span>
+            <<else>>
+                <<for _plantType range $plants_known>>
+                    <br>
+                    <<set $_plant to setup.plants[_plantType]>>
+                    <<if !$_plant>>
+                        <span class="red">植物类型'<<print _plantType>>'未找到。</span>
+                        <br><br>
+                        请反馈此问题。
+                    <<elseif $_plant.season.includes(Time.season)>>
+                        <<set $_name to $_plant.seed_name ? $_plant.seed_name : $_plant.plural>>
+                        /* comparing soil types; check if target bed is compatible with the seed's soil type */
+                        <<if $_plant.bed is _plantbed.bed>>
+                            <<capture _plantbed _plantType>>
+                                <<if $options.images is 1 and $_plant.icon>>
+                                    <img class="tending_icon" @src="`img/misc/icon/tending/` + $_plant.icon">
+                                <</if>>
+                                <<link "种植$_name (0:20)" $passage>><<pass 20>><<run plantSeedsInPlot(_plantbed, _plantType)>><</link>>
+                            <</capture>>
+                            <<if $statdisable is "f">>
+                                <span class="orange">(<<print $_plant.days>>天)</span>
+                            <</if>>
+                        <<else>>
+                            <span class="blue"><<print $_name.toLocaleUpperFirst()>>仅能种植于<<print $_plant.bed.replace("earth","土地里").replace("water","水池中")>>。</span>
+                        <</if>>
+                    <<else>>
+                        <<tending_season_notice $_plant>>
+                    <</if>>
+                <</for>>
+            <</if>>
+            <br><br>
+        <</if>>
+    <</capture>>
+    <<set $_i++>>
+<</for>>
+
+<<link [[停止|Farm Fields]]>><</link>>

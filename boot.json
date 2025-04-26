@@ -1,40 +1,23 @@
 {
   "name": "MoreFarmUpgrade",
-  "version": "1.0.3",
-  "styleFileList": [],
+  "version": "1.0.4",
+  "styleFileList": [
+  ],
   "scriptFileList": [
-    "src/js/FarmerEvents.js",
-    "src/js/BuildTimeUtils.js",
-    "src/js/NewFarmEvents.js"
   ],
   "tweeFileList": [
-    "src/FarmCompost.twee",
-    "src/NewFarmUpgradesFinished.twee",
-    "src/PubFarmer.twee",
-    "src/NewFarmBuildDay.twee",
-    "src/NewFarmUpgradesCurrent.twee",
-    "src/FarmLaboratory.twee",
-    "src/FarmStock.twee",
-    "src/FarmHarvester.twee",
-    "src/FarmFarmhouse.twee",
-    "src/NewFarmUpgrades.twee",
-    "src/NewFarmUpgradeStatus.twee",
-    "src/FarmTank.twee",
-    "src/FarmCultivator.twee",
-    "src/FarmFarmer.twee"
   ],
   "imgFileList": [
-    "img/misc/icon/compost.png"
   ],
   "additionFile": [
-    "src/replace/buildFinishedHandle.txt"
   ],
   "addonPlugin": [
     {
       "modName": "ModLoader DoL ImageLoaderHook",
       "addonName": "ImageLoaderAddon",
       "modVersion": "^2.3.0",
-      "params": []
+      "params": [
+      ]
     },
     {
       "modName": "TweeReplacer",
@@ -42,472 +25,418 @@
       "modVersion": "1.0.0",
       "params": [
         {
-          "passage": "Farm Widgets",
-          "findString": "<<if $farm.build>>",
-          "debug": true,
-          "replace": "<<if $farm.build>><<new_farm_upgrades_current>>"
-        },
-        {
-          "passage": "Farm Widgets",
-          "findString": "<<if $farm_stage gte 8>>",
-          "debug": true,
-          "replace": "<<if $farm_stage gte 8>><<new_farm_upgrades_status>>"
-        },
-        {
-          "passage": "Farm Widgets",
-          "findString": "<<if $farm.build_timer lte 0>>",
-          "debug": true,
-          "replace": "<<if $farm.build_timer lte 0>><<new_farm_build_day>>"
-        },
-        {
-          "passage": "Widgets Journal",
-          "findString": "<<switch $farm.build>>",
-          "debug": true,
-          "replace": "<<new_farm_upgrades_current>><<switch $farm.build>>"
-        },
-        {
           "passage": "Farm Work",
-          "findString": "<<switch $farm.build>>",
-          "debug": true,
-          "replace": "<<new_farm_upgrades_current>><<switch $farm.build>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "<<if _plantbed.stage gte 1>>",
-          "debug": true,
-          "replace": "<<if _plantbed.greenhouse is true>><span class=\"green\">这块农田有温室覆盖</span>，<</if>><<if _plantbed.stage gte 1>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "<<clear_plot _plantbed>><</link>>",
-          "debug": true,
-          "replace": "<<clear_plot _plantbed>><</link>><<harvest_by_harvester _plantbed>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "<<elseif $_plant.season.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3)>>",
-          "debug": true,
-          "replace": "<<elseif $_plant.season.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3) or (_plantbed.greenhouse is true)>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "<<default>><<set _passTime to 180>>",
-          "debug": true,
-          "replace": "<<default>><<set _passTime to (_location is \"farm\" and $farm.seeder gte 1 and _plantbed.greenhouse is undefined) ? 20 : 180>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "<<capture _baseTiredness _baseTime _plantbed>>",
-          "debug": true,
-          "replace": "<<till_by_cultivator _plantbed>><<capture _baseTiredness _baseTime _plantbed>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "<<capture _baseTimeFert _fertTiredness _plantbed>>",
-          "debug": true,
-          "replace": "<<till_by_cultivator_and_fertiliser _plantbed>><<capture _baseTimeFert _fertTiredness _plantbed>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "你开始清除杂草，耕耘土地。这确实很辛苦，但当你完成之后你就可以进行种植了。",
-          "debug": true,
-          "replace": "<<if $farm and $farm.useCultivator is true>>你启动耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，比手动耕作要快得多。<<set $farm.useCultivator to false>><<else>>你开始清除杂草，耕耘土地。这确实很辛苦，但当你完成之后你就可以进行种植了。<</if>>"
-        },
-        {
-          "passage": "Widgets Tending",
-          "findString": "你开始清除杂草，耕耘土地，同时混入一些肥料。这确实很辛苦，但当你完成之后就可以进行种植了。",
-          "debug": true,
-          "replace": "<<if $farm and $farm.useCultivator is true>>你启动耕地机，机器发出低沉的轰鸣声。金属犁片轻松地翻动着土壤，同时将肥料均匀地混入土中。整个过程比手动操作要快得多。<<set $farm.useCultivator to false>><<else>>你开始清除杂草，耕耘土地，同时混入一些肥料。这确实很辛苦，但当你完成之后就可以进行种植了。<</if>>"
-        },
-        {
-          "passage": "Farm Stock",
-          "findString": "你检查了农场的库存。艾利克斯将通过出售农产品满足农场的协议，并支付日常开支。多余的农产品会保存在冰箱里，供你拿去城里卖。",
-          "debug": true,
-          "replace": "你检查了农场的库存。艾利克斯将通过出售农产品满足农场的协议，并支付日常开支。<<if $farm.cold_store gte 1>>多余的农产品会保存在新修建的冷库中，你可以随时取走去镇上出售。<<else>>多余的农产品会保存在冰箱里，供你拿去城里卖。<</if>>"
-        },
-        {
-          "passage": "Farm Stock",
-          "findString": "无人认领的农产品会慢慢过期。",
-          "debug": true,
-          "replace": "<<if $farm.cold_store gte 1>>冷库中的农产品可以保存更长时间而不会变质。<<else>>无人认领的农产品会慢慢过期。<</if>>"
-        },
-        {
-          "passage": "Farm Upgrades Wall 1",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Wall 2",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Wall 3",
-          "findString": "需要两个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(14)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Wall 4",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Tower",
-          "findString": "需要两个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(14)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Tower 2",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Woodland 1",
-          "findString": "需要三天时间扩展围栏。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(3)>>来扩展围栏。"
-        },
-        {
-          "passage": "Farm Upgrades Woodland 2",
-          "findString": "需要五天时间扩展围栏。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(5)>>来扩展围栏。"
-        },
-        {
-          "passage": "Farm Upgrades Woodland 3",
-          "findString": "需要一周时间扩建围栏。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来扩展围栏。"
-        },
-        {
-          "passage": "Farm Upgrades Kennel 1",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Stable 1",
-          "findString": "需要两个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(14)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Barn 1",
-          "findString": "需要两天时间建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(2)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Barn 2",
-          "findString": "需要十天来完成建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(10)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Coop 1",
-          "findString": "需要五天来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(5)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Coop 2",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Parasite Barn",
-          "findString": "需要两个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(14)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Parasite Barn 2",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Irrigation",
-          "findString": "需要三天来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(3)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Nursery",
-          "findString": "需要一个星期来建造。",
-          "debug": true,
-          "replace": "需要<<print get_build_time_str(7)>>来建造。"
-        },
-        {
-          "passage": "Farm Upgrades Wall 1",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Wall 2",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Wall 3",
-          "findString": "<<set $farm.build_timer to 14>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(14)>>"
-        },
-        {
-          "passage": "Farm Upgrades Wall 4",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Tower",
-          "findString": "<<set $farm.build_timer to 14>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(14)>>"
-        },
-        {
-          "passage": "Farm Upgrades Tower 2",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Woodland 1",
-          "findString": "<<set $farm.build_timer to 3>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(3)>>"
-        },
-        {
-          "passage": "Farm Upgrades Woodland 2",
-          "findString": "<<set $farm.build_timer to 5>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(5)>>"
-        },
-        {
-          "passage": "Farm Upgrades Woodland 3",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Kennel 1",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Stable 1",
-          "findString": "<<set $farm.build_timer to 14>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(14)>>"
-        },
-        {
-          "passage": "Farm Upgrades Barn 1",
-          "findString": "<<set $farm.build_timer to 2>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(2)>>"
-        },
-        {
-          "passage": "Farm Upgrades Barn 2",
-          "findString": "<<set $farm.build_timer to 10>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(10)>>"
-        },
-        {
-          "passage": "Farm Upgrades Coop 1",
-          "findString": "<<set $farm.build_timer to 5>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(5)>>"
-        },
-        {
-          "passage": "Farm Upgrades Coop 2",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Parasite Barn",
-          "findString": "<<set $farm.build_timer to 14>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(14)>>"
-        },
-        {
-          "passage": "Farm Upgrades Parasite Barn 2",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Upgrades Irrigation",
-          "findString": "<<set $farm.build_timer to 3>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(3)>>"
-        },
-        {
-          "passage": "Farm Upgrades Nursery",
-          "findString": "<<set $farm.build_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.build_timer to calc_build_time(7)>>"
-        },
-        {
-          "passage": "Farm Work",
-          "findString": "<<elseif $farm.build_finished.includes(\"wall 1\")>>",
-          "debug": true,
-          "replaceFile": "src/replace/buildFinishedHandle.txt"
-        },
-        {
-          "passage": "Farm Still",
-          "findString": "<<if $lurkers_stored gte 2>>",
-          "debug": true,
-          "replace": "<<if $farm.laboratory gte 1>>里面有 <<Number $flowers_stored>> 朵诡异的花。<</if>><<if $lurkers_stored gte 2>>"
-        },
-        {
-          "passage": "Farm Still",
-          "findString": "<<if $lurkers_held gte 1>>",
-          "debug": true,
-          "replace": "<<put_strange_flowers>><<if $lurkers_held gte 1>>"
-        },
-        {
-          "passage": "Farm Still Cage",
-          "findString": "<<set $farm.still_timer to 7>>",
-          "debug": true,
-          "replace": "<<set $farm.still_timer to $farm.laboratory gte 1 ? 1 : 7>>"
-        },
-        {
-          "passage": "Farm Work",
-          "findString": "<<if $farm_stage gte 7 and !$farm_kennel>>",
-          "debug": true,
-          "replace": "<<if $farm.compost gte 1>><<icon \"compost.png\">><<link [[堆肥堆 (0:01)|Farm Compost]]>><<pass 1>><</link>><br><</if>><<if $farm_stage gte 7 and !$farm_kennel>>"
-        },
-        {
-          "passage": "Farm Assault Wardrobe",
-          "findString": "<<if $phase is 2>>",
-          "debug": true,
-          "replace": "<<set $isInTank to false>><<if $phase is 2>>"
-        },
-        {
-          "passage": "Farm Assault Widgets",
-          "findString": "<<if !_noOptions>>",
-          "debug": true,
-          "replace": "<<if !_noOptions>><<farm_assault_tank_options>>"
-        },
-        {
-          "passage": "Farm Assault Widgets",
-          "findString": "<<set $bus to \"tower_top\">><<set $farm_assault.movement to \"climb\">>",
-          "debug": true,
-          "replace": "<<set $bus to \"tower_top\">><<set $farm_assault.movement to \"climb\">><<set $isInTank to false>>"
-        },
-        {
-          "passage": "Farm Assault Widgets",
-          "findString": "<<pass 5>><<set $bus to \"tower\">><<set $farm_assault.movement to \"tower\">>",
-          "debug": true,
-          "replace": "<<pass 5>><<set $bus to \"tower\">><<set $farm_assault.movement to \"tower\">><<set $inInTank to false>>"
-        },
-        {
-          "passage": "Farm Assault Widgets",
-          "findString": "<br>\n\t\t\t\t\t<<if $farm_assault.alex is $_key>>",
-          "debug": true,
-          "replace": "<br><<if $isInTank is false>><<if $farm_assault.alex is $_key>>"
-        },
-        {
-          "passage": "Farm Assault Widgets",
-          "findString": "<br>\n\t\t\t\t<<elseif $_team.state is \"entry\">>",
-          "debug": true,
-          "replace": "<br><</if>><<elseif $_team.state is \"entry\">>"
-        },
-        {
-          "passage": "Farm Assault Widgets",
-          "findString": "<<if $farm_assault.alex is _assault_keys[_s]>>",
-          "debug": true,
-          "replace": "<<if $isInTank is true>><<elseif $farm_assault.alex is _assault_keys[_s]>>"
-        },
-        {
-          "passage": "Farm Assault Tower Defend",
-          "findString": "你来到了瞭望塔的底部。",
-          "debug": true,
-          "replace": "<<set $isInTank to false>>你来到了瞭望塔的底部。"
-        },
-        {
-          "passage": "Farm Stage 11 Confident",
-          "findString": "<<set $plants_known.push(\"strange_flower\")>>",
-          "debug": true,
-          "replace": "<<set $plants_known.push(\"strange_flower\")>><span class=\"gold\">你现在可以升级实验室。</span>"
-        },
-        {
-          "passage": "Farm Stage 11 Caution",
-          "findString": "<<set $plants_known.push(\"strange_flower\")>>",
-          "debug": true,
-          "replace": "<<set $plants_known.push(\"strange_flower\")>><span class=\"gold\">你现在可以升级实验室。</span>"
-        },
-        {
-          "passage": "Farm Assault",
-          "findString": "你低姿前进，匆忙穿过农场。",
-          "debug": true,
-          "replace": "<<if $isInTank is true>>你驾驶坦克穿过农田。<<else>>你低姿前进，匆忙穿过农场。<</if>>"
-        },
-        {
-          "passage": "Farm Assault",
-          "findString": "你在阴影中等待，观察着入侵者的动向。",
-          "debug": true,
-          "replace": "<<if $isInTank is true>>你在坦克中等待，观察着入侵者的动向。<<else>>你在阴影中等待，观察着入侵者的动向。<</if>>"
-        },
-        {
-          "passage": "Farm Fields",
-          "findString": "<<display_plot farm>>",
-          "debug": true,
-          "replace": "<<field_farmer>><<display_plot farm>>"
+          "findString": "\t\t<<if $farm_stage gte 7 and !$farm_kennel>>\n\t\t\t<<farmicon \"kennel\">><<link [[犬舍 (0:03)|Farm Kennel]]>><<pass 3>><</link>>\n\t\t\t<br>\n\t\t<</if>>",
+          "replace": "\t\t<<if $farm.compost gte 1>>\n\t\t\t<<icon \"compost.png\">><<link [[堆肥设施 (0:01)|Farm Compost]]>><<pass 1>><</link>>\n\t\t\t<br>\n\t\t<</if>>\n\t\t<<if $farm_stage gte 7 and !$farm_kennel>>\n\t\t\t<<farmicon \"kennel\">><<link [[犬舍 (0:03)|Farm Kennel]]>><<pass 3>><</link>>\n\t\t\t<br>\n\t\t<</if>>",
+          "debug": true
         },
         {
           "passage": "Farm Work",
           "findString": "<<elseif $farm.tower_guard and $farm.tower_guard_unpaid gte 2 and $farm.tower_guard_patience isnot 1>>",
-          "debug": true,
-          "replace": "<<elseif $farm.farmer and $farm.farmer_unpaid gte 2 and $farm.farmer_patience isnot 1>><<farmer_pay_request>><<elseif $farm.tower_guard and $farm.tower_guard_unpaid gte 2 and $farm.tower_guard_patience isnot 1>>"
+          "replace": "<<elseif $farm.farmer and $farm.farmer_unpaid gte 2 and $farm.farmer_patience isnot 1>>\n\t<<farmer_pay_request>>\n<<elseif $farm.tower_guard and $farm.tower_guard_unpaid gte 2 and $farm.tower_guard_patience isnot 1>>",
+          "debug": true
         },
         {
           "passage": "Farm Work",
           "findString": "<<farmicon \"cottage\">><<link [[小屋 (0:01)|Farm Cottage]]>><<pass 1>><</link>>",
-          "debug": true,
-          "replace": "<<farmicon \"cottage\">><<link [[小屋 (0:01)|Farm Cottage]]>><<pass 1>><</link>><br><<farmhouse_entry>>"
+          "replace": "<<farmicon \"cottage\">><<link [[小屋 (0:01)|Farm Cottage]]>><<pass 1>><</link>><<farmhouse_entry>>",
+          "debug": true
         },
         {
-          "passage": "Pub",
-          "findString": "<<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>",
-          "debug": true,
-          "replace": "<<if $farm.farmhouse gte 1 and !$farm.farmer and $farm.farmer_can_hire>><<investigateicon>><<link [[为农场找农夫 (0:30)|Pub Farmer]]>><<endevent>><<pass 30>><</link>><</if>><<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>"
+          "passage": "Farm Work",
+          "findString": "<<if $farm.build isnot undefined and $farm.build isnot 0>>\n\t<<switch $farm.build>>",
+          "replace": "<<if $farm.build isnot undefined and $farm.build isnot 0>>\n\t<<new_farm_upgrades_current>>\n\t<<switch $farm.build>>",
+          "debug": true
         },
         {
-          "passage": "Farm Stock",
-          "findString": "<<if _farm_stocked is true>>",
-          "debug": true,
-          "replace": "<<farm_stock_plant>><<if _farm_stocked is true or $farm_plant_stocked is true>>"
+          "passage": "Farm Work",
+          "findString": "<<elseif $farm.build_finished.includes(\"wall 1\")>>",
+          "replace": "<<elseif $farm.build_finished.includes(\"cultivator\")>>\n\t<<cultivator_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"seeder\")>>\n\t<<seeder_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"harvester\")>>\n\t<<harvester_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"construction machinery\")>>\n\t<<construction_machinery_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"field greenhouse\")>>\n\t<<field_greenhouse_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"laboratory\")>>\n\t<<laboratory_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"cold store\")>>\n\t<<cold_store_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"compost\")>>\n\t<<compost_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"farmhouse\")>>\n\t<<farmhouse_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"tank\")>>\n\t<<tank_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"basement\")>>\n\t<<basement_upgrades_finished>>\n<<elseif $farm.build_finished.includes(\"wall 1\")>>",
+          "debug": true
         },
         {
-          "passage": "Farm Stock",
-          "findString": "<<link [[拿取全部|Farm Cottage]]>>",
-          "debug": true,
-          "replace": "<<link [[拿取全部|Farm Cottage]]>><<take_all_plant>>"
+          "passage": "Farm Upgrades Kennel 1",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Kennel 1",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault Wardrobe",
+          "findString": "<<set $wardrobe_location to \"alexFarm\">>",
+          "replace": "<<set $isInTank to false>><<set $wardrobe_location to \"alexFarm\">>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Stage Widgets",
+          "findString": "“我以前见过这样的杂草，”<<he>>说道，“在任何书里都找不到，也从来没有发现过一颗种子。”<<He>>把种子举了起来，“你觉得我们能种它们吗？既然雷米种了，那它们肯定是有价值的。”",
+          "replace": "“我以前见过这样的杂草，”<<he>>说道，“在任何书里都找不到，也从来没有发现过一颗种子。”<<He>>把种子举了起来，“你觉得我们能种它们吗？我们可以升级实验室的设备，尝试用这些诡异的花来制作催情剂。既然雷米种了，那它们肯定是有价值的。”",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Tower 2",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Tower 2",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Coop 2",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Coop 2",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Nursery",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Nursery",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Fields",
+          "findString": "<<display_plot farm>>",
+          "replace": "<<farm_fields_append>><<display_plot farm>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Stage 11 Confident",
+          "findString": "<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。</span>",
+          "replace": "<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。你可以升级实验室的设备，来使用诡异的花制作催情剂。</span>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Parasite Barn",
+          "findString": "需要两个星期来建造。",
+          "replace": "需要<<print get_build_time_str(14)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Parasite Barn",
+          "findString": "<<set $farm.build_timer to 14>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(14)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Coop 1",
+          "findString": "需要五天来建造。",
+          "replace": "需要<<print get_build_time_str(5)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Coop 1",
+          "findString": "<<set $farm.build_timer to 5>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(5)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Still",
+          "findString": "<<if $farm_work.alex is \"still\">>\n\t艾利克斯摆弄着仪器。\n<</if>>",
+          "replace": "<<if $farm_work.alex is \"still\">>\n\t艾利克斯摆弄着仪器。\n<</if>>\n<<if $farm.laboratory gte 1>>\n\t里面有 <<Number $flowers_stored>> 朵诡异的花。\n<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Still",
+          "findString": "<<if $lurkers_held gte 1>>\n\t<<petshopicon \"cage\">><<link [[把你的潜伏者放到笼子里|Farm Still Cage]]>><<set $lurkers_stored += $lurkers_held>><<set $lurkers_held to 0>><</link>>\n\t<br>\n<</if>>",
+          "replace": "<<if $lurkers_held gte 1>>\n\t<<petshopicon \"cage\">><<link [[把你的潜伏者放到笼子里|Farm Still Cage]]>><<set $lurkers_stored += $lurkers_held>><<set $lurkers_held to 0>><</link>>\n\t<br>\n<</if>>\n<<put_strange_flowers>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Stable 1",
+          "findString": "需要两个星期来建造。",
+          "replace": "需要<<print get_build_time_str(14)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Stable 1",
+          "findString": "<<set $farm.build_timer to 14>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(14)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Barn 2",
+          "findString": "需要十天来完成建造。",
+          "replace": "需要<<print get_build_time_str(10)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Barn 2",
+          "findString": "<<set $farm.build_timer to 10>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(10)>>",
+          "debug": true
         },
         {
           "passage": "Farm Widgets",
-          "findString": "<<if $farm.stock>>",
-          "debug": true,
-          "replace": "<<farm_basement_enter>><<if $farm.stock>>"
+          "findString": "\t<<if $farm.stock>>\n\t\t<<tendingicon \"basket\">><<link [[检查库存|Farm Stock]]>><<endevent>><</link>>\n\t\t<br>\n\t<</if>>",
+          "replace": "\t<<if $farm.stock>>\n\t\t<<tendingicon \"basket\">>\n\t\t<<if $farm.cold_store gte 1>>\n\t\t\t<<link [[检查库存|Farm Cold Stock]]>><<endevent>><</link>>\n\t\t<<else>>\n\t\t\t<<link [[检查库存|Farm Stock]]>><<endevent>><</link>>\n\t\t<</if>>\n\t\t<br>\n\t<</if>>",
+          "debug": true
         },
         {
-          "passage": "Widgets Machine Actions Generation",
-          "findString": "<<switch $leftarm>>",
-          "debug": true,
-          "replace": "<<run console.log(\"more farm upgrade test: \", $leftarm)>><<switch $leftarm>>"
+          "passage": "Farm Widgets",
+          "findString": "<<widget \"farm_assault_intro\">>\n\t<span class=\"green\">艾利克斯已经准备好战斗了。</span>\n\t<br>",
+          "replace": "<<widget \"farm_assault_intro\">>\n\t<span class=\"green\">艾利克斯已经准备好战斗了。</span>\n\t<br>\n\t<<if $farm.tank gte 1>>\n\t\t<span class=\"green\">一辆翻新过的重型坦克已就位，它的主炮和装甲将为农场提供强大的火力支援。</span>\n\t\t<br>\n\t<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Widgets",
+          "findString": "<<widget \"farm_upgrades_current\">>",
+          "replace": "<<widget \"farm_upgrades_current\">>\n\t<<if $farm.build>>\n\t\t<<new_farm_upgrades_current>>\n\t<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Widgets",
+          "findString": "\t<<if $farm_stage gte 8>>\n\t\t安保：",
+          "replace": "\t<<if $farm_stage gte 8>>\n\t\t<<new_farm_upgrades_status>>\n\t\t安保：",
+          "debug": true
+        },
+        {
+          "passage": "Farm Widgets",
+          "findString": "<<widget \"farm_build_day\">>\n\t<<if $farm_stage gte 7>>\n\t\t<<if $farm.build_timer gte 1>>\n\t\t\t<<set $farm.build_timer -= 1>>\n\t\t<</if>>",
+          "replace": "<<widget \"farm_build_day\">>\n\t<<if $farm_stage gte 7>>\n\t\t<<if $farm.build_timer gte 1>>\n\t\t\t<<set $farm.build_timer -= 1>>\n\t\t<</if>>\n\t\t<<new_farm_build_day>>",
+          "debug": true
+        },
+        {
+          "passage": "Widgets Tending",
+          "findString": "\t\t\t<span class=\"gold\"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>",
+          "replace": "\t\t\t<span class=\"gold\"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>\n\t\t\t<<if _plantbed.greenhouse is true>>\n\t\t\t\t<span class=\"green\">这块农田有温室覆盖</span>，\n\t\t\t<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Widgets Tending",
+          "findString": "$_plant.season.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3)",
+          "replace": "(_plantbed.greenhouse is true) or $_plant.season.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3)",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Barn 1",
+          "findString": "需要两天时间建造。",
+          "replace": "需要<<print get_build_time_str(2)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Barn 1",
+          "findString": "<<set $farm.build_timer to 2>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(2)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault Tower Defend",
+          "findString": "你来到了瞭望塔的底部。你已经听到了顶上的打斗声，楼梯在你爬上去的时候吱吱作响。",
+          "replace": "<<set $isInTank to false>>\n你来到了瞭望塔的底部。你已经听到了顶上的打斗声，楼梯在你爬上去的时候吱吱作响。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault Widgets",
+          "findString": "\t\t<<link [[等待 (0:05)|Farm Assault]]>><<pass 5>><<set $farm_assault.movement to \"wait\">><</link>>",
+          "replace": "\t\t<<if $farm.tank gte 1>>\n\t\t\t<<farm_assault_tank_drive_options>>\n\t\t<</if>>\n\t\t<<link [[等待 (0:05)|Farm Assault]]>><<pass 5>><<set $farm_assault.movement to \"wait\">><</link>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault Widgets",
+          "findString": "<<if $bus is \"tower\" and _tower isnot \"threatened\" and $farm_assault.tower isnot \"manned\">>",
+          "replace": "<<if $bus is \"tower\" and _tower isnot \"threatened\" and $farm_assault.tower isnot \"manned\" and !$isInTank>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault Widgets",
+          "findString": "\t\t\t\t\t<<if $farm_assault.alex is $_key>>\n\t\t\t\t\t\t<<link [[跟艾利克斯一起扔石头 (0:05)|Farm Assault Rocks Alex]]>><<pass 5>><</link>>\n\t\t\t\t\t\t<br>\n\t\t\t\t\t<<else>>\n\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 6000 : 1)>>\n\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 20000 : 16000)>>\n\t\t\t\t\t\t<<link [[扔石头 (0:05)|Farm Assault Rocks]]>><<pass 5>><</link>><<physiquedifficulty $_min $_max>>\n\t\t\t\t\t\t<br>\n\t\t\t\t\t<</if>>\n\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 3000 : 200)>>\n\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 3000 : 1000)>>\n\t\t\t\t\t<<link [[威胁 (0:05)|Farm Assault Threaten]]>><<pass 5>><</link>><<skill_difficulty $fame.scrap \"战斗知名度\" $_min $_max>>",
+          "replace": "\t\t\t\t\t<<if $isInTank>>\n\t\t\t\t\t\t<<farm_assault_tank_threaten_options>>\n\t\t\t\t\t<<else>>\n\t\t\t\t\t\t<<if $farm_assault.alex is $_key>>\n\t\t\t\t\t\t\t<<link [[跟艾利克斯一起扔石头 (0:05)|Farm Assault Rocks Alex]]>><<pass 5>><</link>>\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<<else>>\n\t\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 6000 : 1)>>\n\t\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 20000 : 16000)>>\n\t\t\t\t\t\t\t<<link [[扔石头 (0:05)|Farm Assault Rocks]]>><<pass 5>><</link>><<physiquedifficulty $_min $_max>>\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<</if>>\n\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 3000 : 200)>>\n\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 3000 : 1000)>>\n\t\t\t\t\t\t<<link [[威胁 (0:05)|Farm Assault Threaten]]>><<pass 5>><</link>><<skill_difficulty $fame.scrap \"战斗知名度\" $_min $_max>>\n\t\t\t\t\t<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault Widgets",
+          "findString": "<<widget \"farm_assault_attack_options\">>\n\t<<if $farm_assault.alex is _assault_keys[_s]>>",
+          "replace": "<<widget \"farm_assault_attack_options\">>\n\t<<if $isInTank>>\n\t\t<<farm_assault_attack_tank_options $farm_assault.teams[_assault_keys[_s]]>>\n\t<<elseif $farm_assault.alex is _assault_keys[_s]>>",
+          "debug": true
+        },
+        {
+          "passage": "Pub",
+          "findString": "\t\t\t<<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>\n\t\t\t\t<<investigateicon>><<link [[为农场找守卫 (0:30)|Pub Guard]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>",
+          "replace": "\t\t\t<<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>\n\t\t\t\t<<investigateicon>><<link [[为农场找守卫 (0:30)|Pub Guard]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>\n\t\t\t<<if $farm.farmhouse gte 1 and !$farm.farmer and $farm.farmer_can_hire>>\n\t\t\t\t<<investigateicon>><<link [[为农场找农夫 (0:30)|Pub Farmer]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Tower",
+          "findString": "需要两个星期来建造。",
+          "replace": "需要<<print get_build_time_str(14)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Tower",
+          "findString": "<<set $farm.build_timer to 14>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(14)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Still Cage",
+          "findString": "<<if $farm.still_timer lte 0 or $farm.still_timer is undefined>>\n\t<<set $farm.still_timer to 7>>\n<</if>>",
+          "replace": "<<if $farm.still_timer lte 0 or $farm.still_timer is undefined>>\n\t<<set $farm.still_timer to $farm.laboratory gte 1 ? 1 : 7>>\n<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Stage 11 Caution",
+          "findString": "<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。</span>",
+          "replace": "<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。你可以升级实验室的设备，来使用诡异的花制作催情剂。</span>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 1",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 1",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 2",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 2",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 3",
+          "findString": "需要两个星期来建造。",
+          "replace": "需要<<print get_build_time_str(14)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 3",
+          "findString": "<<set $farm.build_timer to 14>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(14)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 4",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Wall 4",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Irrigation",
+          "findString": "需要三天来建造。",
+          "replace": "需要<<print get_build_time_str(3)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Irrigation",
+          "findString": "<<set $farm.build_timer to 3>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(3)>>",
+          "debug": true
+        },
+        {
+          "passage": "Widgets Journal",
+          "findString": "<<nDays $farm.build_timer>>后就能完成。",
+          "replace": "<<new_farm_upgrades_current>><<nDays $farm.build_timer>>后就能完成。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Parasite Barn 2",
+          "findString": "需要一个星期来建造。",
+          "replace": "需要<<print get_build_time_str(7)>>来建造。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Parasite Barn 2",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Woodland 3",
+          "findString": "需要一周时间扩建围栏。",
+          "replace": "需要<<print get_build_time_str(7)>>来扩展围栏。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Woodland 3",
+          "findString": "<<set $farm.build_timer to 7>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(7)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Woodland 2",
+          "findString": "需要五天时间扩展围栏。",
+          "replace": "需要<<print get_build_time_str(5)>>来扩展围栏。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Woodland 2",
+          "findString": "<<set $farm.build_timer to 5>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(5)>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault",
+          "findString": "你低姿前进，匆忙穿过农场。",
+          "replace": "<<if $isInTank>>你小心操控着坦克，缓慢而稳定地穿过农田，履带碾过泥土发出沉闷的声响。<<else>>你低姿前进，匆忙穿过农场。<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault",
+          "findString": "你尽可能放低身段，向瞭望塔的方向跑去。",
+          "replace": "<<if $isInTank>>你驾驶着钢铁巨兽向瞭望塔推进，坦克引擎的轰鸣声在农场上空回荡。<<else>>你尽可能放低身段，向瞭望塔的方向跑去。<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault",
+          "findString": "你在阴影中等待，观察着入侵者的动向。",
+          "replace": "<<if $isInTank>>你在坦克的装甲掩护下静默等待，通过潜望镜密切监视着入侵者的一举一动。<<else>>你在阴影中等待，观察着入侵者的动向。<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Assault",
+          "findString": "你保持警惕，观察着入侵者的动向。",
+          "replace": "<<if $isInTank>>你在坦克内密切注视着周围的动静，随时准备应对任何威胁。<<else>>你保持警惕，观察着入侵者的动向。<</if>>",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Woodland 1",
+          "findString": "需要三天时间扩展围栏。",
+          "replace": "需要<<print get_build_time_str(3)>>来扩展围栏。",
+          "debug": true
+        },
+        {
+          "passage": "Farm Upgrades Woodland 1",
+          "findString": "<<set $farm.build_timer to 3>>",
+          "replace": "<<set $farm.build_timer to calc_build_time(3)>>",
+          "debug": true
         }
       ]
     },

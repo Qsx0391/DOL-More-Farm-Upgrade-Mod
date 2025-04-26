@@ -1,18 +1,67 @@
-:: Harvester Widgets [widget]
+:: Drive Harvester
 
-<<widget "harvest_by_harvester">>
-    /* _args[0] plantbed */
-    <<set _plantbed to _args[0]>>
-    <<if $location is "alex_farm" and $farm.harvester gte 1 and _plantbed.greenhouse is undefined>>
-        <br>
-        <<set _plantedPlant to setup.plants[_plantbed.plant]>>
-        <<if $options.images is 1 and _plantedPlant.icon>>
-            <img class="tending_icon" @src="`img/misc/icon/tending/` + _plantedPlant.icon">
-        <</if>>
-        <<link "使用收割机收获 (0:15)" $passage>>
-            <<pass 15>>
-            <<tending_harvest _plantbed>>
-            <<clear_plot _plantbed>>
-        <</link>>
+你爬上收割机高大的驾驶室，转动钥匙。引擎轰鸣着苏醒，巨大的割台缓缓升起，准备就绪。
+<br><br>
+<<link [[继续|Farm Harvester]]>><</link>>
+
+:: Farm Harvester
+
+<<if $tendingvars.harvest>>
+收割机的割台平稳地向前推进，将成熟的作物整齐地收割。机器的震动中，你看着作物通过输送带被收集起来。    你收获了<<number $tendingvars.harvest_amount>><<print $tendingvars.harvest_name>>。
+    <<if $tendingvars.plotDecay>>
+        肥料的效果已经<<if $tendingvars.plotDecay is 2>>完全<</if>>消失了。
     <</if>>
-<</widget>>
+    <br>
+<<else>>
+    你坐在驾驶室里，透过玻璃俯视着农田，收割机发出低沉的轰鸣。
+<</if>>
+<<run unsetTendingVars()>>
+<br><br>
+
+<<set $_harvest_count to 0>>
+
+<<for _plantbed range $plots.farm>>
+    <<if _plantbed.stage gte 5>>
+        <<set $_harvest_count++>>
+    <</if>>
+<</for>>
+<<if $_harvest_count gt 0>>
+    这里有<<number $_harvest_count>>块可收获的田地。
+<<else>>
+    没有田地可以收获。
+<</if>>
+<br><br>
+
+<<set $_i to 0>>
+
+<<for _plantbed range $plots.farm>>
+    <<capture _plantbed $_i>>
+        <<if _plantbed.stage gte 5>>
+            <span class="gold"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>
+            <<set $_plantedPlant to setup.plants[_plantbed.plant]>>
+            <<if _plantbed.greenhouse gte 1>>
+                <span class="green">这块农田有温室覆盖</span>，
+            <</if>>
+            <span class="green"><<print $_plantedPlant.seed_name ? `$_plantedPlant.seed_name` : `$_plantedPlant.plural`>>正在开花，已经可以采摘了。</span>
+            <br>
+
+            <<if $farm_attack_timer is 0>>
+                <<set $_timeUntilAttack to ((23 - Time.hour) * 60) + (60 - Time.minute)>>
+            <</if>>
+            <<if _plantbed.greenhouse gte 1>>
+                <span class="red">你无法在温室里使用收割机。</span>
+            <<elseif 10 gte $_timeUntilAttack>>
+                <span class="pink">在雷米到来之前，你没有足够的时间收获。</span>
+            <<else>>
+                <<if $options.images is 1 and $_plantedPlant.icon>>
+                    <img class="tending_icon" @src="`img/misc/icon/tending/` + $_plantedPlant.icon">
+                <</if>>
+                <<link "收获 (0:10)" $passage>><<pass 10>><<tending_harvest _plantbed>><<clear_plot _plantbed>><</link>>
+            <</if>>
+            <br><br>
+        <</if>>
+    <</capture>>
+    <<set $_i++>>
+<</for>>
+
+<<link [[停止|Farm Fields]]>><</link>>

@@ -1,4 +1,98 @@
-:: New Farm Upgrades Finished Widgets [widget]
+:: New Farm Upgrades Widgets [widget]
+
+<<widget "new_farm_upgrades_status">>
+    耕地机：
+    <<if $farm.cultivator gte 1 or $farm.build is "cultivator">>
+        <span class="green">已购买</span>
+    <<else>>
+        <<link [[购买|Farm Upgrades Cultivator]]>><</link>>
+    <</if>>
+    <br>
+
+    播种机：
+    <<if $farm.seeder gte 1 or $farm.build is "seeder">>
+        <span class="green">已购买</span>
+    <<else>>
+        <<link [[购买|Farm Upgrades Seeder]]>><</link>>
+    <</if>>
+    <br>
+
+    收割机：
+    <<if $farm.harvester gte 1 or $farm.build is "harvester">>
+        <span class="green">已购买</span>
+    <<else>>
+        <<link [[购买|Farm Upgrades Harvester]]>><</link>>
+    <</if>>
+    <br>
+
+    施工机械：
+    <<if $farm.construction_machinery gte 1 or $farm.build is "construction machinery">>
+        <span class="green">已购买</span>
+    <<else>>
+        <<link [[购买|Farm Upgrades Construction Machinery]]>><</link>>
+    <</if>>
+    <br>
+
+    温室大棚：
+    <<if $farm.field_greenhouse gte 9>>
+        <span class="green">每片田地都已安装温室大棚</span>
+    <<elseif $farm.field_greenhouse is $plots.farm.length>>
+        <span class="green">每片当前已开发田地都已安装温室大棚</span>
+    <<else>>
+        <<link [[安装|Farm Upgrades Field Greenhouse]]>><</link>>
+    <</if>>
+    <br>
+
+    <<if $farm_stage gte 11>>
+        实验室：
+        <<if $farm.laboratory gte 1 or $farm.build is "laboratory">>
+            <span class="green">最高配置</span>
+        <<else>>
+            <<link [[升级|Farm Upgrades Laboratory]]>><</link>>
+        <</if>>
+        <br>
+    <</if>>
+
+    冷库：
+    <<if $farm.cold_store gte 1 or $farm.build is "cold store">>
+        <span class="green">最高配置</span>
+    <<else>>
+        <<link [[安装|Farm Upgrades Cold Store]]>><</link>>
+    <</if>>
+    <br>
+
+    堆肥设施：
+    <<if $farm.compost gte 1 or $farm.build is "compost">>
+        <span class="green">最佳设施</span>
+    <<else>>
+        <<link [[建造|Farm Upgrades Compost]]>><</link>>
+    <</if>>
+    <br>
+
+    农舍：
+    <<if $farm.farmhouse gte 1 or $farm.build is "farmhouse">>
+        <span class="green">已建成</span>
+    <<else>>
+        <<link [[建造|Farm Upgrades Farmhouse]]>><</link>>
+    <</if>>
+    <br>
+        
+    坦克：
+    <<if $farm.tank gte 1 or $farm.build is "tank">>
+        <span class="green">你有最好的坦克</span>
+    <<else>>
+        <<link [[购买|Farm Upgrades Tank]]>><</link>>
+    <</if>>
+    <br>
+
+    地下室：
+    <<if $farm.basement gte 1 or $farm.build is "basement">>
+        <span class="green">已扩建</span>
+    <<else>>
+        <<link [[扩建|Farm Upgrades Basement]]>><</link>>
+    <</if>>
+    <br>
+<</widget>>
 
 <<widget "cultivator_upgrades_finished">>
     <<run $farm.build_finished.delete("cultivator")>>
@@ -134,4 +228,68 @@
     <br><br>
     <<link [[继续|Farm Work]]>><<endevent>><</link>>
     <br>
+<</widget>>
+
+<<widget "new_farm_upgrades_current">>
+    <<switch $farm.build>>
+        <<case "cultivator">>
+            田地里正在安装一台耕地机。
+        <<case "seeder">>
+            田地里正在安装一台播种机。
+        <<case "harvester">>
+            田地里正在安装一台收割机。
+        <<case "construction machinery">>
+            一些施工机械正在运往农场。
+        <<case "field greenhouse">>
+            田地里正在安装温室。
+        <<case "laboratory">>
+            实验室的科学设备正在升级。
+        <<case "cold store">>
+            小屋里正在加装冷库。
+        <<case "compost">>
+            堆肥设施正在建造中。
+        <<case "farmhouse">>
+            工人们正在建造新的农舍。
+        <<case "tank">>
+            坦克正在运往农场。
+        <<case "basement">>
+            工人们正在扩建地下室。
+    <</switch>>
+<</widget>>
+
+<<widget "new_farm_build_day">>    
+    <<if $farm.build_timer lte 0>>
+        <<switch $farm.build>>
+            <<case "cultivator">>
+                <<set $farm.cultivator to 1>>
+            <<case "seeder">>
+                <<set $farm.seeder to 1>>
+            <<case "harvester">>
+                <<set $farm.harvester to 1>>
+            <<case "construction machinery">>
+                <<set $farm.construction_machinery to 1>>
+            <<case "field greenhouse">>
+                <<if $farm.field_greenhouse is undefined>>
+                    <<set $farm.field_greenhouse to 1>>
+                <<elseif $farm.field_greenhouse lt 9>>
+                    <<set $farm.field_greenhouse++>>
+                <</if>>
+                <<set $plots.farm[$farm.field_greenhouse - 1].greenhouse = true>>
+            <<case "laboratory">>
+                <<set $farm.laboratory to 1>>
+                <<set $flowers_stored to 0>>
+            <<case "cold store">>
+                <<set $farm.cold_store to 1>>
+            <<case "compost">>
+                <<set $farm.compost to 1>>
+                <<set $fertiliser_stored to 0>>
+                <<set $compost_timer to 7>>
+            <<case "farmhouse">>
+                <<set $farm.farmhouse to 1>>
+            <<case "tank">>
+                <<set $farm.tank to 1>>
+            <<case "basement">>
+                <<set $farm.basement to 1>>
+        <</switch>>
+    <</if>>
 <</widget>>
