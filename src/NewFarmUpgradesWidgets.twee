@@ -92,6 +92,10 @@
         <<link [[扩建|Farm Upgrades Basement]]>><</link>>
     <</if>>
     <br>
+
+    <<if $newFarmUpgradesDebug is true>>
+        测试：<<link [[debug|Farm Upgrades Debug]]>><</link>><br>
+    <</if>>
 <</widget>>
 
 <<widget "cultivator_upgrades_finished">>

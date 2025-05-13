@@ -1,9 +1,0 @@
-:: Farm Stock Widgets [widget]
-
-<<widget "farm_stock_plant">>
-    
-<</widget>>
-
-<<widget "take_all_plant">>
-    
-<</widget>>

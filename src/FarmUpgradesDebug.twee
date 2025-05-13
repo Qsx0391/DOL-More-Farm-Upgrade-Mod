@@ -1,0 +1,32 @@
+:: Farm Upgrades Debug
+
+农场入侵：
+<<link [[无坦克|$passage]]>>
+    <<set $farm.tank to 0>>
+    <<set $farm_attack_timer to 0>>
+<</link>>
+<<link [[有坦克|$passage]]>>
+    <<set $farm.tank to 1>>
+    <<set $farm_attack_timer to 0>>
+    <<if Time.hour lt 21>>
+        <<pass (21 - Time.hour) * 60>>
+    <</if>>
+<</link>>
+<br><br>
+
+冷库：
+<<link [[测试|Farm Cold Stock]]>>
+    <<set $farm.cold_store to 1>>
+    <<set $farm.stock.potato to 10000>>
+<</link>>
+<br><br>
+
+堆肥：
+<<link [[测试|$passage]]>>
+    <<set $farm.compost to 1>>
+    <<set $fertiliser_stored to 0>>
+    <<set $compost_timer to 1>>
+<</link>>
+<br><br>
+
+<<link [[返回|Farm Upgrades]]>><</link>>

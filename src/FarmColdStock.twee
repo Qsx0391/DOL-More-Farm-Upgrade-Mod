@@ -29,8 +29,7 @@
 <</if>>
 <br>
 
-
-<<for _plantType range Object.keys($setup.plants)>>
+<<for _plantType range Object.keys(setup.plants)>>
     <<if $farm.stock[_plantType] gt 0>>
         <<set _farm_stocked to true>>
         <<set _plant to setup.plants[_plantType]>>
