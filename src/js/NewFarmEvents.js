@@ -20,6 +20,7 @@ function newDailyFarmEvents() {
         V.farm.stock.truffles = Math.ceil(V.farm.stock.truffles * 1.25);
 		V.farm.stock.milk = Math.ceil(V.farm.stock.milk * 1.25);
 		V.farm.stock.eggs = Math.ceil(V.farm.stock.eggs * 1.25);
+        V.farm.stock.cream = Math.ceil(V.farm.stock.cream * 1.25);
     }
     if (V.farm_stage >= 9) {
 		if (V.lurkers_stored >= 1 || (V.farm.laboratory >= 1 && V.flowers_stored >= 1000)) {

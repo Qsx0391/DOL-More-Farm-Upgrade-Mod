@@ -254,9 +254,9 @@
 :: Work Change End
 
 <<if !$farmerCanWater and !$farmerCanTill and !$farmerCanPlant and !$farmerCanHarvest>>
-    <<he>>看起来有些困惑。"这样的话，我是不是就没什么事可做了？"<<he>>挠挠头，"你确定这样安排合适吗？"
+    <<print $NPCList[0].name>>看起来有些困惑。"这样的话，我是不是就没什么事可做了？"<<he>>挠挠头，"你确定这样安排合适吗？"
 <<else>>
-    <<he>>显得很高兴。"这样我就能全权负责农场的日常工作了，"<<he>>说，"你就放心吧，我会把一切都打理得井井有条。"
+    <<print $NPCList[0].name>>显得很高兴。"这样我就能全权负责农场的日常工作了，"<<he>>说，"你就放心吧，我会把一切都打理得井井有条。"
 <</if>>
 <br><br>
 

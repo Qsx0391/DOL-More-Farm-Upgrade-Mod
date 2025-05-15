@@ -1,22 +1,44 @@
 :: Farm Upgrades Debug
 
-农场入侵：
-<<link [[无坦克|$passage]]>>
-    <<set $farm.tank to 0>>
-    <<set $farm_attack_timer to 0>>
+农业机械：
+<<link [[测试|$passage]]>>
+    <<set $farm.cultivator to 1>>
+    <<set $farm.seeder to 1>>
+    <<set $farm.harvester to 1>>
+    <<set $plots.farm[0].greenhouse to true>>
+    <<set $plots.farm[1].greenhouse to true>>
+    <<set $plots.farm[0].plant to "potato">>
+    <<set $plots.farm[0].stage to 5>>
+    <<set $plots.farm[1].plant to "potato">>
+    <<set $plots.farm[1].stage to 5>>
+    <<set $plots.farm[2].plant to "potato">>
+    <<set $plots.farm[2].stage to 5>>
+    <<set $plots.farm[3].plant to "potato">>
+    <<set $plots.farm[3].stage to 5>>
 <</link>>
-<<link [[有坦克|$passage]]>>
-    <<set $farm.tank to 1>>
-    <<set $farm_attack_timer to 0>>
-    <<if Time.hour lt 21>>
-        <<pass (21 - Time.hour) * 60>>
-    <</if>>
+<br><br>
+
+施工机械：
+<<link [[测试|$passage]]>>
+    <<set $farm.construction_machinery to 1>>
+<</link>>
+<br><br>
+
+实验室：
+<<link [[测试|$passage]]>>
+    <<set $farm.laboratory to 1>>
+    <<set $flowers_stored to 0>>
+    <<set $plants.strange_flower.amount += 1000>>
 <</link>>
 <br><br>
 
 冷库：
 <<link [[测试|Farm Cold Stock]]>>
     <<set $farm.cold_store to 1>>
+    <<set $farm.stock.truffles to 10000>>
+    <<set $farm.stock.eggs to 10000>>
+    <<set $farm.stock.milk to 10000>>
+    <<set $farm.stock.cream to 10000>>
     <<set $farm.stock.potato to 10000>>
 <</link>>
 <br><br>
@@ -26,6 +48,40 @@
     <<set $farm.compost to 1>>
     <<set $fertiliser_stored to 0>>
     <<set $compost_timer to 1>>
+<</link>>
+<br><br>
+
+农舍：
+<<link [[测试|$passage]]>>
+    <<set $farm.farmhouse to 1>>
+    <<set $farm.farmer_can_hire to true>>
+    <<set $plots.farm[0].greenhouse to true>>
+    <<set $plots.farm[1].greenhouse to true>>
+    <<set $plots.farm[0].plant to "potato">>
+    <<set $plots.farm[0].stage to 5>>
+    <<set $plots.farm[1].plant to "potato">>
+    <<set $plots.farm[1].stage to 5>>
+    <<set $plots.farm[2].plant to "potato">>
+    <<set $plots.farm[2].stage to 5>>
+    <<set $plots.farm[3].plant to "potato">>
+    <<set $plots.farm[3].stage to 5>>
+<</link>>
+<br><br>
+
+农场入侵：
+<<link [[无坦克|$passage]]>>
+    <<set $farm.tank to 0>>
+    <<set $farm_attack_timer to 0>>
+<</link>>
+<<link [[有坦克|$passage]]>>
+    <<set $farm.tank to 1>>
+    <<set $farm_attack_timer to 0>>
+<</link>>
+<br><br>
+
+地下室：
+<<link [[测试|$passage]]>>
+    <<set $farm.basement to 1>>
 <</link>>
 <br><br>
 

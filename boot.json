@@ -1,6 +1,6 @@
 {
 	"name":"MoreFarmUpgrade",
-	"version":"1.0.4",
+	"version":"1.0.5",
 	"styleFileList":[
 		
 	],
@@ -453,13 +453,13 @@
 			"params":{
 				"js":[
 					{
-						"from":"fragment.append(dailyFarmEvents());",
-						"to":"newDailyFarmEvents();fragment.append(dailyFarmEvents());",
+						"from":"function dailyFarmEvents() {",
+						"to":"function dailyFarmEvents() { newDailyFarmEvents();",
 						"fileName":"time.js"
 					},
 					{
 						"from":"tendingDay();",
-						"to":"tendingDay();farmerTendingDay();",
+						"to":"tendingDay(); farmerTendingDay();",
 						"fileName":"time.js"
 					}
 				]

@@ -28,24 +28,32 @@
 	<br>
 <</if>>
 <br>
+奶油：$farm.stock.cream
+<br>
+<<if $farm.stock.cream gte 1>>
+	<<set _farm_stocked to true>>
+	<<tendingicon "cream">><<link [[拿走|Farm Cold Stock]]>><<wearProp "cream" 0 "cream">><<tending_give cream $farm.stock.cream>><<set $farm.stock.cream to 0>><</link>>
+	<br>
+<</if>>
+<br>
 
 <<for _plantType range Object.keys(setup.plants)>>
 	<<capture _plantType>>
 		<<if $farm.stock[_plantType] gt 0 and _plantType is not "cream">>
-        <<set _farm_stocked to true>>
-        <<set _plant to setup.plants[_plantType]>>
-        <<set _name to _plant.seed_name ? _plant.seed_name : _plant.plural>>
-        <<print _name>>：<<print $farm.stock[_plantType]>>
-        <br>
-        <<if _plant.icon>>
-            <img class="tending_icon" @src="`img/misc/icon/tending/` + _plant.icon">
-        <</if>>
-        <<link [[拿走|Farm Cold Stock]]>>
-            <<tending_give _plantType $farm.stock[_plantType]>>
-            <<set $farm.stock[_plantType] to 0>>
-        <</link>>
-        <br><br>
-    <</if>>
+			<<set _farm_stocked to true>>
+			<<set _plant to setup.plants[_plantType]>>
+			<<set _name to _plant.seed_name ? _plant.seed_name : _plant.plural>>
+			<<print _name>>：<<print $farm.stock[_plantType]>>
+			<br>
+			<<if _plant.icon>>
+				<img class="tending_icon" @src="`img/misc/icon/tending/` + _plant.icon">
+			<</if>>
+			<<link [[拿走|Farm Cold Stock]]>>
+				<<tending_give _plantType $farm.stock[_plantType]>>
+				<<set $farm.stock[_plantType] to 0>>
+			<</link>>
+			<br><br>
+		<</if>>
 	<</capture>>
 <</for>>
 
@@ -61,13 +69,16 @@
 		<<if $farm.stock.milk gte 1>>
 			<<tending_give bottle_of_milk $farm.stock.milk>><<set $farm.stock.milk to 0>>
 		<</if>>
+		<<if $farm.stock.cream gte 1>>
+			<<tending_give cream $farm.stock.cream>><<set $farm.stock.cream to 0>>
+		<</if>>
         <<for _plantType range Object.keys($farm.stock)>>
             <<if $farm.stock[_plantType] gt 0>>
                 <<tending_give _plantType $farm.stock[_plantType]>>
                 <<set $farm.stock[_plantType] to 0>>
             <</if>>
         <</for>>
-		<<wearProp "basket">>
+		<<wearProp "basket" 0 "farm">>
 	<</link>>
 	<br>
 <</if>>
