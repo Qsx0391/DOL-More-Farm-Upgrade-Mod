@@ -30,7 +30,8 @@
 <br>
 
 <<for _plantType range Object.keys(setup.plants)>>
-    <<if $farm.stock[_plantType] gt 0>>
+	<<capture _plantType>>
+		<<if $farm.stock[_plantType] gt 0 and _plantType is not "cream">>
         <<set _farm_stocked to true>>
         <<set _plant to setup.plants[_plantType]>>
         <<set _name to _plant.seed_name ? _plant.seed_name : _plant.plural>>
@@ -45,6 +46,7 @@
         <</link>>
         <br><br>
     <</if>>
+	<</capture>>
 <</for>>
 
 <<if _farm_stocked is true>>
