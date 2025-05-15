@@ -39,7 +39,7 @@
         <<if _plantbed.stage gte 5>>
             <span class="gold"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>
             <<set $_plantedPlant to setup.plants[_plantbed.plant]>>
-            <<if _plantbed.greenhouse gte 1>>
+            <<if _plantbed.greenhouse>>
                 <span class="green">这块农田有温室覆盖</span>，
             <</if>>
             <span class="green"><<print $_plantedPlant.seed_name ? `$_plantedPlant.seed_name` : `$_plantedPlant.plural`>>正在开花，已经可以采摘了。</span>
@@ -48,7 +48,7 @@
             <<if $farm_attack_timer is 0>>
                 <<set $_timeUntilAttack to ((23 - Time.hour) * 60) + (60 - Time.minute)>>
             <</if>>
-            <<if _plantbed.greenhouse gte 1>>
+            <<if _plantbed.greenhouse>>
                 <span class="red">你无法在温室里使用收割机。</span>
             <<elseif 10 gte $_timeUntilAttack>>
                 <span class="pink">在雷米到来之前，你没有足够的时间收获。</span>

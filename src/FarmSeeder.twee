@@ -34,7 +34,7 @@
     <<capture _plantbed  $_i>>
         <<if _plantbed.stage lte 0 and _plantbed.till gte 1>>
             <span class="gold"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>
-            <<if _plantbed.greenhouse gte 1>>
+            <<if _plantbed.greenhouse>>
                 <span class="green">这块农田有温室覆盖</span>，
             <</if>>
             土壤已准备好种植。
@@ -42,7 +42,7 @@
             <<if $farm_attack_timer is 0>>
                 <<set $_timeUntilAttack to ((23 - Time.hour) * 60) + (60 - Time.minute)>>
             <</if>>
-            <<if _plantbed.greenhouse gte 1>>
+            <<if _plantbed.greenhouse>>
                 <br>
                 <span class="red">你无法在温室里使用播种机。</span>
             <<elseif 20 gte $_timeUntilAttack>>

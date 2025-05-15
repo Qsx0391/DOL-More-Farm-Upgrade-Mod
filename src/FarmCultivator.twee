@@ -39,13 +39,13 @@
     <<capture _plantbed $_i>>
         <<if _plantbed.stage lte 0 and _plantbed.till lte 0>>
             <span class="gold"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>
-            <<if _plantbed.greenhouse gte 1>>
+            <<if _plantbed.greenhouse>>
                 <span class="green">这块农田有温室覆盖</span>，
             <</if>>
             土壤已准备好耕种。
             <br>
 
-            <<if _plantbed.greenhouse gte 1>>
+            <<if _plantbed.greenhouse>>
                 <span class="red">你无法在温室里使用耕地机。</span>
                 <br>
             <<else>>
