@@ -98,14 +98,13 @@ function farmerTendingDay() {
 }
 window.farmerTendingDay = farmerTendingDay;
 
-// 农夫运送农产品到农贸工厂
 function farmerSell() {
     if (!V.farmerCanSell || --V.farmerSellTimer > 0) {
         return;
     } 
     V.farmerSellTimer = 7;
 
-    // 初始化农贸工厂数据（如果需要）
+    // 初始化农贸工厂数据
     if (V.farmersProduce === undefined) {
         V.farmersProduce = {
             selling: {},

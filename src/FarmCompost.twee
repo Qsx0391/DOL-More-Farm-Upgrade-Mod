@@ -8,7 +8,7 @@
     <<if $fertiliser_stored gte 1>>
         你可以取出 <<Number $fertiliser_stored>> 袋肥料。
         <br><br>
-        <<gardenicon "fertiliser">><<link [[取出肥料|Farm Compost Take]]>><</link>>
+        <<gardenicon "fertiliser">><<link [[取出肥料 (0:05)|Farm Compost Take]]>><<pass 5>><</link>>
         <br>
     <<else>>
         堆肥设施正在工作中，废料 <<Number $compost_timer>> 天后就能转化成肥料。
@@ -22,7 +22,7 @@
 :: Farm Compost Take
 <<effects>>
 
-你获得了 <<Number $fertiliser_stored>> 袋肥料。
+你小心翼翼地翻动堆肥，确保其充分发酵。经过仔细收集，你获得了 <<Number $fertiliser_stored>> 袋肥料。<span class="gold">你得到了良好的锻炼。</span>
 <<set $fertiliser.current += $fertiliser_stored>>
 <<set $fertiliser_stored to 0>>
 <br><br>
