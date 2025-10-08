@@ -1,6 +1,6 @@
 {
 	"name":"MoreFarmUpgrade",
-	"version":"1.0.5",
+	"version":"1.0.6",
 	"styleFileList":[
 		
 	],
@@ -278,8 +278,8 @@
 				},
 				{
 					"passage":"Pub",
-					"findString":"\t\t\t<<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>\n\t\t\t\t<<investigateicon>><<link [[为农场找守卫 (0:30)|Pub Guard]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>",
-					"replace":"\t\t\t<<if $farm.tower gte 1 and !$farm.tower_guard and $farm.tower_guard_can_hire>>\n\t\t\t\t<<investigateicon>><<link [[为农场找守卫 (0:30)|Pub Guard]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>\n\t\t\t<<if $farm.farmhouse gte 1 and !$farm.farmer and $farm.farmer_can_hire>>\n\t\t\t\t<<investigateicon>><<link [[为农场找农夫 (0:30)|Pub Farmer]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>",
+					"findString":"\t\t\t<<if $farm.tower gte 1 and !$farm.tower_guard and !$farm.build_finished.includes(\"tower 1\")>>\n\t\t\t\t<<investigateicon>><<link [[为农场找守卫 (0:30)|Pub Guard]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>",
+					"replace":"\t\t\t<<if $farm.tower gte 1 and !$farm.tower_guard and !$farm.build_finished.includes(\"tower 1\")>>\n\t\t\t\t<<investigateicon>><<link [[为农场找守卫 (0:30)|Pub Guard]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>\n\t\t\t<<if $farm.farmhouse gte 1 and !$farm.farmer and $farm.farmer_can_hire>>\n\t\t\t\t<<investigateicon>><<link [[为农场找农夫 (0:30)|Pub Farmer]]>><<endevent>><<pass 30>><</link>>\n\t\t\t\t<br>\n\t\t\t<</if>>",
 					"debug":true
 				},
 				{

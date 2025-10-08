@@ -27,6 +27,7 @@
 实验室：
 <<link [[测试|$passage]]>>
     <<set $farm.laboratory to 1>>
+    <<set $lurkers_held to 1>>
     <<set $flowers_stored to 0>>
     <<set $plants.strange_flower.amount += 1000>>
 <</link>>

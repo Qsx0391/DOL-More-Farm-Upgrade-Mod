@@ -34,7 +34,6 @@ function farmerTendingDay() {
                     }
                 }
             }
-            
             // plant
             if (V.farmerCanPlant) {
                 for (let i = 0; i < plotsFarm.length && workTime >= 60; i++) {
@@ -49,14 +48,13 @@ function farmerTendingDay() {
                         if (plantType) {
                             plantSeedsInPlot(plot, plantType);
                             plot.water = V.farm.irrigation > i ? 1 : 0;
-                            workTime -= 60;
+                            workTime -= 180;
                             updated = true;
                             console.log("plant: " + i + " " + plantType);
                         }
                     }
                 }
             }
-            
             // harvest
             if (V.farmerCanHarvest) {
                 for (let i = 0; i < plotsFarm.length && workTime >= 60; i++) {
@@ -131,7 +129,7 @@ function farmerSell() {
 window.farmerSell = farmerSell;
 
 function calcTillingTime() {
-    let baseTime = 6 * 60;
+    let baseTime = 360;
     return Math.trunc(baseTime - V.farm.farmer_skill * 3 / 10);
 }
 window.calcTillingTime = calcTillingTime;
