@@ -38,7 +38,7 @@
     <<capture _plantbed $_i>>
         <<if _plantbed.stage gte 5>>
             <span class="gold"><<wordify_i $_i true>>种植圃(<<display_quality _plantbed>>)：</span>
-            <<set $_plantedPlant to setup.plants[_plantbed.plant]>>
+            <<set $_plantedPlant to setup.foodstuff[_plantbed.plant]>>
             <<if _plantbed.greenhouse>>
                 <span class="green">这块农田有温室覆盖</span>，
             <</if>>

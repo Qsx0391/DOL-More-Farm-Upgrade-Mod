@@ -217,11 +217,11 @@
 可种植作物：
 <br>
 <<for _plantType range $plants_known>>
-    <<set $_plant to setup.plants[_plantType]>>
+    <<set $_plant to setup.foodstuff[_plantType]>>
     <<if !$_plant>>
         <span class="red">未知作物类型：'<<print _plantType>>'</span>
         <br><br>
-    <<elseif $_plant.bed is "earth">>
+    <<elseif $_plant.tending.planting_bed is "earth">>
         <<capture _plantType>>
             <<set $_name to $_plant.seed_name ? $_plant.seed_name : $_plant.plural>>
             <<if $options.images is 1 and $_plant.icon>>

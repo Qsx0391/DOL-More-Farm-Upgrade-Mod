@@ -65,9 +65,9 @@ function farmerTendingDay() {
                             V.farm.stock[plantType] = 0;
                         }
                         let tending_amount = random(10, Math.trunc(V.farm.farmer_skill / 2)) + 50;
-                        tending_amount *= setup.plants[plantType].multiplier;
+                        tending_amount *= setup.foodstuff[plantType].tending.yield_multiplier;
                         tending_amount *= 1 + (Math.clamp(plot.quality, 1, 4) - 1) * 0.2;
-                        tending_amount = Math.trunc(tending_amount * V.V.settings.tendingYieldModifier);
+                        tending_amount = Math.trunc(tending_amount * V.settings.tendingYieldModifier); //V.V.是何意味？有我什么不知道的特性吗？
                         V.farm.stock[plantType] += tending_amount;
                         if (plot.baseQuality && !V.backgroundTraits.includes("greenthumb")) {
                             if (plot.fertiliserDecay > 0) {
@@ -114,7 +114,7 @@ function farmerSell() {
     }
 
     for (let item in V.farm.stock) {
-        if ((["truffles", "eggs", "milk"].includes(item) || ["produce", "vegetable", "fruit", "shroom"].includes(setup.plants[item].type)) && V.farm.stock[item] >= 250) {
+        if ((["truffles", "eggs", "milk"].includes(item) || ["produce", "vegetable", "fruit", "shroom"].includes(setup.foodstuff[item].category)) && V.farm.stock[item] >= 250) {
             const amount = Math.floor(V.farm.stock[item] / 250) * 250;
             V.farm.stock[item] -= amount;
             console.log("sell: " + item + " " + amount);
@@ -137,8 +137,8 @@ window.calcTillingTime = calcTillingTime;
 function getPlantableList() {
     let result = [];
     V.farmerPlantable.forEach(each => {
-        let plant = setup.plants[each];
-        if (plant.season.includes(Time.season)) {
+        let plant = setup.foodstuff[each];
+        if (plant.tending.seasons.includes(Time.season)) {
             result.push(each);
         }
     })
