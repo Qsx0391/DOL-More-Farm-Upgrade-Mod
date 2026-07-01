@@ -67,7 +67,7 @@ function farmerTendingDay() {
                         let tending_amount = random(10, Math.trunc(V.farm.farmer_skill / 2)) + 50;
                         tending_amount *= setup.plants[plantType].multiplier;
                         tending_amount *= 1 + (Math.clamp(plot.quality, 1, 4) - 1) * 0.2;
-                        tending_amount = Math.trunc(tending_amount * V.tending_yield_factor);
+                        tending_amount = Math.trunc(tending_amount * V.V.settings.tendingYieldModifier);
                         V.farm.stock[plantType] += tending_amount;
                         if (plot.baseQuality && !V.backgroundTraits.includes("greenthumb")) {
                             if (plot.fertiliserDecay > 0) {

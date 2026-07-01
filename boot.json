@@ -386,8 +386,8 @@
 				},
 				{
 					"passage":"Farm Upgrades Woodland 3",
-					"findString":"需要一周时间扩建围栏。",
-					"replace":"需要<<print get_build_time_str(7)>>来扩展围栏。",
+					"findString":"需要一周时间扩建栅栏。",
+					"replace":"需要<<print get_build_time_str(7)>>来扩展栅栏。",
 					"debug":true
 				},
 				{
@@ -398,8 +398,8 @@
 				},
 				{
 					"passage":"Farm Upgrades Woodland 2",
-					"findString":"需要五天时间扩展围栏。",
-					"replace":"需要<<print get_build_time_str(5)>>来扩展围栏。",
+					"findString":"需要五天时间扩展栅栏。",
+					"replace":"需要<<print get_build_time_str(5)>>来扩展栅栏。",
 					"debug":true
 				},
 				{
@@ -434,8 +434,8 @@
 				},
 				{
 					"passage":"Farm Upgrades Woodland 1",
-					"findString":"需要三天时间扩展围栏。",
-					"replace":"需要<<print get_build_time_str(3)>>来扩展围栏。",
+					"findString":"需要三天时间扩展栅栏。",
+					"replace":"需要<<print get_build_time_str(3)>>来扩展栅栏。",
 					"debug":true
 				},
 				{
