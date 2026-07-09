@@ -8,7 +8,7 @@
 <br>
 <<if $farm.stock.truffles gte 1>>
 	<<set _farm_stocked to true>>
-	<<tendingicon "truffle">><<link [[拿走|Farm Cold Stock]]>><<wearProp "truffle">><<tending_give truffle $farm.stock.truffles>><<set $farm.stock.truffles to 0>><</link>>
+	<<icon "tending/truffle">><<link [[拿走|Farm Cold Stock]]>><<wearProp "truffle">><<tending_give truffle $farm.stock.truffles>><<set $farm.stock.truffles to 0>><</link>>
 	<br>
 <</if>>
 <br>
@@ -16,7 +16,7 @@
 <br>
 <<if $farm.stock.eggs gte 1>>
 	<<set _farm_stocked to true>>
-	<<tendingicon "egg">><<link [[拿走|Farm Cold Stock]]>><<wearProp "egg" 0 "chicken">><<tending_give chicken_egg $farm.stock.eggs>><<set $farm.stock.eggs to 0>><</link>>
+	<<icon "tending/egg.png">><<link [[拿走|Farm Cold Stock]]>><<wearProp "egg" 0 "chicken">><<tending_give chicken_egg $farm.stock.eggs>><<set $farm.stock.eggs to 0>><</link>>
 	<br>
 <</if>>
 <br>
@@ -24,7 +24,7 @@
 <br>
 <<if $farm.stock.milk gte 1>>
 	<<set _farm_stocked to true>>
-	<<tendingicon "milk">><<link [[拿走|Farm Cold Stock]]>><<wearProp "milk bottle" 0 "milk">><<tending_give bottle_of_milk $farm.stock.milk>><<set $farm.stock.milk to 0>><</link>>
+	<<icon "tending/milk.png">><<link [[拿走|Farm Cold Stock]]>><<wearProp "milk bottle" 0 "milk">><<tending_give bottle_of_milk $farm.stock.milk>><<set $farm.stock.milk to 0>><</link>>
 	<br>
 <</if>>
 <br>
@@ -32,16 +32,16 @@
 <br>
 <<if $farm.stock.cream gte 1>>
 	<<set _farm_stocked to true>>
-	<<tendingicon "cream">><<link [[拿走|Farm Cold Stock]]>><<wearProp "cream" 0 "cream">><<tending_give cream $farm.stock.cream>><<set $farm.stock.cream to 0>><</link>>
+	<<icon "tending/cream.png">><<link [[拿走|Farm Cold Stock]]>><<wearProp "cream" 0 "cream">><<tending_give cream $farm.stock.cream>><<set $farm.stock.cream to 0>><</link>>
 	<br>
 <</if>>
 <br>
 
-<<for _plantType range Object.keys(setup.plants)>>
+<<for _plantType range Object.keys(setup.foodstuff)>>
 	<<capture _plantType>>
 		<<if $farm.stock[_plantType] gt 0 and _plantType is not "cream">>
 			<<set _farm_stocked to true>>
-			<<set _plant to setup.plants[_plantType]>>
+			<<set _plant to setup.foodstuff[_plantType]>>
 			<<set _name to _plant.seed_name ? _plant.seed_name : _plant.plural>>
 			<<print _name>>：<<print $farm.stock[_plantType]>>
 			<br>
@@ -58,7 +58,7 @@
 <</for>>
 
 <<if _farm_stocked is true>>
-	<<tendingicon "basket">>
+	<<icon "tending/basket.png">>
 	<<link [[拿取全部|Farm Cottage]]>>
 		<<if $farm.stock.truffles gte 1>>
 			<<tending_give truffle $farm.stock.truffles>><<set $farm.stock.truffles to 0>>

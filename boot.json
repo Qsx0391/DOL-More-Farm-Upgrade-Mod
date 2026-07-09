@@ -50,8 +50,8 @@
 				},
 				{
 					"passage":"Farm Work",
-					"findString":"<<if $farm.build isnot undefined and $farm.build isnot 0>>\n\t<<switch $farm.build>>",
-					"replace":"<<if $farm.build isnot undefined and $farm.build isnot 0>>\n\t<<new_farm_upgrades_current>>\n\t<<switch $farm.build>>",
+					"findString":"<<if $farm.build>>\n\t<<switch $farm.build>>",
+					"replace":"<<if $farm.build>>\n\t<<new_farm_upgrades_current>>\n\t<<switch $farm.build>>",
 					"debug":true
 				},
 				{
@@ -128,8 +128,8 @@
 				},
 				{
 					"passage":"Farm Stage 11 Confident",
-					"findString":"<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。</span>",
-					"replace":"<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。你可以升级实验室的设备，来使用诡异的花制作催情剂。</span>",
+					"findString":"<span class=\"gold\">你现在可以种植<<foodstufficon \"strange_flower\">>诡异的花了。</span>",
+					"replace":"<span class=\"gold\">你现在可以种植<<foodstufficon \"strange_flower\">>诡异的花了。你可以升级实验室的设备，来使用诡异的花制作催情剂。</span>",
 					"debug":true
 				},
 				{
@@ -194,8 +194,8 @@
 				},
 				{
 					"passage":"Farm Widgets",
-					"findString":"\t<<if $farm.stock>>\n\t\t<<tendingicon \"basket\">><<link [[检查库存|Farm Stock]]>><<endevent>><</link>>\n\t\t<br>\n\t<</if>>",
-					"replace":"\t<<if $farm.stock>>\n\t\t<<tendingicon \"basket\">>\n\t\t<<if $farm.cold_store gte 1>>\n\t\t\t<<link [[检查库存|Farm Cold Stock]]>><<endevent>><</link>>\n\t\t<<else>>\n\t\t\t<<link [[检查库存|Farm Stock]]>><<endevent>><</link>>\n\t\t<</if>>\n\t\t<br>\n\t\t<<farm_basement_enter>>\n\t<</if>>",
+					"findString":"\t<<if $farm.stock>>\n\t\t<<icon \"tending/basket.png\">><<link [[检查库存|Farm Stock]]>><<endevent>><</link>>\n\t\t<br>\n\t<</if>>",
+					"replace":"\t<<if $farm.stock>>\n\t\t<<icon \"tending/basket.png\">>\n\t\t<<if $farm.cold_store gte 1>>\n\t\t\t<<link [[检查库存|Farm Cold Stock]]>><<endevent>><</link>>\n\t\t<<else>>\n\t\t\t<<link [[检查库存|Farm Stock]]>><<endevent>><</link>>\n\t\t<</if>>\n\t\t<br>\n\t\t<<farm_basement_enter>>\n\t<</if>>",
 					"debug":true
 				},
 				{
@@ -230,8 +230,8 @@
 				},
 				{
 					"passage":"Widgets Tending",
-					"findString":"$_plant.season.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3)",
-					"replace":"(_plantbed.greenhouse is true) or $_plant.season.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3)",
+					"findString":"$_plant.tending?.seasons?.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3)",
+					"replace":"(_plantbed.greenhouse is true) or $_plant.tending?.seasons?.includes(Time.season) or (_location is \"garden\" and $alex_greenhouse gte 3)",
 					"debug":true
 				},
 				{
@@ -266,8 +266,8 @@
 				},
 				{
 					"passage":"Farm Assault Widgets",
-					"findString":"\t\t\t\t\t<<if $farm_assault.alex is $_key>>\n\t\t\t\t\t\t<<link [[跟艾利克斯一起扔石头 (0:05)|Farm Assault Rocks Alex]]>><<pass 5>><</link>>\n\t\t\t\t\t\t<br>\n\t\t\t\t\t<<else>>\n\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 6000 : 1)>>\n\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 20000 : 16000)>>\n\t\t\t\t\t\t<<link [[扔石头 (0:05)|Farm Assault Rocks]]>><<pass 5>><</link>><<physiquedifficulty $_min $_max>>\n\t\t\t\t\t\t<br>\n\t\t\t\t\t<</if>>\n\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 3000 : 200)>>\n\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 3000 : 1000)>>\n\t\t\t\t\t<<link [[威胁 (0:05)|Farm Assault Threaten]]>><<pass 5>><</link>><<skill_difficulty $fame.scrap \"战斗知名度\" $_min $_max>>",
-					"replace":"\t\t\t\t\t<<if $isInTank>>\n\t\t\t\t\t\t<<farm_assault_tank_threaten_options>>\n\t\t\t\t\t<<else>>\n\t\t\t\t\t\t<<if $farm_assault.alex is $_key>>\n\t\t\t\t\t\t\t<<link [[跟艾利克斯一起扔石头 (0:05)|Farm Assault Rocks Alex]]>><<pass 5>><</link>>\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<<else>>\n\t\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 6000 : 1)>>\n\t\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 20000 : 16000)>>\n\t\t\t\t\t\t\t<<link [[扔石头 (0:05)|Farm Assault Rocks]]>><<pass 5>><</link>><<physiquedifficulty $_min $_max>>\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<</if>>\n\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 3000 : 200)>>\n\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 3000 : 1000)>>\n\t\t\t\t\t\t<<link [[威胁 (0:05)|Farm Assault Threaten]]>><<pass 5>><</link>><<skill_difficulty $fame.scrap \"战斗知名度\" $_min $_max>>\n\t\t\t\t\t<</if>>",
+					"findString":"\t\t\t\t\t<<if $farm_assault.alex is $_key>>\n\t\t\t\t\t\t<<link [[跟艾利克斯一起扔石头 (0:05)|Farm Assault Rocks Alex]]>><<pass 5>><</link>>\n\t\t\t\t\t\t<br>\n\t\t\t\t\t<<else>>\n\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 6000 : 1)>>\n\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 20000 : 15000)>>\n\t\t\t\t\t\t<<link [[扔石头 (0:05)|Farm Assault Rocks]]>><<pass 5>><</link>><<physiquedifficulty $_min $_max>>\n\t\t\t\t\t\t<br>\n\t\t\t\t\t<</if>>\n\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 3000 : 200)>>\n\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 3000 : 1000)>>\n\t\t\t\t\t<<link [[威胁 (0:05)|Farm Assault Threaten]]>><<pass 5>><</link>><<skill_difficulty $fame.scrap \"战斗知名度\" $_min $_max>>",
+					"replace":"\t\t\t\t\t<<if $isInTank>>\n\t\t\t\t\t\t<<farm_assault_tank_threaten_options>>\n\t\t\t\t\t<<else>>\n\t\t\t\t\t\t<<if $farm_assault.alex is $_key>>\n\t\t\t\t\t\t\t<<link [[跟艾利克斯一起扔石头 (0:05)|Farm Assault Rocks Alex]]>><<pass 5>><</link>>\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<<else>>\n\t\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 6000 : 1)>>\n\t\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 20000 : 15000)>>\n\t\t\t\t\t\t\t<<link [[扔石头 (0:05)|Farm Assault Rocks]]>><<pass 5>><</link>><<physiquedifficulty $_min $_max>>\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<</if>>\n\t\t\t\t\t\t<<set $_min to ($_isBaileyTeam ? 3000 : 200)>>\n\t\t\t\t\t\t<<set $_max to ($_isBaileyTeam ? 3000 : 1000)>>\n\t\t\t\t\t\t<<link [[威胁 (0:05)|Farm Assault Threaten]]>><<pass 5>><</link>><<skill_difficulty $fame.scrap \"战斗知名度\" $_min $_max>>\n\t\t\t\t\t<</if>>",
 					"debug":true
 				},
 				{
@@ -302,8 +302,8 @@
 				},
 				{
 					"passage":"Farm Stage 11 Caution",
-					"findString":"<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。</span>",
-					"replace":"<span class=\"gold\">你现在可以种植<<icon \"tending/strange_flower.png\">>诡异的花了。你可以升级实验室的设备，来使用诡异的花制作催情剂。</span>",
+					"findString":"<span class=\"gold\">你现在可以种植<<foodstufficon \"strange_flower\">>诡异的花了。</span>",
+					"replace":"<span class=\"gold\">你现在可以种植<<foodstufficon \"strange_flower\">>诡异的花了。你可以升级实验室的设备，来使用诡异的花制作催情剂。</span>",
 					"debug":true
 				},
 				{
@@ -386,8 +386,8 @@
 				},
 				{
 					"passage":"Farm Upgrades Woodland 3",
-					"findString":"需要一周时间扩建围栏。",
-					"replace":"需要<<print get_build_time_str(7)>>来扩展围栏。",
+					"findString":"需要一周时间扩建栅栏。",
+					"replace":"需要<<print get_build_time_str(7)>>来扩展栅栏。",
 					"debug":true
 				},
 				{
@@ -398,8 +398,8 @@
 				},
 				{
 					"passage":"Farm Upgrades Woodland 2",
-					"findString":"需要五天时间扩展围栏。",
-					"replace":"需要<<print get_build_time_str(5)>>来扩展围栏。",
+					"findString":"需要五天时间扩展栅栏。",
+					"replace":"需要<<print get_build_time_str(5)>>来扩展栅栏。",
 					"debug":true
 				},
 				{
@@ -434,8 +434,8 @@
 				},
 				{
 					"passage":"Farm Upgrades Woodland 1",
-					"findString":"需要三天时间扩展围栏。",
-					"replace":"需要<<print get_build_time_str(3)>>来扩展围栏。",
+					"findString":"需要三天时间扩展栅栏。",
+					"replace":"需要<<print get_build_time_str(3)>>来扩展栅栏。",
 					"debug":true
 				},
 				{

@@ -51,15 +51,15 @@
             <<else>>
                 <<for _plantType range $plants_known>>
                     <br>
-                    <<set $_plant to setup.plants[_plantType]>>
+                    <<set $_plant to setup.foodstuff[_plantType]>>
                     <<if !$_plant>>
                         <span class="red">植物类型'<<print _plantType>>'未找到。</span>
                         <br><br>
                         请反馈此问题。
-                    <<elseif $_plant.season.includes(Time.season)>>
+                    <<elseif $_plant.tending.seasons.includes(Time.season)>>
                         <<set $_name to $_plant.seed_name ? $_plant.seed_name : $_plant.plural>>
                         /* comparing soil types; check if target bed is compatible with the seed's soil type */
-                        <<if $_plant.bed is _plantbed.bed>>
+                        <<if $_plant.tending.planting_bed is _plantbed.bed>>
                             <<capture _plantbed _plantType>>
                                 <<if $options.images is 1 and $_plant.icon>>
                                     <img class="tending_icon" @src="`img/misc/icon/tending/` + $_plant.icon">
@@ -67,13 +67,13 @@
                                 <<link "种植$_name (0:20)" $passage>><<pass 20>><<run plantSeedsInPlot(_plantbed, _plantType)>><</link>>
                             <</capture>>
                             <<if $statdisable is "f">>
-                                <span class="orange">(<<print $_plant.days>>天)</span>
+                                <span class="orange">(<<print $_plant.tending.growth_days>>天)</span>
                             <</if>>
                         <<else>>
-                            <span class="blue"><<print $_name.toLocaleUpperFirst()>>仅能种植于<<print $_plant.bed.replace("earth","土地里").replace("water","水池中")>>。</span>
+                            <span class="blue"><<print $_name.toLocaleUpperFirst()>>仅能种植于<<print $_plant.tending.planting_bed.replace("earth","土地里").replace("water","水池中")>>。</span>
                         <</if>>
                     <<else>>
-                        <<tending_season_notice $_plant>>
+                        <<tending_season_notice _plantType>>
                     <</if>>
                 <</for>>
             <</if>>

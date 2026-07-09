@@ -1,11 +1,11 @@
 :: Put Strange Flowers Widget [widget]
 
 <<widget "put_strange_flowers">>
-    <<if $plants.strange_flower.amount >= 1000>>
+    <<if $foodstuff.strange_flower.amount >= 1000>>
         <<icon "tending/strange_flower.png">>
         <<link [[把 1000 朵诡异的花放到实验室|Farm Still Put Flowers]]>>
             <<set $flowers_stored += 1000>>
-            <<set $plants.strange_flower.amount -= 1000>>
+            <<set $foodstuff.strange_flower.amount -= 1000>>
         <</link>>
 	    <br>
     <</if>>
