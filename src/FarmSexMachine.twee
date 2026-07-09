@@ -142,7 +142,7 @@
     <<set $useNippleVibrator to !($useNippleVibrator)>>
 <</if>>
 
-<<if ($useClitVibrator or $useNippleVibrator) and $machine.anal.ammo isnot 0>>
+<<if ($useClitVibrator or $useNippleVibrator) and $machine.anal and $machine.anal.ammo isnot 0>>
     <<if $useClitVibrator and $useNippleVibrator>>
         <<set _posName to "阴蒂和乳头">>
         <<sex (8 * $machine.speed) "genitals">>
@@ -266,7 +266,7 @@
     <br>
 <</if>>
 
-<<if $machine.anal.ammo isnot 0>>
+<<if $machine.anal and $machine.anal.ammo isnot 0>>
     <<if $machine.vaginal>>
         <<set $machine.vaginal.ammo to 10>>
     <</if>>
@@ -297,7 +297,9 @@
                 <<if $machine.vaginal>>
                     <<set $machine.vaginal.ammo to 0>>
                 <</if>>
-                <<set $machine.anal.ammo to 0>>
+                <<if $machine.anal>>
+                    <<set $machine.anal.ammo to 0>>
+                <</if>>
             <</link>>
         </div>
     </div>
