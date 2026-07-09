@@ -28,6 +28,32 @@
 <<link [[返回|Farm Upgrades]]>><</link>>
 <br>
 
+:: Farm Upgrades Cultivator 2
+
+将耕地机升级为量子耕地机，使其能在温室中使用。
+<br><br>
+
+<span class="gold">需要花费£20000。</span>
+<br>
+<span class="blue">安装需要<<print get_build_time_str(3)>>。</span>
+<br>
+<span class="blue">直到项目完成工人都会留在农场里。</span>
+<br>
+<br>
+
+<<if $farm.build>>
+	<span class="blue">一次只能进行一个设施的升级。</span>
+	<br>
+<<elseif $money gte 2000000>>
+	<<link [[升级 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -2000000 "farmUpgrades">><<set $farm.build to "cultivator">>
+		<<set $farm.build_timer to calc_build_time(3)>>
+	<</link>>
+	<br>
+<</if>>
+<br>
+<<link [[返回|Farm Upgrades]]>><</link>>
+<br>
+
 :: Farm Upgrades Seeder
 
 购买一台自动播种机。这台精密的农业设备能让播种工作变得轻松快捷。
@@ -58,6 +84,32 @@
 <<link [[返回|Farm Upgrades]]>><</link>>
 <br>
 
+:: Farm Upgrades Seeder 2
+
+将播种机升级为念力播种机，使其能在温室中使用。
+<br><br>
+
+<span class="gold">需要花费£20000。</span>
+<br>
+<span class="blue">需要<<print get_build_time_str(3)>>来安装。</span>
+<br>
+<span class="blue">直到项目完成工人都会留在农场里。</span>
+<br>
+<br>
+
+<<if $farm.build>>
+	<span class="blue">一次只能进行一个设施的升级。</span>
+	<br>
+<<elseif $money gte 2000000>>
+	<<link [[升级 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -2000000 "farmUpgrades">><<set $farm.build to "seeder">>
+		<<set $farm.build_timer to calc_build_time(3)>>
+	<</link>>
+	<br>
+<</if>>
+<br>
+<<link [[返回|Farm Upgrades]]>><</link>>
+<br>
+
 :: Farm Upgrades Harvester
 
 购买一台现代化收割机。这台强大的农业机械能让收获季节的工作变得轻而易举。
@@ -80,6 +132,58 @@
 	<br>
 <<elseif $money gte 2000000>>
 	<<link [[建造 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -2000000 "farmUpgrades">><<set $farm.build to "harvester">>
+		<<set $farm.build_timer to calc_build_time(7)>>
+	<</link>>
+	<br>
+<</if>>
+<br>
+<<link [[返回|Farm Upgrades]]>><</link>>
+<br>
+
+:: Farm Upgrades Harvester 2
+
+将收割机升级为空间收割机，使其能在温室中使用。
+<br><br>
+
+<span class="gold">需要花费£20000。</span>
+<br>
+<span class="blue">需要<<print get_build_time_str(3)>>来安装。</span>
+<br>
+<span class="blue">直到项目完成工人都会留在农场里。</span>
+<br>
+<br>
+
+<<if $farm.build>>
+	<span class="blue">一次只能进行一个设施的升级。</span>
+	<br>
+<<elseif $money gte 2000000>>
+	<<link [[升级 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -2000000 "farmUpgrades">><<set $farm.build to "harvester">>
+		<<set $farm.build_timer to calc_build_time(3)>>
+	<</link>>
+	<br>
+<</if>>
+<br>
+<<link [[返回|Farm Upgrades]]>><</link>>
+<br>
+
+:: Farm Upgrades Harvester 3
+
+为收割机安装智能收割监控系统，使收获量更加稳定。
+<br><br>
+
+<span class="gold">需要花费£40000。</span>
+<br>
+<span class="blue">需要<<print get_build_time_str(7)>>来安装。</span>
+<br>
+<span class="blue">直到项目完成工人都会留在农场里。</span>
+<br>
+<br>
+
+<<if $farm.build>>
+	<span class="blue">一次只能进行一个设施的升级。</span>
+	<br>
+<<elseif $money gte 4000000>>
+	<<link [[升级 (0:20)|Farm Upgrades Build]]>><<pass 20>><<money -4000000 "farmUpgrades">><<set $farm.build to "harvester">>
 		<<set $farm.build_timer to calc_build_time(7)>>
 	<</link>>
 	<br>

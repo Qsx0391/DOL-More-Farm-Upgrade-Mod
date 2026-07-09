@@ -45,7 +45,7 @@
             土壤已准备好耕种。
             <br>
 
-            <<if _plantbed.greenhouse>>
+            <<if _plantbed.greenhouse and $farm.cultivator lt 2>>
                 <span class="red">你无法在温室里使用耕地机。</span>
                 <br>
             <<else>>
@@ -60,7 +60,6 @@
                         <<set $tendingvars.plot_tilled to true>>
                         <<tiredness 2>><<physique 2>>
                         <<pass 15>>
-                        <<farm_count 15>>
                         <<set _plantbed.till to 1>>
                     <</link>><<gtiredness>>
                 <</if>>
@@ -75,7 +74,6 @@
                             <<set $tendingvars.plot_tilled_fertiliser to true>>
                             <<tiredness 3>><<physique 3>>
                             <<pass 20>>
-                            <<farm_count 20>>
                             <<set _plantbed.till to 1>>
                             <<set $fertiliser.current-->><<set $fertiliser.used++>>
                             <<set _plantbed.quality++>>

@@ -17,7 +17,7 @@
 <<farm_farmer_pay>>
 <<link [[安排工作|Farm Farmer Work Change]]>><</link>>
 <br>
-
+<br>
 <<link [[离开|Farm Fields]]>><<endevent>><</link>>
 
 
@@ -223,9 +223,9 @@
         <br><br>
     <<elseif $_plant.tending.planting_bed is "earth">>
         <<capture _plantType>>
-            <<set $_name to $_plant.seed_name ? $_plant.seed_name : $_plant.plural>>
-            <<if $options.images is 1 and $_plant.icon>>
-                <img class="tending_icon" @src="`img/misc/icon/tending/` + $_plant.icon">
+            <<set $_name to $_plant.tending?.seed_name ? $_plant.tending.seed_name : $_plant.plural>>
+            <<if $options.images is 1 >>
+                <<foodstufficon _plantType>>
             <</if>>
             <<if $farmerPlantable.includes(_plantType)>>
                 <span class="green">✓</span> <<print $_name>> 
@@ -343,7 +343,7 @@
 		你欠<<him>><<printmoney _owed>>工资。
         <br>
         <<if $money gte _owed>>
-            <<link [[支付|Farm Farmer Pay]]>><<money `-_owed` "farm">> 
+            <br><<link [[支付|Farm Farmer Pay]]>><<money `-_owed` "farm">> 
                 <<set $NPCList[0].trust += 1>><<farm_farmer_paid>><</link>>
                 <<gtrust>>
                 <<note "+ 护理技能" "green">>

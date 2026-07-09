@@ -31,21 +31,21 @@
     <<if $farm.cultivator gte 1>>
         一台红色的耕地机停在田边，它的金属外壳在阳光下闪闪发亮。机器看起来保养得很好，随时可以投入使用。
         <br>
-        <<icon "farm_machine.png">><<link [[驾驶 (0:05)|Drive Cultivator]]>><<pass 5>><</link>>
+        <<icon "farmmachine.png">><<link [[驾驶 (0:05)|Drive Cultivator]]>><<pass 5>><</link>>
         <br><br>
     <</if>>
 
     <<if $farm.seeder gte 1>>
         播种机整齐地停放在农具棚旁，它的种子箱已经装满。
         <br>
-        <<icon "farm_machine.png">><<link [[驾驶 (0:05)|Drive Seeder]]>><<pass 5>><</link>>
+        <<icon "farmmachine.png">><<link [[驾驶 (0:05)|Drive Seeder]]>><<pass 5>><</link>>
         <br><br>
     <</if>>
 
     <<if $farm.harvester gte 1>>
         一台大型收割机伫立在田间，它宽大的割台闪着寒光。
         <br>
-        <<icon "farm_machine.png">><<link [[驾驶 (0:05)|Drive Harvester]]>><<pass 5>><</link>>
+        <<icon "farmmachine.png">><<link [[驾驶 (0:05)|Drive Harvester]]>><<pass 5>><</link>>
         <br><br>
     <</if>>
 

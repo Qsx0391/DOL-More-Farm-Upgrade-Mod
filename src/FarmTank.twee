@@ -22,7 +22,7 @@
     <<else>>
         一辆翻新过的重型坦克停在这里。尽管外表布满划痕，但它的主炮和装甲看起来依然可靠。
         <br>
-        <<icon "farm_tank.png">><<link [[驾驶 (0:05)|Farm Tank Drive]]>><<pass 5>><</link>>
+        <<icon "farmtank.png">><<link [[驾驶 (0:05)|Farm Tank Drive]]>><<pass 5>><</link>>
         <br>
     <</if>>
     <br>

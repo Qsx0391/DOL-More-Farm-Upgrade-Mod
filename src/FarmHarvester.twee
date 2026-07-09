@@ -42,19 +42,22 @@
             <<if _plantbed.greenhouse>>
                 <span class="green">这块农田有温室覆盖</span>，
             <</if>>
-            <span class="green"><<print $_plantedPlant.seed_name ? `$_plantedPlant.seed_name` : `$_plantedPlant.plural`>>正在开花，已经可以采摘了。</span>
+            <span class="green"><<print $_plantedPlant.tending?.seed_name ? `$_plantedPlant.tending?.seed_name` : `$_plantedPlant.plural`>>正在开花，已经可以采摘了。</span>
             <br>
 
             <<if $farm_attack_timer is 0>>
                 <<set $_timeUntilAttack to ((23 - Time.hour) * 60) + (60 - Time.minute)>>
             <</if>>
-            <<if _plantbed.greenhouse>>
+            <<if _plantbed.greenhouse and $farm.harvester lt 2>>
                 <span class="red">你无法在温室里使用收割机。</span>
             <<elseif 10 gte $_timeUntilAttack>>
                 <span class="pink">在雷米到来之前，你没有足够的时间收获。</span>
             <<else>>
                 <<if $options.images is 1 and $_plantedPlant.icon>>
                     <img class="tending_icon" @src="`img/misc/icon/tending/` + $_plantedPlant.icon">
+                <</if>>
+                <<if $farm.harvester gte 3>>
+                    <<set $more_by_harvester to 1>>
                 <</if>>
                 <<link "收获 (0:10)" $passage>><<pass 10>><<tending_harvest _plantbed>><<clear_plot _plantbed>><</link>>
             <</if>>

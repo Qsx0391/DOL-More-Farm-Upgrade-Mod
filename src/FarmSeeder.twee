@@ -42,7 +42,7 @@
             <<if $farm_attack_timer is 0>>
                 <<set $_timeUntilAttack to ((23 - Time.hour) * 60) + (60 - Time.minute)>>
             <</if>>
-            <<if _plantbed.greenhouse>>
+            <<if _plantbed.greenhouse and $farm.seeder lt 2>>
                 <br>
                 <span class="red">你无法在温室里使用播种机。</span>
             <<elseif 20 gte $_timeUntilAttack>>
@@ -56,20 +56,23 @@
                         <span class="red">植物类型'<<print _plantType>>'未找到。</span>
                         <br><br>
                         请反馈此问题。
-                    <<elseif $_plant.tending.seasons.includes(Time.season)>>
-                        <<set $_name to $_plant.seed_name ? $_plant.seed_name : $_plant.plural>>
+                    <<elseif $_plant.tending?.seasons?.includes(Time.season) || _plantbed.greenhouse>>
+                        <<set $_name to $_plant.tending?.seed_name ? $_plant.tending.seed_name : $_plant.plural>>
                         /* comparing soil types; check if target bed is compatible with the seed's soil type */
                         <<if $_plant.tending.planting_bed is _plantbed.bed>>
                             <<capture _plantbed _plantType>>
-                                <<if $options.images is 1 and $_plant.icon>>
-                                    <img class="tending_icon" @src="`img/misc/icon/tending/` + $_plant.icon">
+                                <<if $options.images is 1>>
+                                   <<foodstufficon _plantType>>
                                 <</if>>
                                 <<link "种植$_name (0:20)" $passage>><<pass 20>><<run plantSeedsInPlot(_plantbed, _plantType)>><</link>>
                             <</capture>>
-                            <<if $statdisable is "f">>
+                            <<if !$settings.blindStatsEnabled>>
                                 <span class="orange">(<<print $_plant.tending.growth_days>>天)</span>
                             <</if>>
                         <<else>>
+                            <<if $options.images is 1>>
+					            <<foodstufficon _plantType>>
+				            <</if>>
                             <span class="blue"><<print $_name.toLocaleUpperFirst()>>仅能种植于<<print $_plant.tending.planting_bed.replace("earth","土地里").replace("water","水池中")>>。</span>
                         <</if>>
                     <<else>>

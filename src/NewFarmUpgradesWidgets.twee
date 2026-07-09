@@ -2,24 +2,32 @@
 
 <<widget "new_farm_upgrades_status">>
     耕地机：
-    <<if $farm.cultivator gte 1 or $farm.build is "cultivator">>
-        <span class="green">已购买</span>
+    <<if $farm.cultivator gte 2 or ($farm.cultivator is 1 and $farm.build is "cultivator")>>
+        <span class="green">最高配置</span>
+    <<elseif $farm.cultivator is 1 or $farm.build is "cultivator">>
+         <<link [[升级|Farm Upgrades Cultivator 2]]>><</link>>
     <<else>>
         <<link [[购买|Farm Upgrades Cultivator]]>><</link>>
     <</if>>
     <br>
 
     播种机：
-    <<if $farm.seeder gte 1 or $farm.build is "seeder">>
-        <span class="green">已购买</span>
+    <<if $farm.seeder gte 2 or ($farm.seeder is 1 and $farm.build is "seeder")>>
+        <span class="green">最高配置</span>
+    <<elseif $farm.seeder is 1 >>
+        <<link [[升级|Farm Upgrades Seeder 2]]>><</link>>
     <<else>>
         <<link [[购买|Farm Upgrades Seeder]]>><</link>>
     <</if>>
     <br>
 
     收割机：
-    <<if $farm.harvester gte 1 or $farm.build is "harvester">>
-        <span class="green">已购买</span>
+    <<if $farm.harvester gte 3 or ($farm.harvester is 2 and $farm.build is "harvester")>>
+        <span class="green">最高配置</span>
+    <<elseif $farm.harvester is 2 or ($farm.harvester is 1 and $farm.build is "harvester")>>
+        <<link [[升级|Farm Upgrades Harvester 3]]>><</link>>
+    <<elseif $farm.harvester is 1 >>
+        <<link [[升级|Farm Upgrades Harvester 2]]>><</link>>
     <<else>>
         <<link [[购买|Farm Upgrades Harvester]]>><</link>>
     <</if>>
@@ -101,10 +109,15 @@
 <<widget "cultivator_upgrades_finished">>
     <<run $farm.build_finished.delete("cultivator")>>
     <<npc Alex>><<person1>>
-    "嘿，来看看这个新家伙，"艾利克斯兴奋地说，轻轻拍了拍耕地机的金属外壳。"有了它，你就不用再弯腰了。"
-    <br><br>
-    <span class="gold">耕地机已经安装完成。</span>
-    这台机器可以帮助你更快地耕地，让你有更多时间做其他事情。
+    <<if $farm.cultivator gte 2>>
+        <span class="gold">量子耕地机已经升级完毕。</span>
+        现在你可以在温室里使用耕地机了。
+    <<else>>
+        "嘿，来看看这个新家伙，"艾利克斯兴奋地说，轻轻拍了拍耕地机的金属外壳。"有了它，你就不用再弯腰了。"
+        <br><br>
+        <span class="gold">耕地机已经安装完成。</span>
+        这台机器可以帮助你更快地耕地，让你有更多时间做其他事情。
+    <</if>>
     <br><br>
     <<link [[继续|Farm Work]]>><<endevent>><</link>>
     <br>
@@ -112,10 +125,15 @@
 
 <<widget "seeder_upgrades_finished">>
     <<run $farm.build_finished.delete("seeder")>>
-    你走近新安装的播种机，机器上的刻度盘闪烁着微光。工人们正在调试设备，确保每个设置都恰到好处。
-    <br><br>
-    <span class="gold">播种机已经安装完成。</span>
-    这台机器可以帮助你更快地播种，让你有更多时间做其他事情。
+     <<if $farm.seeder gte 2>>
+        <span class="gold">念力播种机已经升级完毕。</span>
+        现在你可以在温室里使用播种机了。
+     <<else>>
+        你走近新安装的播种机，机器上的刻度盘闪烁着微光。工人们正在调试设备，确保每个设置都恰到好处。
+        <br><br>
+        <span class="gold">播种机已经安装完成。</span>
+        这台机器可以帮助你更快地播种，让你有更多时间做其他事情。
+    <</if>>
     <br><br>
     <<link [[继续|Farm Work]]>><<endevent>><</link>>
     <br>
@@ -123,10 +141,18 @@
 
 <<widget "harvester_upgrades_finished">>
     <<run $farm.build_finished.delete("harvester")>>
-    收割机静静地停在田野边，金属外壳在阳光下闪闪发亮。你启动机器，引擎的轰鸣声回荡在农场中。
-    <br><br>
-    <span class="gold">收割机已经安装完成。</span>
-    这台强大的农业机械将让收获变得轻而易举，大大提高工作效率。
+    <<if $farm.harvester gte 3>>
+        <span class="gold">智能收割监控系统已经安装完毕。</span>
+        收割机的作物收获量现在更稳定了。
+    <<elseif $farm.harvester gte 2>>
+        <span class="gold">念力播种机已经升级完毕。</span>
+        现在你可以在温室里使用播种机了。
+    <<else>>
+        收割机静静地停在田野边，金属外壳在阳光下闪闪发亮。你启动机器，引擎的轰鸣声回荡在农场中。
+        <br><br>
+        <span class="gold">收割机已经安装完成。</span>
+        这台强大的农业机械将让收获变得轻而易举，大大提高工作效率。
+    <</if>>
     <br><br>
     <<link [[继续|Farm Work]]>><<endevent>><</link>>
     <br>
@@ -265,11 +291,20 @@
     <<if $farm.build_timer lte 0>>
         <<switch $farm.build>>
             <<case "cultivator">>
-                <<set $farm.cultivator to 1>>
+                <<if !$farm.cultivator>>
+                    <<set $farm.cultivator to 0>>
+                <</if>>
+                <<set $farm.cultivator++>>
             <<case "seeder">>
-                <<set $farm.seeder to 1>>
+                <<if !$farm.seeder>>
+                    <<set $farm.seeder to 0>>
+                <</if>>
+                <<set $farm.seeder++>>
             <<case "harvester">>
-                <<set $farm.harvester to 1>>
+                <<if !$farm.harvester>>
+                    <<set $farm.harvester to 0>>
+                <</if>>
+                <<set $farm.harvester++>>
             <<case "construction machinery">>
                 <<set $farm.construction_machinery to 1>>
             <<case "field greenhouse">>
