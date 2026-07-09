@@ -1,0 +1,432 @@
+:: Farm Sex Machine Intro
+
+<<if $sexMachineGear is undefined>>
+    <<set $sexMachineGear to 1>>
+<</if>>
+
+你在性爱机器上调整设置。现在的挡位是 <<number $sexMachineGear>>。
+<br><br>
+
+<<if $useClitVibrator and $useNippleVibrator>>
+    震动棒固定在你的阴蒂和乳头。
+    <br><br>
+<<elseif $useClitVibrator>>
+    震动棒固定在你的阴蒂。
+    <br><br>
+<<elseif $useNippleVibrator>>
+    震动棒固定在你的乳头。
+    <br><br>
+<</if>>
+
+<<if $useWhip>>
+    一个马鞭被安装在机器上。
+    <br><br>
+<</if>>
+
+<<link [[调到 1 挡|$passage]]>><<set $sexMachineGear to 1>><</link>><br>
+<<link [[调到 2 挡|$passage]]>><<set $sexMachineGear to 2>><</link>><br>
+<<link [[调到 3 挡|$passage]]>><<set $sexMachineGear to 3>><</link>><br>
+<br>
+
+<<if $player.vaginaExist>>
+    <<if $useClitVibrator>>
+        <<link [[把阴蒂上的震动棒推开|$passage]]>><<set $useClitVibrator to false>><</link>>
+    <<else>>
+        <<link [[把震动棒固定在阴蒂上|$passage]]>><<set $useClitVibrator to true>><</link>>
+    <</if>>
+    <br>
+<</if>>
+
+<<if $useNippleVibrator>>
+    <<link [[把乳头上的震动棒推开|$passage]]>><<set $useNippleVibrator to false>><</link>>
+<<else>>
+    <<link [[把震动棒固定在乳头上|$passage]]>><<set $useNippleVibrator to true>><</link>>
+<</if>>
+<br><br>
+
+<<if $useWhip>>
+    <<link [[把马鞭从机器上取下|$passage]]>><<set $useWhip to false>><</link>>
+<<else>>
+    <<link [[把马鞭安装到机器上|$passage]]>><<set $useWhip to true>><</link>>
+<</if>>
+<br><br>
+
+<<link [[启动|Farm Sex Machine]]>><<set $sexstart to 1>><<set $sexMachineTimer to 0>><</link>><br>
+<<link [[束缚并启动|Farm Sex Machine Bind]]>><</link>><br>
+<br>
+
+<<link [[离开|Farm Basement]]>><<farm_sex_machine_unset>><</link>>
+
+:: Farm Sex Machine Bind
+
+你把自己束缚在机器上。
+<br><br>
+
+<<set $sexstart to 1>>
+<<set $leftarm to "bound">>
+<<set $rightarm to "bound">>
+
+上锁时间：
+<br>
+<<link [[10 分钟|Farm Sex Machine]]>><<set $sexMachineTimer to 10 * 6>><</link>><br>
+<<link [[20 分钟|Farm Sex Machine]]>><<set $sexMachineTimer to 20 * 6>><</link>><br>
+<<link [[30 分钟|Farm Sex Machine]]>><<set $sexMachineTimer to 30 * 6>><</link>><br>
+<<link [[1 小时|Farm Sex Machine]]>><<set $sexMachineTimer to 60 * 6>><</link>><br>
+<<link [[2 小时|Farm Sex Machine]]>><<set $sexMachineTimer to 120 * 6>><</link>><br>
+<br>
+
+<<link [[取消|Farm Sex Machine Intro]]>><<set $sexstart to 0>><<arm_unbind>><</link>>
+
+
+:: Farm Sex Machine
+
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+
+	<<set $machine_health to 10>><<set $machine_ammo to 8>>
+	<<if $player.vaginaExist and $analdisable is "f">>
+		<<machine_init vaginal anal>>
+		<<set $machine.vaginal.armed to 1>>
+		<<set $machine.anal.armed to 1>>
+	<<elseif $player.vaginaExist>>
+		<<machine_init vaginal>>
+		<<set $machine.vaginal.armed to 1>>
+	<<else>>
+		<<machine_init anal>>
+		<<set $machine.anal.armed to 1>>
+	<</if>>
+	<<prop table>>
+    <<set $machine.speed to $sexMachineGear>>
+<</if>>
+
+<<effects>>
+
+<<if $sexMachineTimer gt 0>>
+    你被束缚在机器上，还剩 <<print Math.ceil($sexMachineTimer / 6)>> 分钟。
+    <br>
+<</if>>
+
+<<if ($leftaction is "struggle" or $rightaction is "struggle") and !($orgasmdown gte 1 or ($pain gte 100 and $willpowerpain is 0))>>
+    <<switch random(1, 2)>>
+        <<case 1>>
+            你挣扎着想挣脱束缚，但没有用。
+        <<case 2>>
+            你试图挣脱束缚，但你被锁得很紧。
+    <</switch>>
+    <<gstress>><<stress 4>>
+    <br>
+<</if>>
+
+<<if $leftaction is "turn up" or $rightaction is "turn up">>
+    <<set $machine.speed += 1>>
+    你把炮机的挡位调到 <<number $machine.speed>>。
+    <<if $machine.speed is 3>>
+        <span class="red">现在是最大挡位。</span>
+    <</if>>
+    <br>
+<<elseif $leftaction is "turn down" or $rightaction is "turn down">>
+    <<set $machine.speed -= 1>>
+    你把炮机的挡位调到 <<number $machine.speed>>。
+    <<if $machine.speed is 1>>
+        <span class="green">现在是最小挡位。</span>
+    <</if>>
+    <br>
+<</if>>
+
+<<if $leftaction is "clit vibrator" or $rightaction is "clit vibrator">>
+    <<set $useClitVibrator to !($useClitVibrator)>>
+<</if>>
+<<if $leftaction is "nipple vibrator" or $rightaction is "nipple vibrator">>
+    <<set $useNippleVibrator to !($useNippleVibrator)>>
+<</if>>
+
+<<if ($useClitVibrator or $useNippleVibrator) and $machine.anal.ammo isnot 0>>
+    <<if $useClitVibrator and $useNippleVibrator>>
+        <<set _posName to "阴蒂和乳头">>
+        <<sex (8 * $machine.speed) "genitals">>
+    <<elseif $useClitVibrator>>
+        <<set _posName to "阴蒂">>
+        <<sex (6 * $machine.speed) "genitals">>
+    <<else>>
+        <<set _posName to "乳头">>
+        <<sex (2 * $machine.speed) "genitals">>
+    <</if>>
+    
+    <<switch $machine.speed>>
+        <<case 3>>
+            <span class="red">
+                <<switch random(1, 4)>>
+                    <<case 1>>
+                        震动棒以超出你忍耐限度的频率刺激你的<<print _posName>>，持续不断的快感随着震动冲刷着你。
+                    <<case 2>>
+                        震动棒以你可以承受的极限粗暴地刺激着你的<<print _posName>>。
+                    <<case 3>>
+                        震动棒以难以忍受的频率冲击你的<<print _posName>>。
+                    <<case 4>>
+                        震动如此强烈，你感觉自己由外到内都在颤抖。
+                <</switch>>
+            </span>
+
+        <<case 2>>
+            <span class="pink">
+                <<switch random(1, 3)>>
+                    <<case 1>>
+                        震动棒刺激着你的<<print _posName>>，它迅速的震动让你性奋起来。
+                    <<case 2>>
+                        震动棒上下摩擦着你的<<print _posName>>，它的振动产生一股迅速变强的淫荡暖流。
+                    <<case 3>>
+                        你闭上眼，慢慢摇晃你的臀部，最大程度地感受着震动。
+                <</switch>>
+            </span>
+            
+        <<default>>
+            <span class="purple">
+                <<switch random(1, 2)>>
+                    <<case 1>>
+                        震动棒轻轻抵着你的<<print _posName>>。
+                    <<case 2>>
+                        震动棒轻柔地抵在你的<<print _posName>>，振动伴随昆虫爬遍全身的感觉让你的脚趾蜷曲起来。
+                <</switch>>
+            </span>
+
+    <</switch>>
+    <br>
+<</if>>
+
+<<if $useWhip>>
+    <<switch $machine.speed>>
+        <<case 3>>
+            <span class="red">
+                <<switch random(1, 9)>>
+                    <<case 1>>
+                        每一次抽打，你都会发出嘶声，泪水顺着你的眼眶流下。
+                    <<case 2>>
+                        性爱机器鞭笞着你的皮肤，在你的身上割出一道道的印记。
+                    <<case 3>>
+                        性爱机器鞭笞着你的屁股，发出一声巨响，速度与力道实在是太猛烈了，你不由得疼得发抖。
+                    <<case 4>>
+                        机器一下又一下地抽打你，每一下比上一次更重，你痛得哭了出来。
+                    <<case 5>>
+                        机器抽打你的屁股和大腿，你趴在机器上痛苦地尖叫着。
+                    <<case 6>>
+                        性爱机器抽打着你的<<bottom>>，你因疼痛无法抑制地大叫起来。
+                    <<case 7>>
+                        鞭子一次又一次地抽打着你的皮肤，每一次抽打都让你不由自主地发出痛苦的呼喊。
+                    <<case 8>>
+                        机器一次又一次的打击鞭笞着你的背部，你抬起头，发出一声痛苦的尖叫。
+                    <<case 9>>
+                        鞭子抽在了你的皮肤上，你发出了尖叫。
+                <</switch>>
+            </span>
+            <<ggpain>><<violence 15>><<sex 5 "genitals">>
+
+        <<case 2>>
+            <span class="pink">
+                <<switch random(1, 9)>>
+                    <<case 1>>
+                        性爱机器开始鞭打你的<<breasts>>。每次皮革条抽到你变硬的乳头时，你都会浑身颤抖。你的胸部很快就变得通红，刺痛起来。
+                    <<case 2>>
+                        性爱机器鞭打你裸露的<<if $player.penisExist>>阴茎<<else>>阴蒂<</if>>。你不适地动来动去，扭动身体。
+                    <<case 3>>
+                        机器抽打鞭笞着你的屁股。
+                    <<case 4>>
+                        机器用马鞭来回拍打你的屁股，这让你的眼里泛起了泪花。
+                    <<case 5>>
+                        当鞭子抽打在你裸露的皮肤上时，你尝试咬紧牙关，低声呜咽。但眼泪还是止不住地流。
+                    <<case 6>>
+                        鞭子一次又一次地抽打你的皮肤，一次比一次痛。
+                    <<case 7>>
+                        你咬紧牙关。每一次的抽打，都让疼痛感窜遍你的全身。
+                    <<case 8>>
+                        打击来得毫无征兆。你的<<bottom>>传来一种尖锐的刺痛感。
+                    <<case 9>>
+                        你的屁股遭受着无情的鞭笞，你试着忍住泪水，但你办不到。
+                <</switch>>
+            </span>
+            <<gpain>><<violence 10>><<sex 5 "genitals">>
+            
+        <<default>>
+            <span class="purple">
+                <<switch random(1, 4)>>
+                    <<case 1>>
+                        当马鞭落在你翘起的屁股上时，你感受到一种愧疚，但愉悦的感觉。
+                    <<case 2>>
+                        机器用马鞭抽打你，弄出了许多声响，但几乎不痛。
+                    <<case 3>>
+                        你的身体在一下下鞭笞时兴奋地发颤。
+                    <<case 4>>
+                        鞭笞一下又一下地重复着，
+                <</switch>>
+            </span>
+            <<gpain>><<violence 5>><<sex 2 "genitals">>
+
+    <</switch>>
+    <br>
+<</if>>
+
+<<if $machine.anal.ammo isnot 0>>
+    <<if $machine.vaginal>>
+        <<set $machine.vaginal.ammo to 10>>
+    <</if>>
+    <<set $machine.anal.ammo to 10>>
+<</if>>
+
+<<machine_effects>><br><<machine_combat>>
+<<machine_state>>
+
+<br><br>
+<<farm_machine_actions>>
+<<pass 10 seconds>>
+<<if $sexMachineTimer gt 0>>
+    <<set $sexMachineTimer -= 1>>
+<</if>>
+
+<<if $pain gte 100 and $willpowerpain is 0 and $sexMachineTimer lte 0>>
+    <span id="next"><<link [[继续|Farm Sex Machine End Force]]>><</link>></span><<nexttext>>
+<<elseif $machine.number lte 0 or $finish is 1>>
+	<span id="next"><<link [[继续|Farm Sex Machine End]]>><</link>></span><<nexttext>>
+<<elseif $sexMachineTimer gt 0>>
+    <span id="next"><<link [[继续|Farm Sex Machine]]>><</link>></span><<nexttext>>
+<<else>>
+    <div id="masturbationButtons">
+        <div id="next"><<link [[继续|Farm Sex Machine]]>><</link>></div><<nexttext>>
+        <div id="skip">
+            <<link [[停止|Farm Sex Machine]]>>
+                <<if $machine.vaginal>>
+                    <<set $machine.vaginal.ammo to 0>>
+                <</if>>
+                <<set $machine.anal.ammo to 0>>
+            <</link>>
+        </div>
+    </div>
+<</if>>
+
+:: Farm Sex Machine End
+
+<<arm_unbind>>
+<<farm_sex_machine_unset>>
+<<clotheson>>
+<<machine_end>>
+
+<<link [[继续|Farm Basement]]>><</link>>
+
+:: Farm Sex Machine End Force
+
+你再也忍受不住痛苦了，你立刻关闭了性爱机器。
+<br><br>
+
+<<arm_unbind>>
+<<farm_sex_machine_unset>>
+<<clotheson>>
+<<machine_end>>
+
+<<link [[继续|Farm Basement]]>><</link>>
+
+:: Farm Sex Machine Widgets [widget]
+
+<<widget "farm_machine_actions">>
+    <<if $sexMachineTimer gt 0>>
+        <<set $leftarm to "bound">>
+        <<set $rightarm to "bound">>
+    <<elseif $leftarm isnot 0>>
+        <<arm_unbind>>
+    <</if>>
+
+	<<willpowerpain>>
+	<<willpowerorgasm>>
+	<<actioncarry>>
+	<<actioncarrydrop>>
+
+	<<combatstate>>
+	<<carryblock>>
+    
+    <<if $orgasmdown gte 1 or ($pain gte 100 and $willpowerpain is 0)>>
+        <<generateActionsMachine>>
+    <<elseif $sexMachineTimer gt 0>>
+        <span class="gold">你的左臂被无助地束缚着。</span>
+        <br>
+        <<if $leftactiondefault is "struggle" or $leftaction is "struggle">>
+            <label><<radiobutton "$leftaction" "struggle" checked>><span class="red"> 挣扎</span> |</label>
+            <label><<radiobutton "$leftaction" "rest">> 休息 |</label>
+        <<else>>
+            <label><<radiobutton "$leftaction" "struggle">><span class="red"> 挣扎</span> |</label>
+            <label><<radiobutton "$leftaction" "rest" checked>> 休息 |</label>
+        <</if>>
+        <br>
+        <span class="gold">你的右臂被无助地束缚着。</span>
+        <br>
+        <<if $rightactiondefault is "struggle" or $rightaction is "struggle">>
+            <label><<radiobutton "$rightaction" "struggle" checked>><span class="red"> 挣扎</span> |</label>
+            <label><<radiobutton "$rightaction" "rest">> 休息 |</label>
+        <<else>>
+            <label><<radiobutton "$rightaction" "struggle">><span class="red"> 挣扎</span> |</label>
+            <label><<radiobutton "$rightaction" "rest" checked>> 休息 |</label>
+        <</if>>
+        <br>
+    <<else>>
+        <span class="gold">你的左臂是自由的。</span>
+        <br>
+
+        <<if $machine.speed lt 3>>
+            <label><<radiobutton "$leftaction" "turn up">><span class="red"> 调大挡位</span> |</label>
+        <</if>>
+        <<if $machine.speed gt 1>>
+            <label><<radiobutton "$leftaction" "turn down">><span class="green"> 调小挡位</span> |</label>
+        <</if>>
+        
+        <<if $player.vaginaExist>>
+            <<if $useClitVibrator>>
+                <label><<radiobutton "$leftaction" "clit vibrator">><span class="purple"> 推开阴蒂的震动棒</span> |</label>
+            <<else>>
+                <label><<radiobutton "$leftaction" "clit vibrator">><span class="purple"> 把震动棒移向阴蒂</span> |</label>
+            <</if>>
+        <</if>>
+
+        <<if $useNippleVibrator>>
+            <label><<radiobutton "$leftaction" "nipple vibrator">><span class="purple"> 推开乳头的震动棒</span> |</label>
+        <<else>>
+            <label><<radiobutton "$leftaction" "nipple vibrator">><span class="purple"> 把震动棒移向乳头</span> |</label>
+        <</if>>
+
+        <label><<radiobutton "$leftaction" "rest" checked>> 休息 |</label>
+        <br>
+
+        <span class="gold">你的右臂是自由的。</span>
+        <br>
+
+        <<if $machine.speed lt 3>>
+            <label><<radiobutton "$rightaction" "turn up">><span class="red"> 调大挡位</span> |</label>
+        <</if>>
+        <<if $machine.speed gt 1>>
+            <label><<radiobutton "$rightaction" "turn down">><span class="green"> 调小挡位</span> |</label>
+        <</if>>
+
+        <<if $player.vaginaExist>>
+            <<if $useClitVibrator>>
+                <label><<radiobutton "$rightaction" "clit vibrator">><span class="purple"> 推开阴蒂的震动棒</span> |</label>
+            <<else>>
+                <label><<radiobutton "$rightaction" "clit vibrator">><span class="purple"> 把震动棒移向阴蒂</span> |</label>
+            <</if>>
+        <</if>>
+
+        <<if $useNippleVibrator>>
+            <label><<radiobutton "$rightaction" "nipple vibrator">><span class="purple"> 推开乳头的震动棒</span> |</label>
+        <<else>>
+            <label><<radiobutton "$rightaction" "nipple vibrator">><span class="purple"> 把震动棒移向乳头</span> |</label>
+        <</if>>
+
+        <label><<radiobutton "$rightaction" "rest" checked>> 休息 |</label>
+    <</if>>
+	<br><br>
+
+	<<setupMidOrgasm>>
+<</widget>>
+
+<<widget "farm_sex_machine_unset">>
+    <<unset $sexMachineGear>>
+    <<unset $useClitVibrator>>
+    <<unset $useNippleVibrator>>
+    <<unset $useWhip>>
+<</widget>>
